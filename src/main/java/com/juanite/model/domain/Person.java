@@ -3,25 +3,32 @@ package com.juanite.model.domain;
 import java.util.Objects;
 
 public class Person {
-    private int id_Person;
-    private String name;
-    private String gmail;
-    private String password;
+    protected int id;
+    protected String name;
+    protected String email;
+    protected String password;
 
-    public Person(int id_Person, String name, String gmail, String password) {
-        this.id_Person = id_Person;
+    public Person() {
+        this.id = -1;
+        this.name = "";
+        this.email = "";
+        this.password = "";
+    }
+
+    public Person(int id, String name, String email, String password) {
+        this.id = id;
         this.name = name;
-        this.gmail = gmail;
+        this.email = email;
         this.password = password;
     }
 
 
-    public int getId_Person() {
-        return id_Person;
+    public int getId() {
+        return id;
     }
 
-    public void setId_Person(int id_Person) {
-        this.id_Person = id_Person;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -33,11 +40,11 @@ public class Person {
     }
 
     public String getGmail() {
-        return gmail;
+        return email;
     }
 
     public void setGmail(String gmail) {
-        this.gmail = gmail;
+        this.email = gmail;
     }
 
     public String getPassword() {
@@ -52,9 +59,9 @@ public class Person {
     @Override
     public String toString() {
         return "Person{" +
-                "id_Person=" + id_Person +
+                "id_Person=" + id +
                 ", name='" + name + '\'' +
-                ", gmail='" + gmail + '\'' +
+                ", gmail='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }
@@ -64,11 +71,11 @@ public class Person {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return id_Person == person.id_Person && Objects.equals(name, person.name) && Objects.equals(gmail, person.gmail) && Objects.equals(password, person.password);
+        return id == person.id && Objects.equals(name, person.name) && Objects.equals(email, person.email) && Objects.equals(password, person.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id_Person, name, gmail, password);
+        return Objects.hash(id, name, email, password);
     }
 }

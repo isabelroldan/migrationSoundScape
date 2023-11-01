@@ -1,16 +1,27 @@
 package com.juanite.model.domain;
 
+import com.juanite.model.Genres;
+
 import java.util.Objects;
 
 public class Song {
     private int id;
     private String name;
     private int duration;
-    private String genre;
+    private Genres genre;
     private String url;
     private Album album;
 
-    public Song(int id, String name, int duration, String genre, String url, Album album) {
+    public Song() {
+        this.id = -1;
+        this.name = "";
+        this.duration = -1;
+        this.genre = Genres.NONE;
+        this.url = "";
+        this.album = null;
+    }
+
+    public Song(int id, String name, int duration, Genres genre, String url, Album album) {
         this.id = id;
         this.name = name;
         this.duration = duration;
@@ -43,11 +54,11 @@ public class Song {
         this.duration = duration;
     }
 
-    public String getGenre() {
+    public Genres getGenre() {
         return genre;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(Genres genre) {
         this.genre = genre;
     }
 
@@ -72,12 +83,12 @@ public class Song {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Song song = (Song) o;
-        return id == song.id && duration == song.duration && Objects.equals(name, song.name) && Objects.equals(genre, song.genre) && Objects.equals(url, song.url) && Objects.equals(album, song.album);
+        return id == song.id && Objects.equals(name, song.name) && Objects.equals(album, song.album);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, duration, genre, url, album);
+        return Objects.hash(id, name, album);
     }
 
     @Override
@@ -86,7 +97,7 @@ public class Song {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", duration=" + duration +
-                ", genre='" + genre + '\'' +
+                ", genre='" + genre.name() + '\'' +
                 ", url='" + url + '\'' +
                 ", album=" + album +
                 '}';
