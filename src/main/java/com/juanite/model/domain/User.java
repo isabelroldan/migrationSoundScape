@@ -1,22 +1,32 @@
 package com.juanite.model.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class User {
-    private int id_user;
+public class User extends Person {
     private String photo;
+    private List<Playlist> playlists;
+    private List<Playlist> favoritePlaylists;
 
-    public User(int id_user, String photo) {
-        this.id_user = id_user;
+    public User() {
+        super();
+        this.photo = "";
+        this.playlists = new ArrayList<Playlist>();
+        this.favoritePlaylists = new ArrayList<Playlist>();
+    }
+    public User(int id, String name, String email, String password, String photo) {
+        super(id,name,email,password);
         this.photo = photo;
+        this.playlists = new ArrayList<Playlist>();
+        this.favoritePlaylists = new ArrayList<Playlist>();
     }
 
-    public int getId_user() {
-        return id_user;
-    }
-
-    public void setId_user(int id_user) {
-        this.id_user = id_user;
+    public User(int id, String name, String email, String password, String photo, List<Playlist> playlists, List<Playlist> favoritePlaylists) {
+        super(id,name,email,password);
+        this.photo = photo;
+        this.playlists = playlists;
+        this.favoritePlaylists = favoritePlaylists;
     }
 
     public String getPhoto() {
@@ -27,10 +37,26 @@ public class User {
         this.photo = photo;
     }
 
+    public List<Playlist> getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(List<Playlist> playlists) {
+        this.playlists = playlists;
+    }
+
+    public List<Playlist> getFavoritedPlaylists() {
+        return favoritePlaylists;
+    }
+
+    public void setFavoritedPlaylists(List<Playlist> favoritePlaylists) {
+        this.favoritePlaylists = favoritePlaylists;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "id_user=" + id_user +
+                "id_user=" + this.id +
                 ", photo='" + photo + '\'' +
                 '}';
     }
@@ -40,11 +66,11 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id_user == user.id_user && Objects.equals(photo, user.photo);
+        return this.id == user.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id_user, photo);
+        return Objects.hash(id);
     }
 }
