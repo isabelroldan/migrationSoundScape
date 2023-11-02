@@ -1,6 +1,5 @@
 package com.juanite.model.DAO;
 
-import com.juanite.connection.ConnectionData;
 import com.juanite.connection.ConnectionMySQL;
 import com.juanite.model.Genres;
 import com.juanite.model.domain.Album;
@@ -22,6 +21,20 @@ public class SongDAO extends Song {
     private final static String SELECTBYNAME = "SELECT id, name, duration, genre, url, album_id FROM Song WHERE name=?";
     private final static String SELECTBYALBUM = "SELECT id, name, duration, genre, url, album_id FROM Song WHERE album_id=?";
     private final static String SELECTBYGENRE = "SELECT id, name, duration, genre, url, album_id FROM Song WHERE genre=?";
+
+
+    public SongDAO(int id, String name, int duration, Genres genre, String url, Album album) {
+        super(id, name, duration, genre, url, album);
+    }
+
+    public SongDAO(int id) {
+        getById(id);
+    }
+
+    public SongDAO(Song song) {
+        super(song.getId(), song.getName(), song.getDuration(), song.getGenre(), song.getUrl(), song.getAlbum());
+    }
+
 
     public boolean save(Song song) {
         if (song.getId() != -1) {
@@ -89,7 +102,7 @@ public class SongDAO extends Song {
         }
     }
 
-    public boolean getById(int id, Song song) {
+    public boolean getById(int id) {
         Connection conn = ConnectionMySQL.getConnect();
         if (conn == null) return false;
 
@@ -98,15 +111,12 @@ public class SongDAO extends Song {
             if (ps.execute()) {
                 try (ResultSet rs = ps.getResultSet()) {
                     if (rs.next()) {
-                        song.setId(rs.getInt("id"));
-                        song.setName(rs.getString("name"));
-                        song.setDuration(rs.getInt("duration"));
-                        song.setGenre(Genres.valueOf(rs.getString("genre")));
-                        song.setUrl(rs.getString("url"));
-                        AlbumDAO albumDAO = new AlbumDAO();
-                        Album album = new Album();
-                        albumDAO.getById(rs.getInt("album_id"), album);
-                        song.setAlbum(album);
+                        setId(rs.getInt("id"));
+                        setName(rs.getString("name"));
+                        setDuration(rs.getInt("duration"));
+                        setGenre(Genres.valueOf(rs.getString("genre")));
+                        setUrl(rs.getString("url"));
+                        album = new AlbumDAO(rs.getString("album_id"));
                         return true;
                     }
                 }
@@ -133,10 +143,7 @@ public class SongDAO extends Song {
                         song.setDuration(rs.getInt("duration"));
                         song.setGenre(Genres.valueOf(rs.getString("genre")));
                         song.setUrl(rs.getString("url"));
-                        AlbumDAO albumDAO = new AlbumDAO();
-                        Album album = new Album();
-                        albumDAO.getById(rs.getInt("album_id"), album);
-                        song.setAlbum(album);
+                        album = new AlbumDAO(rs.getString("album_id"));
                         result.add(song);
                     }
                 }
@@ -190,10 +197,7 @@ public class SongDAO extends Song {
                         song.setDuration(rs.getInt("duration"));
                         song.setGenre(genre);
                         song.setUrl(rs.getString("url"));
-                        AlbumDAO albumDAO = new AlbumDAO();
-                        Album album = new Album();
-                        albumDAO.getById(rs.getInt("album_id"), album);
-                        song.setAlbum(album);
+                        album = new AlbumDAO(rs.getString("album_id"));
                         result.add(song);
                     }
                 }
