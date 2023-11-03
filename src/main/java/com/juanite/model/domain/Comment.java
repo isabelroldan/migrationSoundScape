@@ -6,19 +6,19 @@ import java.util.Objects;
 public class Comment {
     private int id;
     private LocalDateTime date_time;
-    public Person person;
+    public User user;
     public Playlist playlist;
 
-    public Comment(int id, LocalDateTime date_time, Person person, Playlist playlist) {
+    public Comment(int id, LocalDateTime date_time/*, Person person, Playlist playlist*/) {
         this.id = id;
         this.date_time = date_time;
-        this.person = person;
-        this.playlist = playlist;
+        //this.person = person;
+        //this.playlist = playlist;
     }
 
-    public Comment(int id){ this(id, LocalDateTime.now(), null,null);}
+    public Comment(int id){ this(id, LocalDateTime.now()/*, null,null*/);}
 
-    public Comment(){ this(-1, LocalDateTime.now(), null,null);}
+    public Comment(){ this(-1, LocalDateTime.now()/*, null,null*/);}
 
     public int getId() {
         return id;
@@ -28,8 +28,8 @@ public class Comment {
         return date_time;
     }
 
-    public Person getPerson() {
-        return person;
+    public Person getUser() {
+        return user;
     }
 
     public Playlist getPlaylist() {
@@ -44,8 +44,8 @@ public class Comment {
         this.date_time = date_time;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setPlaylist(Playlist playlist) {
@@ -70,7 +70,7 @@ public class Comment {
         return "Comment: " +
                 "\nid=" + id +
                 "\n, date_time=" + date_time +
-                "\n, person=" + person +
+                "\n, person=" + user +
                 "\n, playlist=" + playlist +
                 '.';
     }
