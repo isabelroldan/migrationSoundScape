@@ -4,33 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="08a09454-af0b-46f3-8b8d-efd554480bdd" name="Changes" comment="First Commit">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/connection/ConnectionData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/connection/ConnectionMySQL.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/Countries.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/iArtistDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/iCommentDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/iPlaylistDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/iSongDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/iUserDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/Genres.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/juanite/connection.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="08a09454-af0b-46f3-8b8d-efd554480bdd" name="Changes" comment="DAO interfaces added, model corrected">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/ArtistDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/iAlbumDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Admin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Artist.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Artist.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Playlist.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Playlist.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Song.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Song.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/util/AppData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/util/AppData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/util/PasswordAuthentication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/util/PasswordAuthentication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Album.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Album.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,8 +18,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
         <option value="Interface" />
       </list>
     </option>
@@ -57,28 +35,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/juan1/IdeaProjects/soundscape_v2/src/main/resources/com/juanite",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/juan1/IdeaProjects/soundscape_v2/src/main/resources/com/juanite&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\juan1\IdeaProjects\soundscape_v2\src\main\resources\com\juanite" />
       <recent name="C:\Users\juan1\IdeaProjects\soundscape_v2\src\main\java\com\juanite\connection" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\juan1\IdeaProjects\soundscape_v2" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.juanite.connection" />
@@ -93,6 +74,9 @@
       <option name="presentableId" value="Default" />
       <updated>1698671478976</updated>
       <workItem from="1698671480158" duration="1809000" />
+      <workItem from="1698958864650" duration="3098000" />
+      <workItem from="1698963264525" duration="140000" />
+      <workItem from="1699130216893" duration="6777000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1698671736616</created>
@@ -101,7 +85,14 @@
       <option name="project" value="LOCAL" />
       <updated>1698671736616</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="DAO interfaces added, model corrected">
+      <created>1698874544153</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1698874544153</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -110,6 +101,7 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="First Commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="First Commit" />
+    <MESSAGE value="DAO interfaces added, model corrected" />
+    <option name="LAST_COMMIT_MESSAGE" value="DAO interfaces added, model corrected" />
   </component>
 </project>
