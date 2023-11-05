@@ -10,5 +10,5 @@ public interface iPlaylistDAO extends AutoCloseable {
     Set<Playlist> getAll();
     boolean getById(int id);
     Set<Playlist> getByUser(User user, boolean isOwner);
-    Set<User> getSubscribers(Playlist playlist);
+    Set<User> getPlaylistSubscribers();
 }
