@@ -1,20 +1,45 @@
 package com.juanite.model.domain;
 
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class Album {
-    protected int id;
-    protected String name;
-    protected Date publication;
-    protected String photo;
+    private int id;
+    private String name;
+    private Date publication;
+    private String photo;
+    private List<Artist> artists;
+    private List<Song> songs;
+
 
     // Constructor
+    public Album() {
+        this.id = -1;
+        this.name = "";
+        this.publication = Date.from(Instant.now());
+        this.photo = "";
+        this.artists = new ArrayList<>();
+        this.songs = new ArrayList<>();
+    }
     public Album(int id, String name, Date publication, String photo) {
         this.id = id;
         this.name = name;
         this.publication = publication;
         this.photo = photo;
+        this.artists = new ArrayList<>();
+        this.songs = new ArrayList<>();
+    }
+
+    public Album(int id, String name, Date publication, String photo, List<Artist> artists, List<Song> songs) {
+        this.id = id;
+        this.name = name;
+        this.publication = publication;
+        this.photo = photo;
+        this.artists = artists;
+        this.songs = songs;
     }
 
     // Getters and Setters
@@ -48,6 +73,22 @@ public class Album {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public List<Artist> getArtists() {
+        return artists;
+    }
+
+    public void setArtists(List<Artist> artists) {
+        this.artists = artists;
+    }
+
+    public List<Song> getSongs() {
+        return songs;
+    }
+
+    public void setSongs(List<Song> songs) {
+        this.songs = songs;
     }
 
     @Override

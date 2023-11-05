@@ -13,15 +13,15 @@ import java.util.Set;
 
 public class ArtistDAO extends Artist implements iArtistDAO {
     private final static String INSERT = "INSERT INTO artist (name, nationality, photo) VALUES (?,?,?)";
-    private final static String INSERTALBUM = "INSERT INTO artist-album (id_artist, id_album) VALUES (?,?,?)";
+    private final static String INSERTALBUM = "INSERT INTO artist_album (id_artist, id_album) VALUES (?,?,?)";
     private final static String UPDATE ="UPDATE artist SET name=?, nationality=?, photo=? WHERE id=?";
     private final static String DELETE="DELETE FROM artist WHERE id=?";
-    private final static String DELETEALBUMS = "DELETE FROM artist-album WHERE id_artist=?";
+    private final static String DELETEALBUMS = "DELETE FROM artist_album WHERE id_artist=?";
     private final static String SELECTBYID="SELECT id, name, nationality, photo FROM artist WHERE id=?";
     private final static String SELECTALL="SELECT id, name, nationality, photo FROM artist";
     private final static String SELECTBYNAME="SELECT id, name, nationality, photo FROM artist WHERE name=?";
-    private final static String SELECTBYNATIONALITY="SELECT id, name, nationality, photo FROM Comment WHERE nationality=?";
-    private final static String SELECTBYALBUM = "SELECT id_artist FROM artist-album WHERE id_album=?";
+    private final static String SELECTBYNATIONALITY="SELECT id, name, nationality, photo FROM artist WHERE nationality=?";
+    private final static String SELECTBYALBUM = "SELECT id_artist FROM artist_album WHERE id_album=?";
 
     public ArtistDAO(int id, String name, Countries nationality, String photo){
         super(id, name, nationality, photo);
@@ -203,9 +203,11 @@ public class ArtistDAO extends Artist implements iArtistDAO {
                         setNationality(Countries.valueOf(rs.getString("nationality")));
                         setPhoto(rs.getString("photo"));
                         List<Album> albums = new ArrayList<>();
-                        try(AlbumDAO adao = new AlbumDAO()) {
+                        try(AlbumDAO adao = new AlbumDAO(new Album())) {
                             Set<Album> albumSet = adao.getByArtist(this.getName());
                             albums.addAll(albumSet);
+                        } catch (Exception e) {
+                            return false;
                         }
                         setAlbumList(albums);
                     }
@@ -241,9 +243,11 @@ public class ArtistDAO extends Artist implements iArtistDAO {
                         a.setNationality(Countries.valueOf(rs.getString("nationality")));
                         a.setPhoto(rs.getString("photo"));
                         List<Album> albums = new ArrayList<>();
-                        try(AlbumDAO adao = new AlbumDAO()) {
+                        try(AlbumDAO adao = new AlbumDAO(new Album())) {
                             Set<Album> albumSet = adao.getByArtist(this.getName());
                             albums.addAll(albumSet);
+                        } catch (Exception e) {
+                            return null;
                         }
                         a.setAlbumList(albums);
                         result.add(a);
@@ -273,9 +277,11 @@ public class ArtistDAO extends Artist implements iArtistDAO {
                         a.setNationality(Countries.valueOf(rs.getString("nationality")));
                         a.setPhoto(rs.getString("photo"));
                         List<Album> albums = new ArrayList<>();
-                        try(AlbumDAO adao = new AlbumDAO()) {
+                        try(AlbumDAO adao = new AlbumDAO(new Album())) {
                             Set<Album> albumSet = adao.getByArtist(this.getName());
                             albums.addAll(albumSet);
+                        } catch (Exception e) {
+                            return null;
                         }
                         a.setAlbumList(albums);
                         result.add(a);
@@ -305,9 +311,11 @@ public class ArtistDAO extends Artist implements iArtistDAO {
                         a.setNationality(Countries.valueOf(rs.getString("nationality")));
                         a.setPhoto(rs.getString("photo"));
                         List<Album> albums = new ArrayList<>();
-                        try(AlbumDAO adao = new AlbumDAO()) {
+                        try(AlbumDAO adao = new AlbumDAO(new Album())) {
                             Set<Album> albumSet = adao.getByArtist(this.getName());
                             albums.addAll(albumSet);
+                        } catch (Exception e) {
+                            return null;
                         }
                         a.setAlbumList(albums);
                         result.add(a);
