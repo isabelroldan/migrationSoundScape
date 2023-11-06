@@ -12,6 +12,7 @@ public class Playlist {
     private User owner;
     private List<Song> songs;
     private List<User> subscribers;
+    private List<Comment> comments;
 
     public Playlist() {
         this.id = -1;
@@ -20,6 +21,7 @@ public class Playlist {
         this.owner = null;
         this.songs = new ArrayList<Song>();
         this.subscribers = new ArrayList<User>();
+        this.comments = new ArrayList<Comment>();
     }
 
     public Playlist(int id, String name, String description, User owner) {
@@ -29,15 +31,17 @@ public class Playlist {
         this.owner = owner;
         this.songs = new ArrayList<Song>();
         this.subscribers = new ArrayList<User>();
+        this.comments = new ArrayList<Comment>();
     }
 
-    public Playlist(int id, String name, String description, User owner, List<Song> songs, List<User> subscribers) {
+    public Playlist(int id, String name, String description, User owner, List<Song> songs, List<User> subscribers, List<Comment> comments) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.owner = owner;
         this.songs = songs;
         this.subscribers = subscribers;
+        this.comments = comments;
     }
 
     public int getId() {
@@ -88,6 +92,14 @@ public class Playlist {
         this.subscribers = subscribers;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -108,6 +120,9 @@ public class Playlist {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", owner=" + owner +
+                ", songs=" + songs +
+                ", subscribers=" + subscribers +
+                ", comments=" + comments +
                 '}';
     }
 }
