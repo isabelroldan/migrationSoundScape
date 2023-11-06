@@ -5,32 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="08a09454-af0b-46f3-8b8d-efd554480bdd" name="Changes" comment="First Commit">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/connection/ConnectionData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/connection/ConnectionMySQL.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/Countries.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/iArtistDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/iCommentDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/iPlaylistDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/iSongDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/iUserDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/Genres.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/juanite/connection.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/UserDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Admin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Artist.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Artist.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Playlist.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Playlist.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Song.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Song.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/util/AppData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/util/AppData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/util/PasswordAuthentication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/util/PasswordAuthentication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,14 +18,22 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2XU6nICf5ztK0zxlsyI44qywMcM" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -66,12 +52,15 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/juan1/IdeaProjects/soundscape_v2/src/main/resources/com/juanite",
+    "last_opened_file_path": "D:/GRADOSUPERIOR/proyectos ACD/soundscape",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -106,6 +95,17 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />

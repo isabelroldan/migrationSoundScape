@@ -45,11 +45,11 @@ public class User extends Person {
         this.playlists = playlists;
     }
 
-    public List<Playlist> getFavoritedPlaylists() {
+    public List<Playlist> getFavoritePlaylists() {
         return favoritePlaylists;
     }
 
-    public void setFavoritedPlaylists(List<Playlist> favoritePlaylists) {
+    public void setFavoritePlaylists(List<Playlist> favoritePlaylists) {
         this.favoritePlaylists = favoritePlaylists;
     }
 
