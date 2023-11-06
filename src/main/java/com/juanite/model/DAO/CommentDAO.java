@@ -95,6 +95,7 @@ public class CommentDAO extends Comment implements iCommentDAO{
             ps.setString(1, formattedDateTime);
             ps.setInt(2,user.getId());
             ps.setInt(3,playlist.getId());
+            ps.setInt(4, getId());
             if(ps.executeUpdate()==1)
                 return true;
             setId(-1);
@@ -150,8 +151,8 @@ public class CommentDAO extends Comment implements iCommentDAO{
                         String dateTimeString = rs.getString("date_time");
                         LocalDateTime dateTime = LocalDateTime.parse(dateTimeString);
                         setDate_time(dateTime);
-                        //user = new UserDAO(rs.getInt("id_person"));
-                        //playlist = new PlaylistDAO(rs.getInt("id_pelaylist"));
+                        user = new UserDAO(rs.getInt("id_person"));
+                        playlist = new PlaylistDAO(rs.getInt("id_playlist"));
                     }
                 }
             }
@@ -184,8 +185,8 @@ public class CommentDAO extends Comment implements iCommentDAO{
                         String dateTimeString = rs.getString("date_time");
                         LocalDateTime dateTime = LocalDateTime.parse(dateTimeString);
                         c.setDate_time(dateTime);
-                        //c.setUser(new UserDAO(rs.getInt("id_person")));
-                        //c.setPlaylist(new PlaylistDAO(rs.getInt("id_playlist")));
+                        c.setUser(new UserDAO(rs.getInt("id_person")));
+                        c.setPlaylist(new PlaylistDAO(rs.getInt("id_playlist")));
 
                         result.add(c);
                     }
@@ -220,7 +221,7 @@ public class CommentDAO extends Comment implements iCommentDAO{
                         String dateTimeString = rs.getString("date_time");
                         LocalDateTime dateTime = LocalDateTime.parse(dateTimeString);
                         c.setDate_time(dateTime);
-                        //c.setUser(new UserDAO(rs.getInt("id_person")));
+                        c.setUser(new UserDAO(rs.getInt("id_person")));
                         c.setPlaylist(playlist);
 
                         result.add(c);
@@ -257,7 +258,7 @@ public class CommentDAO extends Comment implements iCommentDAO{
                         LocalDateTime dateTime = LocalDateTime.parse(dateTimeString);
                         c.setDate_time(dateTime);
                         c.setUser(user);
-                        //c.setPlaylist(new PlaylistDAO(rs.getInt("id_playlist")));
+                        c.setPlaylist(new PlaylistDAO(rs.getInt("id_playlist")));
 
                         result.add(c);
                     }

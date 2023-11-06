@@ -4,14 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="08a09454-af0b-46f3-8b8d-efd554480bdd" name="Changes" comment="ArtistDAO &amp; Album + iAlbumDAO">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/PlaylistDAO.java" afterDir="false" />
+    <list default="true" id="08a09454-af0b-46f3-8b8d-efd554480bdd" name="Changes" comment="PlaylistDAO &amp; various corrections">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/AlbumDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/ArtistDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/ArtistDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/CommentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/CommentDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/PlaylistDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/PlaylistDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/SongDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/SongDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/iPlaylistDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/iPlaylistDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/UserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/iAlbumDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/iAlbumDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Album.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Album.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Playlist.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Playlist.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Person.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +92,9 @@
       <workItem from="1698958864650" duration="3098000" />
       <workItem from="1698963264525" duration="140000" />
       <workItem from="1699130216893" duration="9348000" />
-      <workItem from="1699141291542" duration="6529000" />
+      <workItem from="1699141291542" duration="6685000" />
+      <workItem from="1699287917358" duration="14000" />
+      <workItem from="1699288955903" duration="6354000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1698671736616</created>
@@ -111,7 +117,14 @@
       <option name="project" value="LOCAL" />
       <updated>1699137138975</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="PlaylistDAO &amp; various corrections">
+      <created>1699147872146</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1699147872146</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -133,6 +146,7 @@
     <MESSAGE value="First Commit" />
     <MESSAGE value="DAO interfaces added, model corrected" />
     <MESSAGE value="ArtistDAO &amp; Album + iAlbumDAO" />
-    <option name="LAST_COMMIT_MESSAGE" value="ArtistDAO &amp; Album + iAlbumDAO" />
+    <MESSAGE value="PlaylistDAO &amp; various corrections" />
+    <option name="LAST_COMMIT_MESSAGE" value="PlaylistDAO &amp; various corrections" />
   </component>
 </project>

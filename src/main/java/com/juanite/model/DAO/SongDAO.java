@@ -123,7 +123,7 @@ public class SongDAO extends Song implements iSongDAO {
                         a.setDuration(rs.getInt("duration"));
                         a.setGenre(Genres.valueOf(rs.getString("genre")));
                         a.setUrl(rs.getString("url"));
-                        a.setAlbum(new AlbumDAO(rs.getInt("id_album")));
+                        a.setAlbum(new AlbumDAO(getId()));
                         result.add(a);
                     }
                 }
@@ -149,7 +149,7 @@ public class SongDAO extends Song implements iSongDAO {
                         setDuration(rs.getInt("duration"));
                         setGenre(Genres.valueOf(rs.getString("genre")));
                         setUrl(rs.getString("url"));
-                        setAlbum(new AlbumDAO(rs.getString("album_id")));
+                        setAlbum(new AlbumDAO(getId()));
                         return true;
                     }
                 }
@@ -176,7 +176,7 @@ public class SongDAO extends Song implements iSongDAO {
                         song.setDuration(rs.getInt("duration"));
                         song.setGenre(Genres.valueOf(rs.getString("genre")));
                         song.setUrl(rs.getString("url"));
-                        song.setAlbum(new AlbumDAO(rs.getString("album_id")));
+                        song.setAlbum(new AlbumDAO(getId()));
                         result.add(song);
                     }
                 }
@@ -230,7 +230,7 @@ public class SongDAO extends Song implements iSongDAO {
                         song.setDuration(rs.getInt("duration"));
                         song.setGenre(genre);
                         song.setUrl(rs.getString("url"));
-                        song.setAlbum(new AlbumDAO(rs.getString("album_id")));
+                        song.setAlbum(new AlbumDAO(getId()));
                         result.add(song);
                     }
                 }
@@ -257,7 +257,7 @@ public class SongDAO extends Song implements iSongDAO {
                         song.setDuration(rs.getInt("duration"));
                         song.setGenre(Genres.valueOf(rs.getString("genre")));
                         song.setUrl(rs.getString("url"));
-                        song.setAlbum(new AlbumDAO(rs.getString("album_id")));
+                        song.setAlbum(new AlbumDAO(getId()));
                         result.add(song);
                     }
                 }

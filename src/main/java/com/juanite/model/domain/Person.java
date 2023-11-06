@@ -40,12 +40,12 @@ public class Person {
         this.name = name;
     }
 
-    public String getGmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setGmail(String gmail) {
-        this.email = gmail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
