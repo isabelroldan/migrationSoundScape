@@ -1,20 +1,15 @@
 package com.juanite.model.DAO;
 
 import com.juanite.connection.ConnectionMySQL;
-import com.juanite.model.Genres;
-import com.juanite.model.domain.Album;
 import com.juanite.model.domain.Playlist;
-import com.juanite.model.domain.Song;
 import com.juanite.model.domain.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import static jdk.internal.org.jline.reader.impl.LineReaderImpl.CompletionType.List;
 
 public class UserDAO extends User implements iUserDAO {
 
@@ -27,13 +22,14 @@ public class UserDAO extends User implements iUserDAO {
     private final static String DELETEPERSON="DELETE FROM person WHERE id=?";
     private final static String SELECTBYID="SELECT id_person, photo FROM user WHERE id_person=?";
     private final static String SELECTPERSONBYID="SELECT id, name, email, password FROM person WHERE id=?";
+    private final static String SELECTPERSONBYNAME="SELECT id, name, email, password FROM person WHERE name=?";
     private final static String SELECTALL="SELECT id_person, photo FROM user";
     private final static String SELECTPERSONALL="SELECT id, name, email, password FROM person";
 
 
 
     public UserDAO(int id, String name, String email, String password, String photo, List<Playlist> playlist, List<Playlist> favoritePlaylist) {
-        super(super(id, name, email, password),photo, List<Playlist>playlist, List<Playlist>favoritePlaylist);
+        super(id, name, email, password,photo, playlist, favoritePlaylist);
     }
 
     public UserDAO(int id) {
@@ -41,7 +37,7 @@ public class UserDAO extends User implements iUserDAO {
     }
 
     public UserDAO(User user) {
-        super(super(user.getId(), user.getName(), user.getEmail(), user.getPassword()),user.getPhoto(), user.getPlaylists(), user.getFavoritePlaylists());
+        super(user.getId(), user.getName(), user.getEmail(), user.getPassword(),user.getPhoto(), user.getPlaylists(), user.getFavoritePlaylists());
     }
 
 
@@ -50,8 +46,8 @@ public class UserDAO extends User implements iUserDAO {
         if(getId()!=-1){
             return update();
         }else{
-            if(playlists==null ) return false;
-            if( favoritePlaylists==null ) return false;
+            if(getPlaylists()==null ) return false;
+            if(getFavoritePlaylists()==null ) return false;
             Connection conn = ConnectionMySQL.getConnect();
             if(conn==null) return false;
 
@@ -64,14 +60,14 @@ public class UserDAO extends User implements iUserDAO {
                     try (ResultSet rs = ps.getGeneratedKeys()) {
                         if (rs.next()) {
                             setId(rs.getInt(1));
-                            return true;
                         } else {
                             return false;
                         }
                     }
+                }else {
+                    setId(-1);
+                    return false;
                 }
-                setId(-1);
-                return false;
             } catch (SQLException e) {
                 e.printStackTrace();
                 return false;
@@ -102,8 +98,8 @@ public class UserDAO extends User implements iUserDAO {
     }
     public boolean update(){
         if(getId()==-1) return false;
-        if(playlists==null ) return false;
-        if( favoritePlaylists==null ) return false;
+        if(getPlaylists()==null ) return false;
+        if(getFavoritePlaylists()==null ) return false;
 
         Connection conn = ConnectionMySQL.getConnect();
         if(conn==null) return false;
@@ -113,10 +109,10 @@ public class UserDAO extends User implements iUserDAO {
             ps2.setString(2,getName());
             ps2.setString(3,getEmail());
             ps2.setString(4,getPassword());
-            if(ps2.executeUpdate()==1)
-                return true;
-            setId(-1);
-            return false;
+            if(ps2.executeUpdate()==1) {
+                setId(-1);
+                return false;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -157,7 +153,7 @@ public class UserDAO extends User implements iUserDAO {
                                         u.setEmail(rs2.getString("email"));
                                         u.setPassword(rs2.getString("password"));
                                         List<Playlist> playlists = new ArrayList<>();
-                                        try(PlaylistDAO pdao=new playlistDAO(new Playlist())){
+                                        try(PlaylistDAO pdao=new PlaylistDAO(new Playlist())){
                                             Set<Playlist> pset=pdao.getByUser(u, true);
                                             playlists.addAll(pset);
 
@@ -167,7 +163,7 @@ public class UserDAO extends User implements iUserDAO {
                                         }
                                         u.setPlaylists(playlists);
                                         playlists= new ArrayList<>();
-                                        try(PlaylistDAO pdao=new playlistDAO(new Playlist())){
+                                        try(PlaylistDAO pdao=new PlaylistDAO(new Playlist())){
                                             Set<Playlist> pset=pdao.getByUser(u, false);
                                             playlists.addAll(pset);
 
@@ -175,7 +171,7 @@ public class UserDAO extends User implements iUserDAO {
                                             return null;
 
                                         }
-                                        u.setFavoritePlaylist(playlists);
+                                        u.setFavoritePlaylists(playlists);
                                     }
                                 }
                             }
@@ -201,7 +197,7 @@ public class UserDAO extends User implements iUserDAO {
     @Override
     public boolean getById(int id) {
         Connection conn = ConnectionMySQL.getConnect();
-        if(conn==null) return null;
+        if(conn==null) return false;
         try(PreparedStatement ps = conn.prepareStatement(SELECTBYID)){
             ps.setInt(1, id);
             if(ps.execute()){
@@ -219,102 +215,98 @@ public class UserDAO extends User implements iUserDAO {
                                         setEmail(rs2.getString("email"));
                                         setPassword(rs2.getString("password"));
                                         List<Playlist> playlists = new ArrayList<>();
-                                        try(PlaylistDAO pdao=new playlistDAO(new Playlist())){
+                                        try(PlaylistDAO pdao=new PlaylistDAO(new Playlist())){
                                             Set<Playlist> pset=pdao.getByUser(this, true);
                                             playlists.addAll(pset);
 
                                         }catch (Exception e) {
-                                            return null;
+                                            return false;
 
                                         }
                                         setPlaylists(playlists);
                                         playlists= new ArrayList<>();
-                                        try(PlaylistDAO pdao=new playlistDAO(new Playlist())){
+                                        try(PlaylistDAO pdao=new PlaylistDAO(new Playlist())){
                                             Set<Playlist> pset=pdao.getByUser(this, false);
                                             playlists.addAll(pset);
 
                                         }catch (Exception e) {
-                                            return null;
+                                            return false;
 
                                         }
-                                        setFavoritePlaylist(playlists);
+                                        setFavoritePlaylists(playlists);
                                     }
                                 }
                             }
                         } catch (SQLException e) {
                             e.printStackTrace();
-                            return null;
+                            return false;
                         }
-
-                        result.add(u);
                     }
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
+            return false;
         }
-        return result;
+        return true;
     }
 
     // Método para obtener un usuario por su nombre desde la base de datos.
     @Override
     public boolean getByName(String name) {
         Connection conn = ConnectionMySQL.getConnect();
-        if(conn==null) return null;
-        try(PreparedStatement ps = conn.prepareStatement(SELECTBYNAME)){
+        if(conn==null) return false;
+        try(PreparedStatement ps = conn.prepareStatement(SELECTPERSONBYNAME)){
             ps.setString(1, name);
             if(ps.execute()){
                 try(ResultSet rs = ps.getResultSet()){
                     if (rs.next()){
 
-                        setId(rs.getInt("id_person"));
-                        setPhoto(rs.getString("photo"));
-                        try(PreparedStatement ps2 = conn.prepareStatement(SELECTPERSONBYNAME)){
-                            ps.setString(1, name);
+                        setId(rs.getInt("id"));
+                        setName(rs.getString("name"));
+                        setEmail(rs.getString("email"));
+                        setPassword(rs.getString("password"));
+                        try(PreparedStatement ps2 = conn.prepareStatement(SELECTBYID)){
+                            ps.setInt(1, getId());
                             if(ps2.execute()){
                                 try(ResultSet rs2 = ps2.getResultSet()){
                                     if (rs2.next()){
-                                        setName(rs2.getString("name"));
-                                        setEmail(rs2.getString("email"));
-                                        setPassword(rs2.getString("password"));
-                                        List<Playlist> playlists = new ArrayList<>();
-                                        try(PlaylistDAO pdao=new playlistDAO(new Playlist())){
-                                            Set<Playlist> pset=pdao.getByUser(this, true);
-                                            playlists.addAll(pset);
-
-                                        }catch (Exception e) {
-                                            return null;
-
-                                        }
-                                        setPlaylists(playlists);
-                                        playlists= new ArrayList<>();
-                                        try(PlaylistDAO pdao=new playlistDAO(new Playlist())){
-                                            Set<Playlist> pset=pdao.getByUser(this, false);
-                                            playlists.addAll(pset);
-
-                                        }catch (Exception e) {
-                                            return null;
-
-                                        }
-                                        setFavoritePlaylist(playlists);
+                                        setPhoto(rs2.getString("photo"));
                                     }
+                                    List<Playlist> playlists = new ArrayList<>();
+                                    try(PlaylistDAO pdao=new PlaylistDAO(new Playlist())){
+                                        Set<Playlist> pset=pdao.getByUser(this, true);
+                                        playlists.addAll(pset);
+
+                                    }catch (Exception e) {
+                                        return false;
+
+                                    }
+                                    setPlaylists(playlists);
+                                    playlists= new ArrayList<>();
+                                    try(PlaylistDAO pdao=new PlaylistDAO(new Playlist())){
+                                        Set<Playlist> pset=pdao.getByUser(this, false);
+                                        playlists.addAll(pset);
+
+                                    }catch (Exception e) {
+                                        return false;
+
+                                    }
+                                    setFavoritePlaylists(playlists);
                                 }
                             }
                         } catch (SQLException e) {
                             e.printStackTrace();
-                            return null;
+                            return false;
                         }
-
-                        result.add(u);
                     }
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
+            return false;
         }
-        return result;
+        return true;
     }
 
     // Método para cerrar la conexión a la base de datos.
@@ -330,10 +322,9 @@ public class UserDAO extends User implements iUserDAO {
 
         try(PreparedStatement ps = conn.prepareStatement(DELETE)){
             ps.setInt(1,getId());
-            if(ps.executeUpdate()==1)
-                return true;
-
-            return false;
+            if(ps.executeUpdate()!=1) {
+                return false;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
