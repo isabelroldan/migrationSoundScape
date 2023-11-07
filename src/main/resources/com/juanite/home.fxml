@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.juanite.controller.SecondaryController">
+
+    <Pane prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: #8c8c8c;">
+        <children>
+            <Text layoutX="12.0" layoutY="57.0" style="-fx-font-size: 35px; -fx-padding: 10px;" text="SoundScape">
+                <font>
+                    <Font name="Bodoni MT" size="61.0" />
+                </font>
+            </Text>
+            <Button layoutX="7.0" layoutY="84.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-font-size: 15px; -fx-text-fill: black; -fx-background-radius: 10px;" text="🏠   Inicio">
+                <font>
+                    <Font size="43.0" />
+                </font>
+            </Button>
+            <Button layoutX="8.0" layoutY="147.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-font-size: 15px; -fx-text-fill: black; -fx-background-radius: 10px;" text="🎓  Explorar" />
+            <Button layoutX="8.0" layoutY="217.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-font-size: 15px; -fx-text-fill: black; -fx-background-radius: 10px;" text="🖤   Mis Listas" />
+            <Button layoutX="6.0" layoutY="530.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-font-size: 15px; -fx-text-fill: black; -fx-background-radius: 10px;" text="🌑  Cerrar Sesión" />
+            <Button layoutX="6.0" layoutY="483.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-font-size: 15px; -fx-text-fill: black; -fx-background-radius: 10px;" text="🙍‍♀️ Mi perfil" />
+        </children>
+    </Pane>
+
+    <!-- Contenido principal -->
+    <VBox>
+        <!-- Barra de búsqueda -->
+        <HBox style="-fx-background-color: #000000;" />
+        <!-- Aquí puedes agregar más contenido principal según tus necesidades -->
+    </VBox>
+   <Pane layoutX="199.0" prefHeight="600.0" prefWidth="600.0">
+      <children>
+          <TextField layoutX="34.0" layoutY="83.0" prefHeight="30.0" prefWidth="478.0" promptText="Buscar..." style="-fx-background-color: #8c8c8c;-fx-text-fill: black;" />
+          <Button layoutX="506.0" layoutY="83.0" prefHeight="30.0" prefWidth="63.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black;" text="🔎" />
+      </children>
+   </Pane>
+</AnchorPane>
