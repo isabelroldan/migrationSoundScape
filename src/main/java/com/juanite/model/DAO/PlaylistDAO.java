@@ -344,12 +344,8 @@ public class PlaylistDAO extends Playlist implements iPlaylistDAO {
                         }
                         setSongs(songs);
                         List<User> subscribers = new ArrayList<>();
-                        try(UserDAO udao = new UserDAO(new User())) {
-                            Set<User> subscriberSet = udao.getByPlaylist(this);
-                            subscribers.addAll(subscriberSet);
-                        } catch (Exception e) {
-                            return false;
-                        }
+                        Set<User> subscriberSet = getPlaylistSubscribers();
+                        subscribers.addAll(subscriberSet);
                         setSubscribers(subscribers);
                         List<Comment> comments = new ArrayList<>();
                         try(CommentDAO cdao = new CommentDAO(new Comment())) {
@@ -433,12 +429,8 @@ public class PlaylistDAO extends Playlist implements iPlaylistDAO {
                     }
                     a.setSongs(songs);
                     List<User> subscribers = new ArrayList<>();
-                    try (UserDAO udao = new UserDAO(new User())) {
-                        Set<User> subscriberSet = udao.getByPlaylist(this);
-                        subscribers.addAll(subscriberSet);
-                    } catch (Exception e) {
-                        return null;
-                    }
+                    Set<User> subscriberSet = getPlaylistSubscribers();
+                    subscribers.addAll(subscriberSet);
                     a.setSubscribers(subscribers);
                     List<Comment> comments = new ArrayList<>();
                     try (CommentDAO cdao = new CommentDAO(new Comment())) {
@@ -499,12 +491,8 @@ public class PlaylistDAO extends Playlist implements iPlaylistDAO {
                         }
                         p.setSongs(songs);
                         List<User> subscribers = new ArrayList<>();
-                        try(UserDAO udao = new UserDAO(new User())) {
-                            Set<User> subscriberSet = udao.getByPlaylist(this);
-                            subscribers.addAll(subscriberSet);
-                        } catch (Exception e) {
-                            return null;
-                        }
+                        Set<User> subscriberSet = getPlaylistSubscribers();
+                        subscribers.addAll(subscriberSet);
                         p.setSubscribers(subscribers);
                         List<Comment> comments = new ArrayList<>();
                         try(CommentDAO cdao = new CommentDAO(new Comment())) {

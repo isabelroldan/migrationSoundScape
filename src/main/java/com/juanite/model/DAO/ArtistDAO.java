@@ -121,6 +121,7 @@ public class ArtistDAO extends Artist implements iArtistDAO {
             ps.setString(1, getName());
             ps.setString(2, getNationality().toString());
             ps.setString(3, getPhoto());
+            ps.setInt(4, getId());
             if(ps.executeUpdate()==1) {
                 return true;
             }
@@ -204,7 +205,7 @@ public class ArtistDAO extends Artist implements iArtistDAO {
                         setPhoto(rs.getString("photo"));
                         List<Album> albums = new ArrayList<>();
                         try(AlbumDAO adao = new AlbumDAO(new Album())) {
-                            Set<Album> albumSet = adao.getByArtist(this.getName());
+                            Set<Album> albumSet = adao.getByArtist(this);
                             albums.addAll(albumSet);
                         } catch (Exception e) {
                             return false;
@@ -244,7 +245,7 @@ public class ArtistDAO extends Artist implements iArtistDAO {
                         a.setPhoto(rs.getString("photo"));
                         List<Album> albums = new ArrayList<>();
                         try(AlbumDAO adao = new AlbumDAO(new Album())) {
-                            Set<Album> albumSet = adao.getByArtist(this.getName());
+                            Set<Album> albumSet = adao.getByArtist(this);
                             albums.addAll(albumSet);
                         } catch (Exception e) {
                             return null;
@@ -278,7 +279,7 @@ public class ArtistDAO extends Artist implements iArtistDAO {
                         a.setPhoto(rs.getString("photo"));
                         List<Album> albums = new ArrayList<>();
                         try(AlbumDAO adao = new AlbumDAO(new Album())) {
-                            Set<Album> albumSet = adao.getByArtist(this.getName());
+                            Set<Album> albumSet = adao.getByArtist(this);
                             albums.addAll(albumSet);
                         } catch (Exception e) {
                             return null;
@@ -312,7 +313,7 @@ public class ArtistDAO extends Artist implements iArtistDAO {
                         a.setPhoto(rs.getString("photo"));
                         List<Album> albums = new ArrayList<>();
                         try(AlbumDAO adao = new AlbumDAO(new Album())) {
-                            Set<Album> albumSet = adao.getByArtist(this.getName());
+                            Set<Album> albumSet = adao.getByArtist(this);
                             albums.addAll(albumSet);
                         } catch (Exception e) {
                             return null;
@@ -325,6 +326,48 @@ public class ArtistDAO extends Artist implements iArtistDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+        return result;
+    }
+    public Set<Artist> getByAlbum(Album album) throws SQLException {
+        Connection conn = ConnectionMySQL.getConnect();
+        if(conn==null) return null;
+        Set<Artist> result=new HashSet<>();
+        List<Integer> artistIds = new ArrayList<>();
+        try(PreparedStatement ps = conn.prepareStatement(SELECTBYALBUM)){
+            ps.setInt(1, album.getId());
+            if(ps.execute()){
+                try(ResultSet rs = ps.getResultSet()){
+                    while(rs.next()) {
+                        artistIds.add(rs.getInt("id_artist"));
+
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        try(PreparedStatement ps2 = conn.prepareStatement(SELECTBYID)) {
+            for(Integer i : artistIds) {
+                ps2.setInt(1, i);
+                if (ps2.execute()) {
+                    try (ResultSet rs2 = ps2.getResultSet()) {
+                        while (rs2.next()) {
+                            Artist a = new Artist();
+                            a.setId(rs2.getInt("id"));
+                            a.setName(rs2.getString("name"));
+                            a.setNationality(Countries.valueOf(rs2.getString("nationality")));
+                            a.setPhoto(rs2.getString("photo"));
+                            List<Album> albums = new ArrayList<>();
+                            a.setAlbumList(albums);
+                            result.add(a);
+                        }
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
         }
         return result;
     }

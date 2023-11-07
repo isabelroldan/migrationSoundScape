@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Person {
     protected int id;
+
     protected String name;
     protected String email;
     protected String password;
@@ -39,12 +40,12 @@ public class Person {
         this.name = name;
     }
 
-    public String getGmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setGmail(String gmail) {
-        this.email = gmail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
