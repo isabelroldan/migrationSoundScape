@@ -4,18 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="08a09454-af0b-46f3-8b8d-efd554480bdd" name="Changes" comment="PlaylistDAO &amp; various corrections">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/AlbumDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="08a09454-af0b-46f3-8b8d-efd554480bdd" name="Changes" comment="AlbumDAO half done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/AlbumDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/AlbumDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/ArtistDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/ArtistDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/CommentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/CommentDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/PlaylistDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/PlaylistDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/SongDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/SongDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/UserDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/iAlbumDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/DAO/iAlbumDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Album.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Album.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/model/domain/Person.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +87,8 @@
       <workItem from="1699130216893" duration="9348000" />
       <workItem from="1699141291542" duration="6685000" />
       <workItem from="1699287917358" duration="14000" />
-      <workItem from="1699288955903" duration="6354000" />
+      <workItem from="1699288955903" duration="6409000" />
+      <workItem from="1699347895272" duration="1581000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1698671736616</created>
@@ -124,7 +118,14 @@
       <option name="project" value="LOCAL" />
       <updated>1699147872146</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="AlbumDAO half done">
+      <created>1699297631735</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1699297631746</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -147,6 +148,7 @@
     <MESSAGE value="DAO interfaces added, model corrected" />
     <MESSAGE value="ArtistDAO &amp; Album + iAlbumDAO" />
     <MESSAGE value="PlaylistDAO &amp; various corrections" />
-    <option name="LAST_COMMIT_MESSAGE" value="PlaylistDAO &amp; various corrections" />
+    <MESSAGE value="AlbumDAO half done" />
+    <option name="LAST_COMMIT_MESSAGE" value="AlbumDAO half done" />
   </component>
 </project>

@@ -205,7 +205,7 @@ public class ArtistDAO extends Artist implements iArtistDAO {
                         setPhoto(rs.getString("photo"));
                         List<Album> albums = new ArrayList<>();
                         try(AlbumDAO adao = new AlbumDAO(new Album())) {
-                            Set<Album> albumSet = adao.getByArtist(this.getName());
+                            Set<Album> albumSet = adao.getByArtist(this);
                             albums.addAll(albumSet);
                         } catch (Exception e) {
                             return false;
@@ -245,7 +245,7 @@ public class ArtistDAO extends Artist implements iArtistDAO {
                         a.setPhoto(rs.getString("photo"));
                         List<Album> albums = new ArrayList<>();
                         try(AlbumDAO adao = new AlbumDAO(new Album())) {
-                            Set<Album> albumSet = adao.getByArtist(this.getName());
+                            Set<Album> albumSet = adao.getByArtist(this);
                             albums.addAll(albumSet);
                         } catch (Exception e) {
                             return null;
@@ -279,7 +279,7 @@ public class ArtistDAO extends Artist implements iArtistDAO {
                         a.setPhoto(rs.getString("photo"));
                         List<Album> albums = new ArrayList<>();
                         try(AlbumDAO adao = new AlbumDAO(new Album())) {
-                            Set<Album> albumSet = adao.getByArtist(this.getName());
+                            Set<Album> albumSet = adao.getByArtist(this);
                             albums.addAll(albumSet);
                         } catch (Exception e) {
                             return null;
@@ -313,7 +313,7 @@ public class ArtistDAO extends Artist implements iArtistDAO {
                         a.setPhoto(rs.getString("photo"));
                         List<Album> albums = new ArrayList<>();
                         try(AlbumDAO adao = new AlbumDAO(new Album())) {
-                            Set<Album> albumSet = adao.getByArtist(this.getName());
+                            Set<Album> albumSet = adao.getByArtist(this);
                             albums.addAll(albumSet);
                         } catch (Exception e) {
                             return null;
