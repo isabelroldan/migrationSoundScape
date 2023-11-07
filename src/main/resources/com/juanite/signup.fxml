@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #424949;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.juanite.controller.SignUpController">
+    <children>
+        <Pane layoutX="181.0" layoutY="17.0" prefHeight="366.0" prefWidth="237.0" style="-fx-background-color: #CACFD2; -fx-background-radius: 5px;">
+            <children>
+                <Label layoutX="75.0" layoutY="43.0" style="-fx-font-size: 20; -fx-font-weight: bold;" text="Sign Up" textFill="WHITE" />
+
+                <TextField fx:id="emailField" alignment="CENTER" layoutX="112.0" layoutY="103.0" prefHeight="26.0" prefWidth="96.0" promptText="Email" />
+                <TextField fx:id="userNameField" alignment="CENTER" layoutX="112.0" layoutY="157.0" prefHeight="26.0" prefWidth="96.0" promptText="UserName" />
+                <PasswordField fx:id="passwordField" alignment="CENTER" layoutX="112.0" layoutY="210.0" prefHeight="26.0" prefWidth="96.0" promptText="Password" />
+
+                <Button layoutX="63.0" layoutY="284.0" style="-fx-background-color: #000000; -fx-text-fill: white; -fx-background-radius: 25px;" text="Create Account" />
+                <Label layoutX="41.0" layoutY="108.0" text="Email" />
+                <Label layoutX="28.0" layoutY="162.0" text="UserName" />
+                <Label layoutX="31.0" layoutY="215.0" text="Password" />
+            </children>
+        </Pane>
+        <ImageView fitHeight="90.0" fitWidth="102.0" layoutX="47.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@images/Logo.png" />
+            </image>
+        </ImageView>
+        <Label layoutX="40.0" layoutY="134.0" text="SoundScape" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>

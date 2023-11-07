@@ -5,7 +5,7 @@ import java.io.IOException;
 import com.juanite.App;
 import javafx.fxml.FXML;
 
-public class PrimaryController {
+public class LoginController {
 
     @FXML
     private void switchToSecondary() throws IOException {
