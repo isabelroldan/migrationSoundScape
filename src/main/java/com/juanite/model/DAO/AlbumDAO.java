@@ -4,6 +4,7 @@ import com.juanite.connection.ConnectionMySQL;
 import com.juanite.model.Countries;
 import com.juanite.model.domain.Album;
 import com.juanite.model.domain.Artist;
+import com.juanite.model.domain.Song;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,7 +18,6 @@ public class AlbumDAO extends Album implements iAlbumDAO {
     private final static String DELETE="DELETE FROM album WHERE id=?";
     private final static String SELECTBYID="SELECT id, name, publication, photo FROM album WHERE id=?";
     private final static String SELECTALL="SELECT id, name, publication, photo FROM album";
-    private final static String SELECTBYNAME="SELECT id, name, publication, photo FROM album WHERE name=?";
     private final static String SELECTBYARTIST="SELECT id_album FROM artist_album WHERE id_artist=?";
 
     public AlbumDAO(int id, String name, Date publication, String photo){
@@ -147,12 +147,12 @@ public class AlbumDAO extends Album implements iAlbumDAO {
                         a.setPhoto(rs.getString("photo"));
                         List<Artist> artists = new ArrayList<>();
                         try(ArtistDAO adao = new ArtistDAO(new Artist())) {
-                            Set<Album> albumSet = adao.getByArtist(this.getName());
-                            albums.addAll(albumSet);
+                            Set<Artist>artistSet = adao.getByAlbum(this);
+                            artists.addAll(artistSet);
                         } catch (Exception e) {
                             return null;
                         }
-                        a.setAlbumList(albums);
+                        a.setArtists(artists);
                         result.add(a);
                     }
                 }
@@ -182,16 +182,16 @@ public class AlbumDAO extends Album implements iAlbumDAO {
                     if(rs.next()){
                         setId(rs.getInt("id"));
                         setName(rs.getString("name"));
-                        setNationality(Countries.valueOf(rs.getString("nationality")));
+                        setPublication(rs.getDate("publication"));
                         setPhoto(rs.getString("photo"));
-                        List<Album> albums = new ArrayList<>();
-                        try(AlbumDAO adao = new AlbumDAO(new Album())) {
-                            Set<Album> albumSet = adao.getByArtist(this.getName());
-                            albums.addAll(albumSet);
+                        List<Artist> artists = new ArrayList<>();
+                        try(ArtistDAO adao = new ArtistDAO(new Artist())) {
+                            Set<Artist>artistSet = adao.getByAlbum(this);
+                            artists.addAll(artistSet);
                         } catch (Exception e) {
                             return false;
                         }
-                        setAlbumList(albums);
+                        setArtists(artists);
                     }
                 }
             }
@@ -204,63 +204,43 @@ public class AlbumDAO extends Album implements iAlbumDAO {
     }
 
     @Override
-    public Set<Album> getByName(String name) {
+    public boolean getBySong(Song song) {
         Connection conn = ConnectionMySQL.getConnect();
-        if(conn==null) return null;
-        Set<Artist> result=new HashSet<>();
-        try(PreparedStatement ps = conn.prepareStatement(SELECTBYNAME)){
-            ps.setString(1, name);
+        if(conn==null) return false;
+        try(PreparedStatement ps = conn.prepareStatement(SELECTBYID)){
+            ps.setInt(1, song.getAlbum().getId());
             if(ps.execute()){
                 try(ResultSet rs = ps.getResultSet()){
-                    while(rs.next()){
-                        Artist a = new Artist();
-                        a.setId(rs.getInt("id"));
-                        a.setName(rs.getString("name"));
-                        a.setNationality(Countries.valueOf(rs.getString("nationality")));
-                        a.setPhoto(rs.getString("photo"));
-                        List<Album> albums = new ArrayList<>();
-                        try(AlbumDAO adao = new AlbumDAO(new Album())) {
-                            Set<Album> albumSet = adao.getByArtist(this.getName());
-                            albums.addAll(albumSet);
-                        } catch (Exception e) {
-                            return null;
-                        }
-                        a.setAlbumList(albums);
-                        result.add(a);
+                    if(rs.next()){
+                        setId(rs.getInt("id"));
+                        setName(rs.getString("name"));
+                        setPublication(rs.getDate("publication"));
+                        setPhoto(rs.getString("photo"));
+                        List<Artist> artists = new ArrayList<>();
+                        artists.addAll((new ArtistDAO(new Artist()).getByAlbum(this)));
+                        setArtists(artists);
+                        setSongs(new ArrayList<>());
                     }
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
+            return false;
         }
-        return result;
+        return true;
     }
 
     @Override
-    public Set<Album> getByArtist(String artistName) {
+    public Set<Album> getByArtist(Artist artist) {
         Connection conn = ConnectionMySQL.getConnect();
         if(conn==null) return null;
-        Set<Artist> result=new HashSet<>();
-        try(PreparedStatement ps = conn.prepareStatement(SELECTBYNATIONALITY)){
-            ps.setString(1, country.toString());
+        Set<Album> result=new HashSet<>();
+        try(PreparedStatement ps = conn.prepareStatement(SELECTBYARTIST)){
+            ps.setInt(1, artist.getId());
             if(ps.execute()){
                 try(ResultSet rs = ps.getResultSet()){
                     while(rs.next()){
-                        Artist a = new Artist();
-                        a.setId(rs.getInt("id"));
-                        a.setName(rs.getString("name"));
-                        a.setNationality(Countries.valueOf(rs.getString("nationality")));
-                        a.setPhoto(rs.getString("photo"));
-                        List<Album> albums = new ArrayList<>();
-                        try(AlbumDAO adao = new AlbumDAO(new Album())) {
-                            Set<Album> albumSet = adao.getByArtist(this.getName());
-                            albums.addAll(albumSet);
-                        } catch (Exception e) {
-                            return null;
-                        }
-                        a.setAlbumList(albums);
-                        result.add(a);
+                        getById(rs.getInt("id_album"));
                     }
                 }
             }
