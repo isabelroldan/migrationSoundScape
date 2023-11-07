@@ -1,14 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.juanite.controller.PlayController">
+
+    <Pane prefHeight="610.0" prefWidth="200.0" style="-fx-background-color: #8c8c8c;">
+        <children>
+            <Text layoutX="12.0" layoutY="57.0" style="-fx-font-size: 35px; -fx-padding: 10px;" text="SoundScape">
+                <font>
+                    <Font name="Bodoni MT" size="61.0" />
+                </font>
+            </Text>
+            <Button layoutX="7.0" layoutY="84.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-font-size: 15px; -fx-text-fill: black; -fx-background-radius: 10px;" text="🏠   Inicio">
+                <font>
+                    <Font size="43.0" />
+                </font>
+            </Button>
+            <Button layoutX="8.0" layoutY="147.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-font-size: 15px; -fx-text-fill: black; -fx-background-radius: 10px;" text="🎓  Explorar" />
+            <Button layoutX="8.0" layoutY="217.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-font-size: 15px; -fx-text-fill: black; -fx-background-radius: 10px;" text="🖤   Mis Listas" />
+            <Button layoutX="6.0" layoutY="530.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-font-size: 15px; -fx-text-fill: black; -fx-background-radius: 10px;" text="🌑  Cerrar Sesión" />
+            <Button layoutX="6.0" layoutY="483.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-font-size: 15px; -fx-text-fill: black; -fx-background-radius: 10px;" text="🙍‍♀️ Mi perfil" />
+        </children>
+    </Pane>
+
+    <!-- Contenido principal -->
+    <ImageView fitHeight="428.0" fitWidth="610.0" layoutX="199.0">
+        <image>
+            <Image url="https://iheartradio.mx/wp-content/uploads/2020/03/Hay-nuevo-disco-de-Dua-Lipa-Future-nostalgia.jpg" />
+        </image>
+    </ImageView>
+
+
+    <VBox>
+        <!-- Barra de búsqueda -->
+        <HBox style="-fx-background-color: #000000;" />
+        <!-- Aquí puedes agregar más contenido principal según tus necesidades -->
+    </VBox>
+    <Pane layoutX="199.0" prefHeight="600.0" prefWidth="600.0" />
+   <Pane layoutX="199.0" layoutY="426.0" prefHeight="184.0" prefWidth="610.0" style="-fx-background-color: #272727;">
+      <children>
+         <Button layoutX="274.0" layoutY="73.0" prefHeight="66.0" prefWidth="63.0" style="-fx-background-color: #ffffff; -fx-font-size: 30px; -fx-text-fill: black; -fx-background-radius: 10px;" text="▶">
+            <font>
+               <Font size="43.0" />
+            </font>
+         </Button>
+         <Slider layoutX="24.0" layoutY="22.0" prefHeight="14.0" prefWidth="562.0" />
+         <Button layoutX="372.0" layoutY="80.0" prefHeight="42.0" prefWidth="20.0" style="-fx-background-color: #ffffff; -fx-font-size: 25px; -fx-text-fill: black; -fx-background-radius: 10px;" text="⊵">
+            <font>
+               <Font size="43.0" />
+            </font>
+         </Button>
+         <Button layoutX="193.0" layoutY="80.0" prefHeight="42.0" prefWidth="20.0" style="-fx-background-color: #ffffff; -fx-font-size: 25px; -fx-text-fill: black; -fx-background-radius: 10px;" text="⊴">
+            <font>
+               <Font size="43.0" />
+            </font>
+         </Button>
+         <Text layoutX="552.0" layoutY="59.0" style="-fx-font-size: 12px; -fx-padding: 10px; -fx-fill: white;" text="00:00">
+            <font>
+               <Font name="Bodoni MT" size="61.0" />
+            </font>
+         </Text>
+         <Text layoutX="24.0" layoutY="59.0" style="-fx-font-size: 12px; -fx-padding: 10px; -fx-fill: white;" text="00:00">
+            <font>
+               <Font name="Bodoni MT" size="61.0" />
+            </font>
+         </Text>
+      </children>
+   </Pane>
 
 </AnchorPane>

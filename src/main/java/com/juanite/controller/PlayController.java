@@ -1,2 +1,4 @@
-package com.juanite.controller;public class PlayController {
+package com.juanite.controller;
+
+public class PlayController {
 }
