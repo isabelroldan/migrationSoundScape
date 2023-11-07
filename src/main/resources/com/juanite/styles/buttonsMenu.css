@@ -1,0 +1,4 @@
+.custom-button:hover {
+    -fx-background-color: #CCCCCC; /* Cambia el color de fondo cuando se pasa el ratón por encima */
+    -fx-text-fill: black; /* Cambia el color del texto */
+}
