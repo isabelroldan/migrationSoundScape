@@ -12,10 +12,10 @@
                 <Label layoutX="75.0" layoutY="43.0" style="-fx-font-size: 20; -fx-font-weight: bold;" text="Sign Up" textFill="WHITE" />
 
                 <TextField fx:id="emailField" alignment="CENTER" layoutX="112.0" layoutY="103.0" prefHeight="26.0" prefWidth="96.0" promptText="Email" />
-                <TextField fx:id="userNameField" alignment="CENTER" layoutX="112.0" layoutY="157.0" prefHeight="26.0" prefWidth="96.0" promptText="UserName" />
+                <TextField fx:id="usernameField" alignment="CENTER" layoutX="112.0" layoutY="157.0" prefHeight="26.0" prefWidth="96.0" promptText="UserName" />
                 <PasswordField fx:id="passwordField" alignment="CENTER" layoutX="112.0" layoutY="210.0" prefHeight="26.0" prefWidth="96.0" promptText="Password" />
 
-                <Button layoutX="63.0" layoutY="284.0" style="-fx-background-color: #000000; -fx-text-fill: white; -fx-background-radius: 25px;" text="Create Account" />
+                <Button layoutX="63.0" layoutY="284.0" onAction="#signUp" style="-fx-background-color: #000000; -fx-text-fill: white; -fx-background-radius: 25px;" text="Create Account" />
                 <Label layoutX="41.0" layoutY="108.0" text="Email" />
                 <Label layoutX="28.0" layoutY="162.0" text="UserName" />
                 <Label layoutX="31.0" layoutY="215.0" text="Password" />

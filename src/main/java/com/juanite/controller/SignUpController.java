@@ -22,7 +22,7 @@ public class SignUpController {
     private PasswordField passwordField;
 
     @FXML
-    public void Signup() throws Exception {
+    public void signUp() throws Exception {
         if(!usernameField.getText().equals("") && !passwordField.getText().equals("") && !emailField.getText().equals("")) {
                 if(Validator.validatePassword(passwordField.getText())) {
                     if(Validator.validateEmail(emailField.getText())) {
