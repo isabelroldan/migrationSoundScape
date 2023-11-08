@@ -30,9 +30,9 @@ public class SignUpController {
                             try (UserDAO udao = new UserDAO(new User())) {
                                 if(!udao.emailExists(emailField.getText())) {
                                     if(!udao.userExists(usernameField.getText())) {
-                                            AppData.setCurrentUser(new User(-1,usernameField.getText(), passwordField.getText(), emailField.getText(),""));
-                                            AppData.getCurrentUser().create();
-                                            home();
+                                        AppData.setCurrentUser(new UserDAO(new User(-1,usernameField.getText(), passwordField.getText(), emailField.getText(),"")));
+                                        ((UserDAO) AppData.getCurrentUser()).save();
+                                        home();
                                 }
                             }
                         }
@@ -43,7 +43,7 @@ public class SignUpController {
     }
     @FXML
     public void home() throws IOException {
-        App.setRoot("login");
+        App.setRoot("home");
     }
 
 

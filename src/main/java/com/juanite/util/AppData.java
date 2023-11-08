@@ -2,16 +2,18 @@ package com.juanite.util;
 
 import com.juanite.model.domain.*;
 
+import java.util.List;
+
 public class AppData {
 
     private static PasswordAuthentication pa = new PasswordAuthentication();
     private static User currentUser;
     private static Song currentSong;
     private static Playlist currentPL;
-    private static Artist currentArtist;
+    private static List<Artist> currentArtist;
     private static Album currentAlbum;
 
-    public PasswordAuthentication getPa() {
+    public static PasswordAuthentication getPa() {
         return pa;
     }
 
@@ -43,11 +45,11 @@ public class AppData {
         currentPL = currentPL2;
     }
 
-    public static Artist getCurrentArtist() {
+    public static List<Artist> getCurrentArtist() {
         return currentArtist;
     }
 
-    public static void setCurrentArtist(Artist currentArtist2) {
+    public static void setCurrentArtist(List<Artist> currentArtist2) {
         currentArtist = currentArtist2;
     }
 
