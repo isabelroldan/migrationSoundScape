@@ -26,6 +26,9 @@ public class UserDAO extends User implements iUserDAO {
     private final static String SELECTALL="SELECT id_person, photo FROM user";
     private final static String SELECTPERSONALL="SELECT id, name, email, password FROM person";
 
+    private final static String CHECKUSER="SELECT name FROM person WHERE name=? ";
+    private final static String CHECKEMAIL="SELECT email FROM person WHERE email=? ";
+
 
 
     public UserDAO(int id, String name, String email, String password, String photo, List<Playlist> playlist, List<Playlist> favoritePlaylist) {
@@ -307,6 +310,36 @@ public class UserDAO extends User implements iUserDAO {
             return false;
         }
         return true;
+    }
+
+    public boolean userExists(String username) throws SQLException {
+        Connection conn = ConnectionMySQL.getConnect();
+        if(!username.equals("")) {
+            try (PreparedStatement pst = conn.prepareStatement(CHECKUSER)) {
+                pst.setString(1, username);
+                try (ResultSet res = pst.executeQuery()) {
+                    if(res.next()) {
+                        return username.equals(res.getString("username"));
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean emailExists(String email) throws SQLException {
+        Connection conn = ConnectionMySQL.getConnect();
+        if(!email.equals("")) {
+            try (PreparedStatement pst = conn.prepareStatement(CHECKEMAIL)) {
+                pst.setString(1, email);
+                try (ResultSet res = pst.executeQuery()) {
+                    if(res.next()) {
+                        return email.equals(res.getString("email"));
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     // Método para cerrar la conexión a la base de datos.
