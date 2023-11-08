@@ -1,15 +1,20 @@
 package com.juanite.controller;
 
 import com.juanite.App;
+import com.juanite.model.domain.Song;
+import com.juanite.util.AppData;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 public class HomeController {
     @FXML
@@ -26,6 +31,15 @@ public class HomeController {
 
     @FXML
     private Button profileButton;
+
+    @FXML
+    private TextField searchTextField;
+
+    @FXML
+    private Button searchButton;
+
+    @FXML
+    private Label messageLabel;
 
     private String botonEstiloOriginal;
 
@@ -46,6 +60,7 @@ public class HomeController {
 
         profileButton.setOnMouseEntered(event -> changeColorButtonprofile(true));
         profileButton.setOnMouseExited(event -> changeColorButtonprofile(false));
+
     }
 
     /**
@@ -136,6 +151,48 @@ public class HomeController {
             App.setRoot("signup");
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Handles the search button event. Performs a search in the database and displays the results in the "play" view.
+     */
+    @FXML
+    private void handleSearchButton() {
+        /*String searchTerm = searchTextField.getText();
+        if (!searchTerm.isEmpty()) {
+            List<Song> searchResults = searchInDatabase(searchTerm);
+            if (!searchResults.isEmpty()) {
+                int songId = searchResults.get(0).getId(); // Supongo que tomas la primera canción encontrada
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("play.fxml"));
+                Parent playRoot = loader.load();
+                PlayController playController = loader.getController();
+                playController.setSongId(songId); // Establece el ID seleccionado en el controlador de "play"
+                Scene playScene = new Scene(playRoot);
+                Stage stage = (Stage) searchButton.getScene().getWindow();
+                stage.setScene(playScene);
+            } else {
+                messageLabel.setText("Canción no encontrada.");
+            }
+        }*/
+
+        String searchTerm = searchTextField.getText();
+        if (!searchTerm.isEmpty()) {
+            List<Song> searchResults = searchInDatabase(searchTerm);
+            if (!searchResults.isEmpty()) {
+                Song selectedSong = searchResults.get(0); // Supongo que tomas la primera canción encontrada
+
+                AppData.setCurrentSong(selectedSong);
+
+                // Luego, cambia a la vista "play" como lo hacías antes
+                try {
+                    App.setRoot("play");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                messageLabel.setText("Canción no encontrada.");
+            }
         }
     }
 }
