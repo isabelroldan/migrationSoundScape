@@ -7,6 +7,8 @@ import com.juanite.model.domain.Album;
 import com.juanite.model.domain.Artist;
 import com.juanite.model.domain.Playlist;
 import com.juanite.model.domain.Song;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,6 +30,7 @@ public class SongDAO extends Song implements iSongDAO {
     private final static String SELECTBYALBUM = "SELECT id, name, duration, genre, url, album_id FROM Song WHERE album_id=?";
     private final static String SELECTBYGENRE = "SELECT id, name, duration, genre, url, album_id FROM Song WHERE genre=?";
     private final static String SELECTBYPLAYLIST = "SELECT id_song FROM song_playlist WHERE id_playlist=?";
+    private final static String SELECTCONTAININGSONGNAMES = "SELECT id, name, duration, genre, url, album_id FROM song WHERE name LIKE ?";
 
 
     public SongDAO(int id, String name, int duration, Genres genre, String url, Album album) {
@@ -264,6 +267,29 @@ public class SongDAO extends Song implements iSongDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        return result;
+    }
+
+    public Set<Song> getSearchResults(String searchInput) {
+        Connection conn = ConnectionMySQL.getConnect();
+        Set<Song> result = new HashSet<>();
+        try (PreparedStatement ps = conn.prepareStatement(SELECTCONTAININGSONGNAMES)) {
+            ps.setString(1, "%" + searchInput + "%");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Song song = new Song();
+                    song.setId(rs.getInt("id"));
+                    song.setName(rs.getString("name"));
+                    song.setGenre(Genres.valueOf(rs.getString("genre")));
+                    song.setDuration(rs.getInt("duration"));
+                    song.setUrl(rs.getString("url"));
+                    song.setAlbum(new AlbumDAO(rs.getInt("id_album")));
+                    result.add(song);
+                }
+            }
+        } catch (SQLException e) {
+        e.printStackTrace();
         }
         return result;
     }
