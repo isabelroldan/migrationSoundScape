@@ -228,18 +228,18 @@ public class PlaylistPageController {
 
         String searchTerm = searchTextField.getText();
         if (!searchTerm.isEmpty()) {
-            Set<Song> songsSet = new SongDAO(new Song()).getSearchResults(searchTerm);
-            List<Song> searchResults = new ArrayList<>();
-            searchResults.addAll(songsSet);
+            Set<Playlist> playlistSet = new PlaylistDAO(new Playlist()).getSearchResults(searchTerm);
+            List<Playlist> searchResults = new ArrayList<>();
+            searchResults.addAll(playlistSet);
             if (!searchResults.isEmpty()) {
-                AppData.setSearchResults(searchResults);
+                AppData.setSearchResultsPl(searchResults);
                 try {
                     App.setRoot("searchResult");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             } else {
-                messageLabel.setText("Canción no encontrada.");
+                messageLabel.setText("Playlist no encontrada.");
             }
         }
     }
