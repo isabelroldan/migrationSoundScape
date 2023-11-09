@@ -114,8 +114,7 @@ public class UserDAO extends User implements iUserDAO {
             ps2.setInt(1, getId());
             ps2.setString(2,getName());
             ps2.setString(3,getEmail());
-            ps2.setString(4,getPassword());
-            ps2.setInt(5,getId());
+            ps2.setInt(4,getId());
             if(ps2.executeUpdate()==1) {
                 if(updatePhoto()) {
                     return true;

@@ -1,7 +1,9 @@
 package com.juanite.controller;
 
 import com.juanite.App;
+import com.juanite.model.DAO.SongDAO;
 import com.juanite.model.DAO.UserDAO;
+import com.juanite.model.domain.Song;
 import com.juanite.util.AppData;
 import com.juanite.util.Validator;
 import javafx.fxml.FXML;
@@ -13,6 +15,9 @@ import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class UserProfileController {
     @FXML
@@ -53,6 +58,12 @@ public class UserProfileController {
     public Button logOutButton;
     @FXML
     public Button profileButton;
+    @FXML
+    public TextField searchTextField;
+    @FXML
+    public Button searchButton;
+    @FXML
+    public Label messageLabel;
     private String botonEstiloOriginal;
 
     public void initialize() {
@@ -234,43 +245,26 @@ public class UserProfileController {
      */
     @FXML
     private void handleSearchButton() {
-        /*String searchTerm = searchTextField.getText();
-        if (!searchTerm.isEmpty()) {
-            List<Song> searchResults = searchInDatabase(searchTerm);
-            if (!searchResults.isEmpty()) {
-                int songId = searchResults.get(0).getId(); // Supongo que tomas la primera canción encontrada
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("play.fxml"));
-                Parent playRoot = loader.load();
-                PlayController playController = loader.getController();
-                playController.setSongId(songId); // Establece el ID seleccionado en el controlador de "play"
-                Scene playScene = new Scene(playRoot);
-                Stage stage = (Stage) searchButton.getScene().getWindow();
-                stage.setScene(playScene);
-            } else {
-                messageLabel.setText("Canción no encontrada.");
-            }
-        }*/
-/*
+
         String searchTerm = searchTextField.getText();
         if (!searchTerm.isEmpty()) {
-            List<Song> searchResults = searchInDatabase(searchTerm);
+            Set<Song> songsSet = new SongDAO(new Song()).getSearchResults(searchTerm);
+            List<Song> searchResults = new ArrayList<>();
+            searchResults.addAll(songsSet);
             if (!searchResults.isEmpty()) {
-                Song selectedSong = searchResults.get(0); // Supongo que tomas la primera canción encontrada
-
-                AppData.setCurrentSong(selectedSong);
-
-                // Luego, cambia a la vista "play" como lo hacías antes
+                AppData.setSearchResults(searchResults);
                 try {
-                    App.setRoot("play");
+                    App.setRoot("searchResult");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             } else {
                 messageLabel.setText("Canción no encontrada.");
             }
-        }*/
+        }
     }
 
+    @FXML
     public void goToProfile() throws IOException {
         App.setRoot("userProfile");
     }

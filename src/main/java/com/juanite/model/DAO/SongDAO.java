@@ -21,16 +21,16 @@ import java.util.Set;
 
 public class SongDAO extends Song implements iSongDAO {
 
-    private final static String INSERT = "INSERT INTO Song (name, duration, genre, url, album_id) VALUES(?, ?, ?, ?, ?)";
-    private final static String UPDATE = "UPDATE Song SET name=?, duration=?, genre=?, url=?, album_id=? WHERE id=?";
+    private final static String INSERT = "INSERT INTO Song (name, duration, genre, url, id_album) VALUES(?, ?, ?, ?, ?)";
+    private final static String UPDATE = "UPDATE Song SET name=?, duration=?, genre=?, url=?, id_album=? WHERE id=?";
     private final static String DELETE = "DELETE FROM Song WHERE id=?";
-    private final static String SELECTALL = "SELECT id, name, duration, genre, url, album_id FROM Song";
-    private final static String SELECTBYID = "SELECT id, name, duration, genre, url, album_id FROM Song WHERE id=?";
-    private final static String SELECTBYNAME = "SELECT id, name, duration, genre, url, album_id FROM Song WHERE name=?";
-    private final static String SELECTBYALBUM = "SELECT id, name, duration, genre, url, album_id FROM Song WHERE album_id=?";
-    private final static String SELECTBYGENRE = "SELECT id, name, duration, genre, url, album_id FROM Song WHERE genre=?";
+    private final static String SELECTALL = "SELECT id, name, duration, genre, url, id_album FROM Song";
+    private final static String SELECTBYID = "SELECT id, name, duration, genre, url, id_album FROM Song WHERE id=?";
+    private final static String SELECTBYNAME = "SELECT id, name, duration, genre, url, id_album FROM Song WHERE name=?";
+    private final static String SELECTBYALBUM = "SELECT id, name, duration, genre, url, id_album FROM Song WHERE id_album=?";
+    private final static String SELECTBYGENRE = "SELECT id, name, duration, genre, url, id_album FROM Song WHERE genre=?";
     private final static String SELECTBYPLAYLIST = "SELECT id_song FROM song_playlist WHERE id_playlist=?";
-    private final static String SELECTCONTAININGSONGNAMES = "SELECT id, name, duration, genre, url, album_id FROM song WHERE name LIKE ?";
+    private final static String SELECTCONTAININGSONGNAMES = "SELECT id, name, duration, genre, url, id_album FROM song WHERE name LIKE ?";
 
 
     public SongDAO(int id, String name, int duration, Genres genre, String url, Album album) {
