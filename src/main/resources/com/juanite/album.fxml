@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.juanite.controller.AlbumController">
+
+    <Pane prefHeight="610.0" prefWidth="200.0" style="-fx-background-color: #8c8c8c;">
+        <children>
+            <Text layoutX="5.0" layoutY="59.0" style="-fx-font-size: 35px; -fx-padding: 10px;" text="SoundScape">
+                <font>
+                    <Font name="Bodoni MT" size="61.0" />
+                </font>
+            </Text>
+            <Button layoutX="7.0" layoutY="84.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-font-size: 15px; -fx-text-fill: black; -fx-background-radius: 10px;" text="🏠   Inicio">
+                <font>
+                    <Font size="43.0" />
+                </font>
+            </Button>
+            <Button layoutX="8.0" layoutY="147.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-font-size: 15px; -fx-text-fill: black; -fx-background-radius: 10px;" text="🎓  Explorar" />
+            <Button layoutX="8.0" layoutY="217.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-font-size: 15px; -fx-text-fill: black; -fx-background-radius: 10px;" text="🖤   Mis Listas" />
+            <Button layoutX="6.0" layoutY="530.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-font-size: 15px; -fx-text-fill: black; -fx-background-radius: 10px;" text="🌑  Cerrar Sesión" />
+            <Button layoutX="6.0" layoutY="483.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-font-size: 15px; -fx-text-fill: black; -fx-background-radius: 10px;" text="🙍‍♀️ Mi perfil" />
+        </children>
+    </Pane>
+
+    <!-- Contenido principal -->
+    <ImageView fitHeight="199.0" fitWidth="206.0" layoutX="395.0" layoutY="18.0">
+      <image>
+         <Image url="@images/disc.jpg" />
+      </image>
+    </ImageView>
+    <Pane layoutX="200.0" layoutY="5.0" prefHeight="600.0" prefWidth="600.0">
+      <children>
+         <ListView fx:id="songListView" layoutX="36.0" layoutY="225.0" prefHeight="350.0" prefWidth="528.0" style="-fx-background-color: #909497; -fx-background-radius: 20px;"/>
+      </children></Pane>
+
+</AnchorPane>
