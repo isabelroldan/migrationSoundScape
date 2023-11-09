@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Slider?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.juanite.controller.PlayController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.juanite.controller.PlayController">
 
     <Pane prefHeight="610.0" prefWidth="200.0" style="-fx-background-color: #8c8c8c;">
         <children>
@@ -32,7 +26,7 @@
                     <Font size="15.0" />
                 </font>
             </Button>
-            <Button fx:id="myListsButton" layoutX="8.0" layoutY="217.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="🖤   Mis Listas">
+            <Button fx:id="myListsButton" layoutX="8.0" layoutY="217.0" onAction="#goToPlaylists" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="🖤   Mis Listas">
                 <font>
                     <Font size="15.0" />
                 </font>
@@ -42,7 +36,7 @@
                     <Font size="15.0" />
                 </font>
             </Button>
-            <Button fx:id="profileButton" layoutX="6.0" layoutY="483.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="🙍‍♀️ Mi perfil">
+            <Button fx:id="profileButton" layoutX="6.0" layoutY="483.0" onAction="#goToProfile" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="🙍‍♀️ Mi perfil">
                 <font>
                     <Font size="15.0" />
                 </font>
@@ -53,7 +47,7 @@
     <!-- Contenido principal -->
     <ImageView fx:id="image" fitHeight="428.0" fitWidth="610.0" layoutX="199.0">
         <image>
-            <Image  url="https://iheartradio.mx/wp-content/uploads/2020/03/Hay-nuevo-disco-de-Dua-Lipa-Future-nostalgia.jpg" />
+            <Image url="https://iheartradio.mx/wp-content/uploads/2020/03/Hay-nuevo-disco-de-Dua-Lipa-Future-nostalgia.jpg" />
         </image>
     </ImageView>
 
@@ -102,12 +96,12 @@
                <Font name="Bodoni MT" size="61.0" />
             </font>
          </Text>
-         <Text fx:id="nameAlbum" onMouseClicked="#handleNameAlbumTextClick" fill="WHITE" layoutX="63.0" layoutY="97.0" style="-fx-font-size: 15px; -fx-padding: 10px;" text="...">
+         <Text fx:id="nameAlbum" fill="WHITE" layoutX="63.0" layoutY="97.0" onMouseClicked="#handleNameAlbumTextClick" style="-fx-font-size: 15px; -fx-padding: 10px;" text="...">
             <font>
                <Font name="Bodoni MT" size="61.0" />
             </font>
          </Text>
-         <Text fx:id="nameArtist" onMouseClicked="#handleNameArtistTextClick"  fill="WHITE" layoutX="75.0" layoutY="128.0" style="-fx-font-size: 15px; -fx-padding: 10px;" text="...">
+         <Text fx:id="nameArtist" fill="WHITE" layoutX="75.0" layoutY="128.0" onMouseClicked="#handleNameArtistTextClick" style="-fx-font-size: 15px; -fx-padding: 10px;" text="...">
             <font>
                <Font name="Bodoni MT" size="61.0" />
             </font>

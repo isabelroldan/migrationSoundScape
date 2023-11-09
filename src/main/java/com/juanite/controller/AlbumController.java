@@ -42,7 +42,7 @@ public class AlbumController {
             Parent root = loader.load();
 
             PlayController playController = loader.getController();
-            playController.setSong(song);
+            //playController.setSong(song);
 
             Scene scene = new Scene(root);
             stage.setScene(scene);

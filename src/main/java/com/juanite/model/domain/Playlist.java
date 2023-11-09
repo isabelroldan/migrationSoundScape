@@ -24,8 +24,8 @@ public class Playlist {
         this.comments = new ArrayList<Comment>();
     }
 
-    public Playlist(int id, String name, String description, User owner) {
-        this.id = id;
+    public Playlist(String name, String description, User owner) {
+        this.id = -1;
         this.name = name;
         this.description = description;
         this.owner = owner;

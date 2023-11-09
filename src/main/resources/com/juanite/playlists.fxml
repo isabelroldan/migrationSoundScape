@@ -3,10 +3,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.scene.image.ImageView?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.juanite.controller.PlaylistPageController">
    <children>
       <Pane prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: #8c8c8c;">
          <children>
@@ -25,7 +25,7 @@
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="myListsButton" layoutX="8.0" layoutY="217.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="🖤   Mis Listas">
+            <Button fx:id="myListsButton" layoutX="8.0" layoutY="217.0" onAction="#goToPlaylists" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="🖤   Mis Listas">
                <font>
                   <Font size="15.0" />
                </font>
@@ -35,7 +35,7 @@
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="profileButton" layoutX="6.0" layoutY="483.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="🙍‍♀️ Mi perfil">
+            <Button fx:id="profileButton" layoutX="6.0" layoutY="483.0" onAction="#goToProfile" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="🙍‍♀️ Mi perfil">
                <font>
                   <Font size="15.0" />
                </font>
@@ -45,9 +45,37 @@
       <Pane layoutX="200.0" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: black;">
          <children>
             <ImageView fx:id="img_avatar" fitHeight="18.0" fitWidth="19.0" layoutX="567.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="42.0" />
-            <VBox fx:id="playlists" layoutX="53.0" layoutY="161.0" prefHeight="278.0" prefWidth="234.0" style="-fx-background-color: #8c8c8c;" />
-            <VBox fx:id="favorite_playlist" layoutX="315.0" layoutY="161.0" prefHeight="278.0" prefWidth="234.0" style="-fx-background-color: #8c8c8c;" />
-            <Label layoutX="129.0" layoutY="106.0" text="MY PLAYLIST">
+            <Pane prefHeight="600.0" prefWidth="600.0">
+               <children>
+                  <ListView fx:id="playlists" layoutX="53.0" layoutY="161.0" prefHeight="278.0" prefWidth="234.0" style="-fx-background-color: #909497; -fx-background-radius: 20px;" />
+                  <ListView fx:id="favorite_playlist" layoutX="315.0" layoutY="161.0" prefHeight="278.0" prefWidth="234.0" style="-fx-background-color: #909497; -fx-background-radius: 20px;" />
+                  <Button fx:id="createMyPlaylist" layoutX="78.0" layoutY="456.0" onAction="#createNewMyPlaylist" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="CREATE NEW PLAYLIST">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="showMyPlaylist" layoutX="78.0" layoutY="495.0" onAction="#showFocusedMyPlaylist" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="SHOW PLAYLIST">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="removeMyPlaylist" layoutX="78.0" layoutY="533.0" onAction="#removeFocusedMyPlaylist" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="REMOVE PLAYLIST">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="showFavPlaylist" layoutX="340.0" layoutY="471.0" onAction="#showFocusedFavPlaylist" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="SHOW PLAYLIST">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="removeFavPlaylist" layoutX="340.0" layoutY="517.0" onAction="#removeFocusedFavPlaylist" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="REMOVE PLAYLIST">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+               </children></Pane>
+            <Label layoutX="129.0" layoutY="106.0" text="MY PLAYLISTS">
                <textFill>
                   <RadialGradient centerX="0.4823787874062156" centerY="0.5" proportional="false" radius="0.5">
                      <stops>
@@ -64,31 +92,32 @@
                      </stops>
                   </RadialGradient>
                </textFill>
-            </Label>
-            <Label layoutX="359.0" layoutY="106.0" text="MY FAVORITE PLAYLIST">
-               <textFill>
-                  <RadialGradient centerX="0.4823787874062156" centerY="0.5" proportional="false" radius="0.5">
-                     <stops>
-                        <Stop>
-                           <color>
-                              <Color red="1.0" green="1.0" blue="1.0" />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color red="1.0" green="1.0" blue="1.0" />
-                           </color>
-                        </Stop>
-                     </stops>
-                  </RadialGradient>
-               </textFill>
-            </Label>
-            <Button fx:id="createPlaylist" layoutX="208.0" layoutY="489.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="CREATE NEW PLAYLIST">
                <font>
-                  <Font size="15.0" />
+                  <Font name="System Bold" size="12.0" />
                </font>
-            </Button>
+            </Label>
+            <Label layoutX="359.0" layoutY="106.0" text="MY FAVORITE PLAYLISTS">
+               <textFill>
+                  <RadialGradient centerX="0.4823787874062156" centerY="0.5" proportional="false" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+            </Label>
          </children>
       </Pane>
+      <TextField fx:id="searchTextField" layoutX="224.0" layoutY="37.0" prefHeight="30.0" prefWidth="478.0" promptText="Buscar una playlist" style="-fx-background-color: #8c8c8c;-fx-text-fill: black;" AnchorPane.leftAnchor="224.0" AnchorPane.rightAnchor="96.60000000000002" AnchorPane.topAnchor="37.0" />
+      <Button fx:id="searchButton" layoutX="696.0" layoutY="37.0" onAction="#handleSearchButton" prefHeight="30.0" prefWidth="63.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black;" text="🔎" AnchorPane.leftAnchor="696.0" AnchorPane.rightAnchor="39.8" AnchorPane.topAnchor="37.0" />
+      <Label fx:id="messageLabel" layoutX="224.0" layoutY="85.0" prefHeight="18.0" prefWidth="537.0" text="" AnchorPane.leftAnchor="224.0" AnchorPane.rightAnchor="37.39999999999998" AnchorPane.topAnchor="85.0" />
    </children>
 </AnchorPane>

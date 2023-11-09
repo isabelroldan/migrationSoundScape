@@ -3,6 +3,7 @@ package com.juanite.model.DAO;
 import com.juanite.connection.ConnectionMySQL;
 import com.juanite.model.Countries;
 import com.juanite.model.domain.*;
+import com.juanite.util.AppData;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class PlaylistDAO extends Playlist implements iPlaylistDAO {
     private final static String DELETE="DELETE FROM playlist WHERE id=?";
     private final static String DELETESUBSCRIBERS = "DELETE FROM user_playlist WHERE id_playlist=?";
     private final static String DELETEUSERPLAYLISTS = "DELETE FROM user_playlist WHERE id_person=?";
+    private final static String DELETEUSERPLAYLIST = "DELETE FROM user_playlist WHERE id_person=? AND id_playlist=?";
     private final static String DELETESONGS = "DELETE FROM song_playlist WHERE id_song=?";
     private final static String DELETEPLAYLISTSONGS = "DELETE FROM song_playlist WHERE id_playlist=?";
     private final static String SELECTBYID="SELECT id, name, description, id_person FROM playlist WHERE id=?";
@@ -190,6 +192,9 @@ public class PlaylistDAO extends Playlist implements iPlaylistDAO {
         Connection conn = ConnectionMySQL.getConnect();
         if(conn==null) return false;
 
+        removeSubscribers();
+        removePlaylistSongs();
+
         try(PreparedStatement ps = conn.prepareStatement(DELETE)){
             ps.setInt(1,getId());
             if(ps.executeUpdate()==1)
@@ -217,6 +222,34 @@ public class PlaylistDAO extends Playlist implements iPlaylistDAO {
 
         try(PreparedStatement ps = conn.prepareStatement(DELETESUBSCRIBERS)){
             ps.setInt(1,getId());
+            if(ps.executeUpdate()==1)
+                return true;
+
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    /**
+     * Removes the current object's data from the database.
+     * This method is used to delete the database record associated with the current object.
+     *
+     * @return true if the removal operation is successful, false otherwise.
+     */
+    public boolean removeUserPlaylist(){
+
+        if(getId()==-1) return false;
+
+        Connection conn = ConnectionMySQL.getConnect();
+        if(conn==null) return false;
+
+        removeSubscribers();
+        removePlaylistSongs();
+
+        try(PreparedStatement ps = conn.prepareStatement(DELETEUSERPLAYLIST)){
+            ps.setInt(1, AppData.getCurrentUser().getId());
+            ps.setInt(2,getId());
             if(ps.executeUpdate()==1)
                 return true;
 
