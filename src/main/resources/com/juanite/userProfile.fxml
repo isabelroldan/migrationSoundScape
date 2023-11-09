@@ -36,7 +36,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <ImageView fx:id="img_editEmail" fitHeight="26.0" fitWidth="25.0" layoutX="502.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="73.0" AnchorPane.topAnchor="180.0" />
+      <ImageView fx:id="img_editEmail" fitHeight="26.0" fitWidth="25.0" layoutX="502.0" layoutY="180.0" onMouseClicked="#editEmailMode" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="73.0" AnchorPane.topAnchor="180.0" />
       <Label layoutX="157.0" layoutY="224.0" text="Password" textFill="WHITE" AnchorPane.rightAnchor="379.8" AnchorPane.topAnchor="224.0">
          <font>
             <Font name="System Bold" size="14.0" />
@@ -50,10 +50,9 @@
       </Label>
       <ImageView fx:id="img_changeAvatar" fitHeight="48.0" fitWidth="48.0" layoutX="181.0" layoutY="308.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="371.0" AnchorPane.topAnchor="308.0" />
       <Button fx:id="btn_changeAvatar" layoutX="248.0" layoutY="332.0" mnemonicParsing="false" style="-fx-background-radius: 10px;" text="Upload Image" AnchorPane.rightAnchor="260.8" AnchorPane.topAnchor="332.0" />
-      <Button fx:id="btn_save" layoutX="436.0" layoutY="71.0" mnemonicParsing="false" style="-fx-background-radius: 10px;" text="Save Changes" AnchorPane.rightAnchor="74.4" AnchorPane.topAnchor="71.0" />
       <TextField fx:id="txtfld_username" layoutX="174.0" layoutY="125.0" prefHeight="26.0" prefWidth="263.0" style="-fx-background-color: #a9a9a9; -fx-background-radius: 10px;" />
       <TextField fx:id="txtfld_email" layoutX="174.0" layoutY="180.0" prefHeight="26.0" prefWidth="263.0" style="-fx-background-color: #a9a9a9; -fx-background-radius: 10px;" />
       <Button fx:id="btn_username" layoutX="469.0" layoutY="124.0" mnemonicParsing="false" onAction="#editUsername" style="-fx-background-radius: 10px;" text="Change" />
-      <Button fx:id="btn_email" layoutX="469.0" layoutY="180.0" mnemonicParsing="false" style="-fx-background-radius: 10px;" text="Change" />
+      <Button fx:id="btn_email" layoutX="469.0" layoutY="180.0" mnemonicParsing="false" onAction="#editEmail" style="-fx-background-radius: 10px;" text="Change" />
    </children>
 </AnchorPane>

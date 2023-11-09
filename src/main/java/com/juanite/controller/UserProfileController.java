@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class UserProfileController {
     @FXML
@@ -34,8 +35,6 @@ public class UserProfileController {
     @FXML
     public Button btn_changeAvatar;
     @FXML
-    public Button btn_save;
-    @FXML
     public TextField txtfld_username;
     @FXML
     public TextField txtfld_email;
@@ -54,8 +53,13 @@ public class UserProfileController {
         txtfld_email.setVisible(false);
         btn_username.setVisible(false);
         btn_email.setVisible(false);
-        img_avatar.setImage(new Image(UserProfileController.class.getResourceAsStream(AppData.getCurrentUser().getPhoto())));
-        img_changeAvatar.setImage(new Image(UserProfileController.class.getResourceAsStream(AppData.getCurrentUser().getPhoto())));
+        if(!AppData.getCurrentUser().getPhoto().equals("")) {
+            img_avatar.setImage(new Image(getClass().getResourceAsStream(AppData.getCurrentUser().getPhoto())));
+            img_changeAvatar.setImage(new Image(getClass().getResourceAsStream(AppData.getCurrentUser().getPhoto())));
+        }else{
+            img_avatar.setImage(new Image(getClass().getResourceAsStream("/com/juanite/images/default_avatar.png")));
+            img_changeAvatar.setImage(new Image(getClass().getResourceAsStream("/com/juanite/images/default_avatar.png")));
+        }
     }
 
     public void editUsernameMode() {
@@ -71,6 +75,7 @@ public class UserProfileController {
             if(Validator.validateUsername(txtfld_username.getText())) {
                 if(!((UserDAO)AppData.getCurrentUser()).userExists(txtfld_username.getText())) {
                     AppData.getCurrentUser().setName(txtfld_username.getText());
+                    ((UserDAO) AppData.getCurrentUser()).save();
                 }
             }
         }
