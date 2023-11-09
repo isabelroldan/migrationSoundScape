@@ -30,7 +30,7 @@ public class SignUpController {
                             try (UserDAO udao = new UserDAO(new User())) {
                                 if(!udao.emailExists(emailField.getText())) {
                                     if(!udao.userExists(usernameField.getText())) {
-                                        AppData.setCurrentUser(new UserDAO(new User(-1,usernameField.getText(), passwordField.getText(), emailField.getText(),"")));
+                                        AppData.setCurrentUser(new UserDAO(new User(-1,usernameField.getText(), emailField.getText(), AppData.getPa().hash(passwordField.getText()),"")));
                                         ((UserDAO) AppData.getCurrentUser()).save();
                                         home();
                                 }
