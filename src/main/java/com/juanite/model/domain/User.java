@@ -11,20 +11,20 @@ public class User extends Person {
 
     public User() {
         super();
-        this.photo = "";
+        this.photo = "/com/juanite/images/default_avatar.png";
         this.playlists = new ArrayList<Playlist>();
         this.favoritePlaylists = new ArrayList<Playlist>();
     }
     public User(int id, String name, String email, String password, String photo) {
         super(id,name,email,password);
-        this.photo = photo;
+        this.photo = "/com/juanite/images/default_avatar.png";
         this.playlists = new ArrayList<Playlist>();
         this.favoritePlaylists = new ArrayList<Playlist>();
     }
 
     public User(int id, String name, String email, String password, String photo, List<Playlist> playlists, List<Playlist> favoritePlaylists) {
         super(id,name,email,password);
-        this.photo = photo;
+        this.photo = "/com/juanite/images/default_avatar.png";
         this.playlists = playlists;
         this.favoritePlaylists = favoritePlaylists;
     }
