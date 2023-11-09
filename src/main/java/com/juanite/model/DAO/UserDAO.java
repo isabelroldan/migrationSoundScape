@@ -16,7 +16,7 @@ public class UserDAO extends User implements iUserDAO {
     private final static String INSERT = "INSERT INTO user (id_person, photo) VALUES (?,?)";
     private final static String INSERTPERSON = "INSERT INTO person (name, email, password) VALUES (?,?,?)";
     private final static String UPDATE ="UPDATE user SET id_person=?, photo=? WHERE id_person=?";
-    private final static String UPDATEPERSON ="UPDATE person SET id=?, name=?, email=? password=? WHERE id=?";
+    private final static String UPDATEPERSON ="UPDATE person SET id=?, name=?, email=? WHERE id=?";
 
     private final static String DELETE="DELETE FROM user WHERE id_person=?";
     private final static String DELETEPERSON="DELETE FROM person WHERE id=?";
@@ -115,19 +115,34 @@ public class UserDAO extends User implements iUserDAO {
             ps2.setString(2,getName());
             ps2.setString(3,getEmail());
             ps2.setString(4,getPassword());
+            ps2.setInt(5,getId());
             if(ps2.executeUpdate()==1) {
-                setId(-1);
-                return false;
+                if(updatePhoto()) {
+                    return true;
+                }
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
+        return false;
 
+
+    }
+
+    public boolean updatePhoto() {
+        if(getId()==-1) return false;
+        if(getPlaylists()==null ) return false;
+        if(getFavoritePlaylists()==null ) return false;
+
+        Connection conn = ConnectionMySQL.getConnect();
+        if(conn==null) return false;
         try(PreparedStatement ps = conn.prepareStatement(UPDATE)){
 
             ps.setInt(1, getId());
             ps.setString(2,getPhoto());
+            ps.setInt(3, getId());
             if(ps.executeUpdate()==1)
                 return true;
             setId(-1);
@@ -136,7 +151,6 @@ public class UserDAO extends User implements iUserDAO {
             e.printStackTrace();
             return false;
         }
-
     }
 
      @Override
@@ -269,7 +283,7 @@ public class UserDAO extends User implements iUserDAO {
                     if (rs.next()){
 
                         setId(rs.getInt("id"));
-                        if(getById(id)){
+                        if(getById(getId())){
                             return true;
                         }
                     }
