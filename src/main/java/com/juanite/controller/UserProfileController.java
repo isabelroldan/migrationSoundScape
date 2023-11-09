@@ -2,12 +2,15 @@ package com.juanite.controller;
 
 import com.juanite.model.DAO.UserDAO;
 import com.juanite.util.AppData;
+import com.juanite.util.Validator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.sql.SQLException;
 
 public class UserProfileController {
     @FXML
@@ -63,7 +66,7 @@ public class UserProfileController {
         img_editUsername.setVisible(false);
     }
 
-    public void editUsername() {
+    public void editUsername() throws SQLException {
         if(!txtfld_username.getText().equals("")) {
             if(Validator.validateUsername(txtfld_username.getText())) {
                 if(!((UserDAO)AppData.getCurrentUser()).userExists(txtfld_username.getText())) {
@@ -86,7 +89,7 @@ public class UserProfileController {
         img_editEmail.setVisible(false);
     }
 
-    public void editEmail() {
+    public void editEmail() throws SQLException {
         if(!txtfld_email.getText().equals("")) {
             if(Validator.validateEmail(txtfld_email.getText())) {
                 if(!((UserDAO)AppData.getCurrentUser()).emailExists(txtfld_email.getText())) {

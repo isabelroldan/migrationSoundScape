@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class ConnectionMySQL {
 
-    private String file = "classes/com/juanite/connection.xml";
+    private String file = "connection.xml";
     private static ConnectionMySQL _newInstance;
     private static Connection con = null;
     private static ConnectionData cd = null;
