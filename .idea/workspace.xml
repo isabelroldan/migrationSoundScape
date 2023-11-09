@@ -4,6 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+
     <list default="true" id="08a09454-af0b-46f3-8b8d-efd554480bdd" name="Changes" comment="SongDAO corregido">
       <change afterPath="$PROJECT_DIR$/src/main/java/com/juanite/controller/SignUpController.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/com/juanite/signup.fxml" afterDir="false" />
@@ -11,6 +12,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/juanite/controller/PrimaryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/juanite/controller/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/juanite/primary.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/juanite/login.fxml" afterDir="false" />
+
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,9 +72,11 @@
       <workItem from="1699342542480" duration="84000" />
       <workItem from="1699355165247" duration="2329000" />
     </task>
+
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+
 </project>

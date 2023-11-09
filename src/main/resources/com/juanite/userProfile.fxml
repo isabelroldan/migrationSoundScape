@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #424242;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.juanite.controller.UserProfileController">
+   <children>
+      <TextField fx:id="txtfld_searchBar" layoutX="135.0" layoutY="38.0" prefHeight="25.0" prefWidth="392.0" style="-fx-background-color: #a9a9a9; -fx-background-radius: 10px;" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="73.0" AnchorPane.topAnchor="38.0" />
+      <ImageView fx:id="img_alerts" fitHeight="18.0" fitWidth="19.0" layoutX="541.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="42.0" />
+      <ImageView fx:id="img_avatar" fitHeight="18.0" fitWidth="19.0" layoutX="567.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="42.0" />
+      <Label layoutX="135.0" layoutY="70.0" text="PROFILE" textFill="WHITE" AnchorPane.rightAnchor="394.6" AnchorPane.topAnchor="70.0">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="156.0" layoutY="104.0" text="Username" textFill="WHITE" AnchorPane.rightAnchor="377.6" AnchorPane.topAnchor="104.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl_username" layoutX="175.0" layoutY="127.0" text="Placeholder" textFill="WHITE" AnchorPane.rightAnchor="352.2" AnchorPane.topAnchor="127.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="img_editUsername" fitHeight="26.0" fitWidth="25.0" layoutX="502.0" layoutY="124.0" onMouseClicked="#editUsernameMode" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="73.0" AnchorPane.topAnchor="124.0" />
+      <Label layoutX="157.0" layoutY="160.0" text="Email" textFill="WHITE" AnchorPane.rightAnchor="407.0" AnchorPane.topAnchor="160.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl_email" layoutX="175.0" layoutY="183.0" text="Placeholder" textFill="WHITE" AnchorPane.rightAnchor="352.2" AnchorPane.topAnchor="183.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="img_editEmail" fitHeight="26.0" fitWidth="25.0" layoutX="502.0" layoutY="180.0" onMouseClicked="#editEmailMode" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="73.0" AnchorPane.topAnchor="180.0" />
+      <Label layoutX="157.0" layoutY="224.0" text="Password" textFill="WHITE" AnchorPane.rightAnchor="379.8" AnchorPane.topAnchor="224.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="btn_password" layoutX="177.0" layoutY="244.0" mnemonicParsing="false" style="-fx-background-radius: 10px;" text="Change Password" AnchorPane.rightAnchor="312.6" AnchorPane.topAnchor="244.0" />
+      <Label layoutX="155.0" layoutY="280.0" text="Avatar" textFill="WHITE" AnchorPane.rightAnchor="401.0" AnchorPane.topAnchor="280.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="img_changeAvatar" fitHeight="48.0" fitWidth="48.0" layoutX="181.0" layoutY="308.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="371.0" AnchorPane.topAnchor="308.0" />
+      <Button fx:id="btn_changeAvatar" layoutX="248.0" layoutY="332.0" mnemonicParsing="false" style="-fx-background-radius: 10px;" text="Upload Image" AnchorPane.rightAnchor="260.8" AnchorPane.topAnchor="332.0" />
+      <TextField fx:id="txtfld_username" layoutX="174.0" layoutY="125.0" prefHeight="26.0" prefWidth="263.0" style="-fx-background-color: #a9a9a9; -fx-background-radius: 10px;" />
+      <TextField fx:id="txtfld_email" layoutX="174.0" layoutY="180.0" prefHeight="26.0" prefWidth="263.0" style="-fx-background-color: #a9a9a9; -fx-background-radius: 10px;" />
+      <Button fx:id="btn_username" layoutX="469.0" layoutY="124.0" mnemonicParsing="false" onAction="#editUsername" style="-fx-background-radius: 10px;" text="Change" />
+      <Button fx:id="btn_email" layoutX="469.0" layoutY="180.0" mnemonicParsing="false" onAction="#editEmail" style="-fx-background-radius: 10px;" text="Change" />
+   </children>
+</AnchorPane>

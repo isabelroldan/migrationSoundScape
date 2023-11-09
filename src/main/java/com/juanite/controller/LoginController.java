@@ -28,6 +28,7 @@ public class LoginController {
                     if(udao != null) {
                         if (AppData.getPa().authenticate(passwordField.getText(), udao.getPassword())) {
                             AppData.setCurrentUser(udao);
+                            App.setRoot("home");
                         }
                     }
                 }

@@ -8,4 +8,5 @@ module com.juanite {
     exports com.juanite;
     exports com.juanite.controller;
     opens com.juanite.controller to javafx.fxml;
+    opens com.juanite.connection to java.xml.bind;
 }

@@ -2,60 +2,62 @@ package com.juanite.util;
 
 import com.juanite.model.domain.*;
 
+import java.util.List;
+
 public class AppData {
 
-    private PasswordAuthentication pa = new PasswordAuthentication();
-    private User currentUser;
-    private Song currentSong;
-    private Playlist currentPL;
-    private Artist currentArtist;
-    private Album currentAlbum;
+    private static PasswordAuthentication pa = new PasswordAuthentication();
+    private static User currentUser;
+    private static Song currentSong;
+    private static Playlist currentPL;
+    private static List<Artist> currentArtist;
+    private static Album currentAlbum;
 
-    public PasswordAuthentication getPa() {
+    public static PasswordAuthentication getPa() {
         return pa;
     }
 
-    public void setPa(PasswordAuthentication pa) {
-        this.pa = pa;
+    public static void setPa(PasswordAuthentication pa2) {
+        pa = pa2;
     }
 
-    public User getCurrentUser() {
+    public static User getCurrentUser() {
         return currentUser;
     }
 
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
+    public static void setCurrentUser(User currentUser2) {
+        currentUser = currentUser2;
     }
 
-    public Song getCurrentSong() {
+    public static Song getCurrentSong() {
         return currentSong;
     }
 
-    public void setCurrentSong(Song currentSong) {
-        this.currentSong = currentSong;
+    public static void setCurrentSong(Song currentSong2) {
+        currentSong = currentSong2;
     }
 
-    public Playlist getCurrentPL() {
+    public static Playlist getCurrentPL() {
         return currentPL;
     }
 
-    public void setCurrentPL(Playlist currentPL) {
-        this.currentPL = currentPL;
+    public static void setCurrentPL(Playlist currentPL2) {
+        currentPL = currentPL2;
     }
 
-    public Artist getCurrentArtist() {
+    public static List<Artist> getCurrentArtist() {
         return currentArtist;
     }
 
-    public void setCurrentArtist(Artist currentArtist) {
-        this.currentArtist = currentArtist;
+    public static void setCurrentArtist(List<Artist> currentArtist2) {
+        currentArtist = currentArtist2;
     }
 
-    public Album getCurrentAlbum() {
+    public static Album getCurrentAlbum() {
         return currentAlbum;
     }
 
-    public void setCurrentAlbum(Album currentAlbum) {
-        this.currentAlbum = currentAlbum;
+    public static void setCurrentAlbum(Album currentAlbum2) {
+        currentAlbum = currentAlbum2;
     }
 }

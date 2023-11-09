@@ -54,13 +54,14 @@ public class UserDAO extends User implements iUserDAO {
             Connection conn = ConnectionMySQL.getConnect();
             if(conn==null) return false;
 
-            try(PreparedStatement ps = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)){
+            try(PreparedStatement ps2 = conn.prepareStatement(INSERTPERSON, Statement.RETURN_GENERATED_KEYS)){
 
-                ps.setInt(1, getId());
-                ps.setString(2,getPhoto());
+                ps2.setString(1, getName());
+                ps2.setString(2,getEmail());
+                ps2.setString(3,getPassword());
 
-                if(ps.executeUpdate()==1) {
-                    try (ResultSet rs = ps.getGeneratedKeys()) {
+                if(ps2.executeUpdate()==1) {
+                    try (ResultSet rs = ps2.getGeneratedKeys()) {
                         if (rs.next()) {
                             setId(rs.getInt(1));
                         } else {
@@ -75,14 +76,14 @@ public class UserDAO extends User implements iUserDAO {
                 e.printStackTrace();
                 return false;
             }
-            try(PreparedStatement ps2 = conn.prepareStatement(INSERTPERSON, Statement.RETURN_GENERATED_KEYS)){
 
-                ps2.setString(1, getName());
-                ps2.setString(2,getEmail());
-                ps2.setString(3,getPassword());
+            try(PreparedStatement ps = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)){
 
-                if(ps2.executeUpdate()==1) {
-                    try (ResultSet rs = ps2.getGeneratedKeys()) {
+                ps.setInt(1, getId());
+                ps.setString(2,getPhoto());
+
+                if(ps.executeUpdate()==1) {
+                    try (ResultSet rs = ps.getGeneratedKeys()) {
                         if (rs.next()) {
                             setId(rs.getInt(1));
                             return true;
@@ -90,13 +91,15 @@ public class UserDAO extends User implements iUserDAO {
                             return false;
                         }
                     }
+                }else {
+                    setId(-1);
+                    return false;
                 }
-                setId(-1);
-                return false;
             } catch (SQLException e) {
                 e.printStackTrace();
                 return false;
             }
+
         }
     }
     public boolean update(){
@@ -210,7 +213,7 @@ public class UserDAO extends User implements iUserDAO {
                         setId(rs.getInt("id_person"));
                         setPhoto(rs.getString("photo"));
                         try(PreparedStatement ps2 = conn.prepareStatement(SELECTPERSONBYID)){
-                            ps.setInt(1, id);
+                            ps2.setInt(1, id);
                             if(ps2.execute()){
                                 try(ResultSet rs2 = ps2.getResultSet()){
                                     if (rs2.next()){
@@ -266,41 +269,8 @@ public class UserDAO extends User implements iUserDAO {
                     if (rs.next()){
 
                         setId(rs.getInt("id"));
-                        setName(rs.getString("name"));
-                        setEmail(rs.getString("email"));
-                        setPassword(rs.getString("password"));
-                        try(PreparedStatement ps2 = conn.prepareStatement(SELECTBYID)){
-                            ps.setInt(1, getId());
-                            if(ps2.execute()){
-                                try(ResultSet rs2 = ps2.getResultSet()){
-                                    if (rs2.next()){
-                                        setPhoto(rs2.getString("photo"));
-                                    }
-                                    List<Playlist> playlists = new ArrayList<>();
-                                    try(PlaylistDAO pdao=new PlaylistDAO(new Playlist())){
-                                        Set<Playlist> pset=pdao.getByUser(this, true);
-                                        playlists.addAll(pset);
-
-                                    }catch (Exception e) {
-                                        return false;
-
-                                    }
-                                    setPlaylists(playlists);
-                                    playlists= new ArrayList<>();
-                                    try(PlaylistDAO pdao=new PlaylistDAO(new Playlist())){
-                                        Set<Playlist> pset=pdao.getByUser(this, false);
-                                        playlists.addAll(pset);
-
-                                    }catch (Exception e) {
-                                        return false;
-
-                                    }
-                                    setFavoritePlaylists(playlists);
-                                }
-                            }
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                            return false;
+                        if(getById(id)){
+                            return true;
                         }
                     }
                 }
