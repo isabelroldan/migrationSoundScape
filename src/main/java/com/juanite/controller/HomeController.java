@@ -185,4 +185,8 @@ public class HomeController {
     public void goToProfile() throws IOException {
         App.setRoot("userProfile");
     }
+
+    public void goToPlaylists() throws IOException {
+        App.setRoot("playlists");
+    }
 }

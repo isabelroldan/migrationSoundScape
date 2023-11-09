@@ -191,6 +191,15 @@ public class PlayController {
         }
     }
 
+    @FXML
+    public void goToProfile() throws IOException {
+        App.setRoot("userProfile");
+    }
+
+    public void goToPlaylists() throws IOException {
+        App.setRoot("playlists");
+    }
+
 
     /*public void setSongId(int songId) {
         this.songId = songId;

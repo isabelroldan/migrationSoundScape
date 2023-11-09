@@ -25,7 +25,7 @@
                     <Font size="15.0" />
                 </font>
             </Button>
-            <Button fx:id="myListsButton" layoutX="8.0" layoutY="217.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="🖤   Mis Listas">
+            <Button fx:id="myListsButton" layoutX="8.0" layoutY="217.0" onAction="#goToPlaylists" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="🖤   Mis Listas">
                 <font>
                     <Font size="15.0" />
                 </font>

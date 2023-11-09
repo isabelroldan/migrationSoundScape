@@ -9,6 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.ListView?>
 <AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.juanite.controller.HomeController">
 
     <Pane prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: #8c8c8c;">
@@ -61,7 +62,10 @@
                <Font name="Tw Cen MT" size="20.0" />
             </font>
          </Text>
-         <VBox id="listaDiscos" layoutX="26.0" layoutY="259.0" prefHeight="315.0" prefWidth="549.0" style="-fx-background-color: #B8B8B8;" />
+          <Pane layoutX="200.0" layoutY="5.0" prefHeight="600.0" prefWidth="600.0">
+              <children>
+                  <ListView fx:id="songListView" layoutX="36.0" layoutY="225.0" prefHeight="350.0" prefWidth="528.0" style="-fx-background-color: #909497; -fx-background-radius: 20px;"/>
+              </children></Pane>
          <Text id="textoPopulares" fill="WHITE" layoutX="26.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POPULARES" wrappingWidth="103.95832824707043">
             <font>
                <Font name="Tw Cen MT" size="19.0" />
