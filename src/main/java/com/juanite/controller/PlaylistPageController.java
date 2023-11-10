@@ -40,9 +40,9 @@ public class PlaylistPageController {
     @FXML
     public Label messageLabel;
     @FXML
-    public ListView playlists;
+    public ListView<Playlist> playlists;
     @FXML
-    public ListView favorite_playlist;
+    public ListView<Playlist> favorite_playlist;
     @FXML
     public Button createMyPlaylist;
     @FXML
@@ -77,6 +77,8 @@ public class PlaylistPageController {
 
         myPlaylists = FXCollections.observableArrayList();
         myFavoritePlaylists = FXCollections.observableArrayList();
+        myPlaylists.removeAll();
+        myFavoritePlaylists.removeAll();
         myPlaylists.addAll(AppData.getCurrentUser().getPlaylists());
         myFavoritePlaylists.addAll(AppData.getCurrentUser().getFavoritePlaylists());
         playlists.setItems(myPlaylists);
@@ -114,7 +116,7 @@ public class PlaylistPageController {
     public void showFocusedFavPlaylist() throws IOException {
         if(favorite_playlist.getSelectionModel().getSelectedItem() != null) {
             AppData.setCurrentPL(((Playlist)favorite_playlist.getSelectionModel().getSelectedItem()));
-            //App.setRoot("playlist");
+            App.setRoot("playlist");
         }
     }
 

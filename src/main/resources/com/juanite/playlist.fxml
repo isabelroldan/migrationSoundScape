@@ -38,6 +38,17 @@
                <Font size="15.0" />
             </font>
          </Button>
+         <Button fx:id="btn_changeName" layoutX="431.0" layoutY="117.0" onAction="#changePlaylistName" prefHeight="31.0" prefWidth="133.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="RENAME">
+            <font>
+               <Font size="15.0" />
+            </font>
+         </Button>
+         <Label fx:id="lbl_plName" layoutX="36.0" layoutY="117.0" text="Label">
+            <font>
+               <Font name="System Bold" size="18.0" />
+            </font>
+         </Label>
+         <TextField fx:id="txtfld_changeName" layoutX="36.0" layoutY="118.0" prefHeight="30.0" prefWidth="380.0" style="-fx-background-color: #8c8c8c;-fx-text-fill: black;" />
       </children></Pane>
     <ImageView fx:id="img_avatar" fitHeight="18.0" fitWidth="19.0" layoutX="567.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="42.0" />
     <TextField fx:id="searchTextField" layoutX="224.0" layoutY="37.0" prefHeight="30.0" prefWidth="478.0" promptText="Buscar una canción" style="-fx-background-color: #8c8c8c;-fx-text-fill: black;" AnchorPane.leftAnchor="224.0" AnchorPane.rightAnchor="96.60000000000002" AnchorPane.topAnchor="37.0" />
