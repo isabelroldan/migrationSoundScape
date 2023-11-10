@@ -1,22 +1,16 @@
 package com.juanite.model.DAO;
 
 import com.juanite.connection.ConnectionMySQL;
-import com.juanite.model.Countries;
 import com.juanite.model.Genres;
 import com.juanite.model.domain.Album;
-import com.juanite.model.domain.Artist;
 import com.juanite.model.domain.Playlist;
 import com.juanite.model.domain.Song;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class SongDAO extends Song implements iSongDAO {

@@ -15,6 +15,13 @@ public class User extends Person {
         this.playlists = new ArrayList<Playlist>();
         this.favoritePlaylists = new ArrayList<Playlist>();
     }
+    public User(int id) {
+        super();
+        this.id = id;
+        this.photo = "/com/juanite/images/default_avatar.png";
+        this.playlists = new ArrayList<Playlist>();
+        this.favoritePlaylists = new ArrayList<Playlist>();
+    }
     public User(int id, String name, String email, String password, String photo) {
         super(id,name,email,password);
         this.photo = "/com/juanite/images/default_avatar.png";

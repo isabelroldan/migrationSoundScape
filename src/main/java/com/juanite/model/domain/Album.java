@@ -2,6 +2,7 @@ package com.juanite.model.domain;
 
 import java.sql.Date;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -19,7 +20,7 @@ public class Album {
     public Album() {
         this.id = -1;
         this.name = "";
-        this.publication = (Date) Date.from(Instant.now());
+        this.publication = Date.valueOf(LocalDate.now());
         this.photo = "";
         this.artists = new ArrayList<>();
         this.songs = new ArrayList<>();

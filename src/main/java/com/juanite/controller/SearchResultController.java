@@ -1,6 +1,7 @@
 package com.juanite.controller;
 
 import com.juanite.App;
+import com.juanite.model.DAO.PlaylistDAO;
 import com.juanite.model.DAO.SongDAO;
 import com.juanite.model.domain.Playlist;
 import com.juanite.model.domain.Song;
@@ -67,13 +68,15 @@ public class SearchResultController {
         profileButton.setOnMouseEntered(event -> changeColorButtonprofile(true));
         profileButton.setOnMouseExited(event -> changeColorButtonprofile(false));
 
-        if(AppData.getSearchResults().isEmpty()) {
+        if(AppData.getSearchResults() == null) {
             isPlaylist = true;
+            searchTextField.setPromptText("Buscar una playlist");
             playlistResults = FXCollections.observableArrayList();
             playlistResults.addAll(AppData.getSearchResultsPl());
             resultListView.setItems(playlistResults);
         }else{
             isPlaylist = false;
+            searchTextField.setPromptText("Buscar una canción");
             songResults = FXCollections.observableArrayList();
             songResults.addAll(AppData.getSearchResults());
             resultListView.setItems(songResults);
@@ -85,6 +88,8 @@ public class SearchResultController {
         if(isPlaylist) {
             if(resultListView.getSelectionModel().getSelectedItem() != null) {
                 AppData.setCurrentPL(((Playlist)resultListView.getSelectionModel().getSelectedItem()));
+                AppData.setSearchResults(null);
+                AppData.setSearchResultsPl(null);
                 /*try {
                     App.setRoot("playlist");
                 } catch (IOException e) {
@@ -94,6 +99,8 @@ public class SearchResultController {
         }else{
             if(resultListView.getSelectionModel().getSelectedItem() != null) {
                 AppData.setCurrentSong(((Song)resultListView.getSelectionModel().getSelectedItem()));
+                AppData.setSearchResults(null);
+                AppData.setSearchResultsPl(null);
                 try {
                     App.setRoot("play");
                 } catch (IOException e) {
@@ -174,6 +181,8 @@ public class SearchResultController {
      */
     @FXML
     private void handleHomeButton() {
+        AppData.setSearchResults(null);
+        AppData.setSearchResultsPl(null);
         try {
             App.setRoot("home");
         } catch (IOException e) {
@@ -187,6 +196,8 @@ public class SearchResultController {
      */
     @FXML
     private void handleLogOutButton() {
+        AppData.setSearchResults(null);
+        AppData.setSearchResultsPl(null);
         try {
             App.setRoot("login");
         } catch (IOException e) {
@@ -199,21 +210,39 @@ public class SearchResultController {
      */
     @FXML
     private void handleSearchButton() {
+        AppData.setSearchResults(null);
+        AppData.setSearchResultsPl(null);
 
         String searchTerm = searchTextField.getText();
         if (!searchTerm.isEmpty()) {
-            Set<Song> songsSet = new SongDAO(new Song()).getSearchResults(searchTerm);
-            List<Song> searchResults = new ArrayList<>();
-            searchResults.addAll(songsSet);
-            if (!searchResults.isEmpty()) {
-                AppData.setSearchResults(searchResults);
-                try {
-                    App.setRoot("searchResult");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+            if(isPlaylist) {
+                Set<Playlist> playlistSet = new PlaylistDAO(new Playlist()).getSearchResults(searchTerm);
+                List<Playlist> searchResults = new ArrayList<>();
+                searchResults.addAll(playlistSet);
+                if (!searchResults.isEmpty()) {
+                    AppData.setSearchResultsPl(searchResults);
+                    try {
+                        App.setRoot("searchResult");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    messageLabel.setText("Playlist no encontrada.");
                 }
-            } else {
-                messageLabel.setText("Canción no encontrada.");
+            }else{
+                Set<Song> songsSet = new SongDAO(new Song()).getSearchResults(searchTerm);
+                List<Song> searchResults = new ArrayList<>();
+                searchResults.addAll(songsSet);
+                if (!searchResults.isEmpty()) {
+                    AppData.setSearchResults(searchResults);
+                    try {
+                        App.setRoot("searchResult");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    messageLabel.setText("Canción no encontrada.");
+                }
             }
         }
     }

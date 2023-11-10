@@ -232,6 +232,7 @@ public class PlaylistPageController {
             List<Playlist> searchResults = new ArrayList<>();
             searchResults.addAll(playlistSet);
             if (!searchResults.isEmpty()) {
+                AppData.setSearchResults(null);
                 AppData.setSearchResultsPl(searchResults);
                 try {
                     App.setRoot("searchResult");

@@ -370,7 +370,7 @@ public class PlaylistDAO extends Playlist implements iPlaylistDAO {
                         setId(rs.getInt("id"));
                         setName(rs.getString("name"));
                         setDescription(rs.getString("description"));
-                        setOwner(new UserDAO(rs.getInt("id_person")));
+                        setOwner(new User(rs.getInt("id_person")));
                         List<Song> songs = new ArrayList<>();
                         try(SongDAO sdao = new SongDAO(new Song())) {
                             Set<Song> songSet = sdao.getByPlaylist(this);
@@ -455,7 +455,7 @@ public class PlaylistDAO extends Playlist implements iPlaylistDAO {
                     a.setId(rs.getInt("id"));
                     a.setName(rs.getString("name"));
                     a.setDescription(rs.getString("description"));
-                    a.setOwner(new UserDAO(rs.getInt("id_person")));
+                    a.setOwner(new User(rs.getInt("id_person")));
                     List<Song> songs = new ArrayList<>();
                     try (SongDAO sdao = new SongDAO(new Song())) {
                         Set<Song> songSet = sdao.getByPlaylist(this);
@@ -493,7 +493,7 @@ public class PlaylistDAO extends Playlist implements iPlaylistDAO {
             if(ps.execute()) {
                 try(ResultSet rs = ps.getResultSet()) {
                     while (rs.next()) {
-                        result.add(new UserDAO(rs.getInt("id_person")));
+                        result.add(new User(rs.getInt("id_person")));
                     }
                 }
             }
@@ -517,7 +517,7 @@ public class PlaylistDAO extends Playlist implements iPlaylistDAO {
                         p.setId(rs.getInt("id"));
                         p.setName(rs.getString("name"));
                         p.setDescription(rs.getString("description"));
-                        p.setOwner(new UserDAO(rs.getInt("id_person")));
+                        p.setOwner(new User(rs.getInt("id_person")));
                         List<Song> songs = new ArrayList<>();
                         try(SongDAO sdao = new SongDAO(new Song())) {
                             Set<Song> songSet = sdao.getByPlaylist(this);
