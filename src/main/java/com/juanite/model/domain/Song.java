@@ -93,13 +93,6 @@ public class Song {
 
     @Override
     public String toString() {
-        return "Song{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", duration=" + duration +
-                ", genre='" + genre.name() + '\'' +
-                ", url='" + url + '\'' +
-                ", album=" + album +
-                '}';
+        return name;
     }
 }

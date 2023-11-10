@@ -13,9 +13,7 @@ public class Admin extends Person {
 
     @Override
     public String toString() {
-        return "Admin{" +
-                "id=" + id +
-                '}';
+        return super.toString();
     }
 
     @Override

@@ -55,10 +55,7 @@ public class User extends Person {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id_user=" + this.id +
-                ", photo='" + photo + '\'' +
-                '}';
+        return super.toString();
     }
 
     @Override
