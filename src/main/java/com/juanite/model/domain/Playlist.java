@@ -115,14 +115,6 @@ public class Playlist {
 
     @Override
     public String toString() {
-        return "Playlist{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", owner=" + owner +
-                ", songs=" + songs +
-                ", subscribers=" + subscribers +
-                ", comments=" + comments +
-                '}';
+        return name;
     }
 }

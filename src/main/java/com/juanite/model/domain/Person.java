@@ -59,12 +59,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
-                "id_Person=" + id +
-                ", name='" + name + '\'' +
-                ", gmail='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return name;
     }
 
     @Override

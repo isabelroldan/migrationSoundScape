@@ -5,20 +5,26 @@ import java.util.Objects;
 
 public class Comment {
     private int id;
+    private String comment;
     private LocalDateTime date_time;
-    public User user;
-    public Playlist playlist;
+    private User user;
+    private Playlist playlist;
 
-    public Comment(int id, LocalDateTime date_time/*, Person person, Playlist playlist*/) {
+    public Comment(int id, String comment, LocalDateTime date_time, User user, Playlist playlist) {
         this.id = id;
+        this.comment = comment;
         this.date_time = date_time;
-        //this.person = person;
-        //this.playlist = playlist;
+        this.user = user;
+        this.playlist = playlist;
     }
 
-    public Comment(int id){ this(id, LocalDateTime.now()/*, null,null*/);}
+    public Comment(int id){
+        this(id,"" ,LocalDateTime.now(), new User(), new Playlist());
+    }
 
-    public Comment(){ this(-1, LocalDateTime.now()/*, null,null*/);}
+    public Comment(){
+        this(-1,"" ,LocalDateTime.now(), new User(), new Playlist());
+    }
 
     public int getId() {
         return id;
@@ -52,6 +58,14 @@ public class Comment {
         this.playlist = playlist;
     }
 
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -67,11 +81,6 @@ public class Comment {
 
     @Override
     public String toString() {
-        return "Comment: " +
-                "\nid=" + id +
-                "\n, date_time=" + date_time +
-                "\n, person=" + user +
-                "\n, playlist=" + playlist +
-                '.';
+        return comment;
     }
 }
