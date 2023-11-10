@@ -14,22 +14,22 @@ import java.util.Set;
 
 public class CommentDAO extends Comment implements iCommentDAO{
 
-    private final static String INSERT = "INSERT INTO Comment (date_time, id_person, id_playlist) VALUES (?,?,?)";
-    private final static String UPDATE ="UPDATE Comment SET date_time=?,id_person=?,id_playlist=? WHERE id=?";
+    private final static String INSERT = "INSERT INTO Comment (comment,date_time, id_person, id_playlist) VALUES (?,?,?,?)";
+    private final static String UPDATE ="UPDATE Comment SET comment=?,date_time=?,id_person=?,id_playlist=? WHERE id=?";
     private final static String DELETE="DELETE FROM Comment WHERE id=?";
-    private final static String SELECTBYID="SELECT id,date_time,id_person,id_playlist FROM Comment WHERE id=?";
-    private final static String SELECTALL="SELECT id,date_time,id_person,id_playlist FROM Comment";
-    private final static String SELECTBYPERSON="SELECT id,date_time,id_person,id_playlist FROM Comment WHERE id_person=?";
-    private final static String SELECTBYPLAYLIST="SELECT id,date_time,id_person,id_playlist FROM Comment WHERE id_playlist=?";
+    private final static String SELECTBYID="SELECT id,comment,date_time,id_person,id_playlist FROM Comment WHERE id=?";
+    private final static String SELECTALL="SELECT id,comment,date_time,id_person,id_playlist FROM Comment";
+    private final static String SELECTBYPERSON="SELECT id,comment,date_time,id_person,id_playlist FROM Comment WHERE id_person=?";
+    private final static String SELECTBYPLAYLIST="SELECT id,comment,date_time,id_person,id_playlist FROM Comment WHERE id_playlist=?";
 
-    public CommentDAO(int id, LocalDateTime date_time){
-        super(id, date_time);
+    public CommentDAO(int id,String comment, LocalDateTime date_time, User user, Playlist playlist){
+        super(id,comment, date_time, user, playlist);
     }
 
-    //public CommentDAO(int id){ getById(id);}
+    public CommentDAO(int id){ getById(id);}
 
     public CommentDAO(Comment c){
-        super(c.getId(), c.getDate_time());
+        super(c.getId(), c.getComment(), c.getDate_time(), c.getUser(), c.getPlaylist());
     }
 
     /**
@@ -42,8 +42,8 @@ public class CommentDAO extends Comment implements iCommentDAO{
         if(getId()!=-1){
             return update();
         }else{
-            if(user==null ) return false;
-            if( playlist==null ) return false;
+            if(getUser()==null ) return false;
+            if( getPlaylist()==null ) return false;
             Connection conn = ConnectionMySQL.getConnect();
             if(conn==null) return false;
 
@@ -51,9 +51,10 @@ public class CommentDAO extends Comment implements iCommentDAO{
                 LocalDateTime dateTime = getDate_time();
                 String formattedDateTime = dateTime.toString();
 
-                ps.setString(1, formattedDateTime);
-                ps.setInt(2,user.getId());
-                ps.setInt(3,playlist.getId());
+                ps.setString(1, getComment());
+                ps.setString(2, formattedDateTime);
+                ps.setInt(3,getUser().getId());
+                ps.setInt(4,getPlaylist().getId());
 
                 if(ps.executeUpdate()==1) {
                     try (ResultSet rs = ps.getGeneratedKeys()) {
@@ -82,8 +83,8 @@ public class CommentDAO extends Comment implements iCommentDAO{
      */
     public boolean update(){
         if(getId()==-1) return false;
-        if(user==null ) return false;
-        if( playlist==null ) return false;
+        if(getUser()==null ) return false;
+        if( getPlaylist()==null ) return false;
 
         Connection conn = ConnectionMySQL.getConnect();
         if(conn==null) return false;
@@ -92,10 +93,11 @@ public class CommentDAO extends Comment implements iCommentDAO{
             LocalDateTime dateTime = getDate_time();
             String formattedDateTime = dateTime.toString();
 
-            ps.setString(1, formattedDateTime);
-            ps.setInt(2,user.getId());
-            ps.setInt(3,playlist.getId());
-            ps.setInt(4, getId());
+            ps.setString(1, getComment());
+            ps.setString(2, formattedDateTime);
+            ps.setInt(3,getUser().getId());
+            ps.setInt(4,getPlaylist().getId());
+            ps.setInt(5, getId());
             if(ps.executeUpdate()==1)
                 return true;
             setId(-1);
@@ -148,11 +150,12 @@ public class CommentDAO extends Comment implements iCommentDAO{
                 try(ResultSet rs = ps.getResultSet()){
                     if(rs.next()){
                         setId(rs.getInt("id"));
+                        setComment(rs.getString("comment"));
                         String dateTimeString = rs.getString("date_time");
                         LocalDateTime dateTime = LocalDateTime.parse(dateTimeString);
                         setDate_time(dateTime);
-                        user = new UserDAO(rs.getInt("id_person"));
-                        playlist = new PlaylistDAO(rs.getInt("id_playlist"));
+                        setUser(new UserDAO(rs.getInt("id_person")));
+                        setPlaylist(new PlaylistDAO(rs.getInt("id_playlist")));
                     }
                 }
             }
@@ -182,6 +185,7 @@ public class CommentDAO extends Comment implements iCommentDAO{
                     while(rs.next()){
                         Comment c = new Comment();
                         c.setId(rs.getInt("id"));
+                        c.setComment(rs.getString("comment"));
                         String dateTimeString = rs.getString("date_time");
                         LocalDateTime dateTime = LocalDateTime.parse(dateTimeString);
                         c.setDate_time(dateTime);
@@ -218,6 +222,7 @@ public class CommentDAO extends Comment implements iCommentDAO{
                     while (rs.next()) {
                         Comment c = new Comment();
                         c.setId(rs.getInt("id"));
+                        c.setComment(rs.getString("comment"));
                         String dateTimeString = rs.getString("date_time");
                         LocalDateTime dateTime = LocalDateTime.parse(dateTimeString);
                         c.setDate_time(dateTime);
@@ -254,6 +259,7 @@ public class CommentDAO extends Comment implements iCommentDAO{
                     while (rs.next()) {
                         Comment c = new Comment();
                         c.setId(rs.getInt("id"));
+                        c.setComment(rs.getString("comment"));
                         String dateTimeString = rs.getString("date_time");
                         LocalDateTime dateTime = LocalDateTime.parse(dateTimeString);
                         c.setDate_time(dateTime);
