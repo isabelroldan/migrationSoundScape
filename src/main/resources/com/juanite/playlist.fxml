@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.juanite.controller.PlaylistController">
+
+    <Pane prefHeight="610.0" prefWidth="200.0" style="-fx-background-color: #8c8c8c;">
+        <children>
+            <Text layoutX="5.0" layoutY="59.0" style="-fx-font-size: 35px; -fx-padding: 10px;" text="SoundScape">
+                <font>
+                    <Font name="Bodoni MT" size="61.0" />
+                </font>
+            </Text>
+            <Button fx:id="homeButton" layoutX="7.0" layoutY="84.0" onAction="#handleHomeButton" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-font-size: 15px; -fx-text-fill: black; -fx-background-radius: 10px;" text="🏠   Inicio">
+                <font>
+                    <Font size="43.0" />
+                </font>
+            </Button>
+            <Button fx:id="exploreButton" layoutX="8.0" layoutY="147.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-font-size: 15px; -fx-text-fill: black; -fx-background-radius: 10px;" text="🎓  Explorar" />
+            <Button fx:id="myListsButton" layoutX="8.0" layoutY="217.0" onAction="#goToPlaylists" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-font-size: 15px; -fx-text-fill: black; -fx-background-radius: 10px;" text="🖤   Mis Listas" />
+            <Button fx:id="logOutButton" layoutX="6.0" layoutY="530.0" onAction="#handleLogOutButton" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-font-size: 15px; -fx-text-fill: black; -fx-background-radius: 10px;" text="🌑  Cerrar Sesión" />
+            <Button fx:id="profileButton" layoutX="6.0" layoutY="483.0" onAction="#goToProfile" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-font-size: 15px; -fx-text-fill: black; -fx-background-radius: 10px;" text="🙍‍♀️ Mi perfil" />
+        </children>
+    </Pane>
+    <Pane layoutX="200.0" layoutY="5.0" prefHeight="600.0" prefWidth="600.0">
+      <children>
+         <ListView fx:id="songListView" layoutX="36.0" layoutY="159.0" prefHeight="350.0" prefWidth="528.0" style="-fx-background-color: #909497; -fx-background-radius: 20px;" />
+          <Button fx:id="btn_goSong" layoutX="114.0" layoutY="522.0" onAction="#goToSong" prefHeight="31.0" prefWidth="133.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="GO TO SONG">
+              <font>
+                  <Font size="15.0" />
+              </font>
+          </Button>
+         <Button fx:id="btn_removeSong" layoutX="344.0" layoutY="522.0" onAction="#removeSong" prefHeight="31.0" prefWidth="133.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="REMOVE SONG">
+            <font>
+               <Font size="15.0" />
+            </font>
+         </Button>
+      </children></Pane>
+    <ImageView fx:id="img_avatar" fitHeight="18.0" fitWidth="19.0" layoutX="567.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="42.0" />
+    <TextField fx:id="searchTextField" layoutX="224.0" layoutY="37.0" prefHeight="30.0" prefWidth="478.0" promptText="Buscar una canción" style="-fx-background-color: #8c8c8c;-fx-text-fill: black;" AnchorPane.leftAnchor="224.0" AnchorPane.rightAnchor="96.60000000000002" AnchorPane.topAnchor="37.0" />
+    <Button fx:id="searchButton" layoutX="696.0" layoutY="37.0" onAction="#handleSearchButton" prefHeight="30.0" prefWidth="63.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black;" text="🔎" AnchorPane.leftAnchor="696.0" AnchorPane.rightAnchor="39.8" AnchorPane.topAnchor="37.0" />
+    <Label fx:id="messageLabel" layoutX="224.0" layoutY="85.0" prefHeight="18.0" prefWidth="537.0" text="" AnchorPane.leftAnchor="224.0" AnchorPane.rightAnchor="37.39999999999998" AnchorPane.topAnchor="85.0" />
+
+</AnchorPane>

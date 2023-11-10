@@ -90,11 +90,11 @@ public class SearchResultController {
                 AppData.setCurrentPL(((Playlist)resultListView.getSelectionModel().getSelectedItem()));
                 AppData.setSearchResults(null);
                 AppData.setSearchResultsPl(null);
-                /*try {
+                try {
                     App.setRoot("playlist");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
-                }*/
+                }
             }
         }else{
             if(resultListView.getSelectionModel().getSelectedItem() != null) {

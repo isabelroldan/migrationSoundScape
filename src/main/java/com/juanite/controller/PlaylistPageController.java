@@ -96,7 +96,7 @@ public class PlaylistPageController {
     public void showFocusedMyPlaylist() throws IOException {
         if(playlists.getSelectionModel().getSelectedItem() != null) {
             AppData.setCurrentPL(((Playlist)playlists.getSelectionModel().getSelectedItem()));
-            //App.setRoot("playlist");
+            App.setRoot("playlist");
         }
     }
 
