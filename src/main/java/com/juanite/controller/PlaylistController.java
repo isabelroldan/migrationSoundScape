@@ -40,11 +40,17 @@ public class PlaylistController {
     @FXML
     public Label messageLabel;
     @FXML
-    public ListView songListView;
+    public ListView<Song> songListView;
     @FXML
     public Button btn_goSong;
     @FXML
     public Button btn_removeSong;
+    @FXML
+    public Button btn_changeName;
+    @FXML
+    public Label lbl_plName;
+    @FXML
+    public TextField txtfld_changeName;
     private String botonEstiloOriginal;
     private ObservableList<Song> plSongs;
 
@@ -69,6 +75,13 @@ public class PlaylistController {
         plSongs = FXCollections.observableArrayList();
         plSongs.addAll(AppData.getCurrentPL().getSongs());
         songListView.setItems(plSongs);
+        lbl_plName.setText(AppData.getCurrentPL().getName());
+        txtfld_changeName.setVisible(false);
+        if(AppData.getCurrentPL().getOwner().getId() == AppData.getCurrentUser().getId()) {
+            btn_changeName.setVisible(true);
+        }else{
+            btn_changeName.setVisible(false);
+        }
     }
 
     public void goToSong() throws IOException {
@@ -87,6 +100,28 @@ public class PlaylistController {
                 }
             } catch (Exception e) {
                 throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public void changePlaylistName() {
+        if(!txtfld_changeName.isVisible()) {
+            txtfld_changeName.setVisible(true);
+            txtfld_changeName.setText(AppData.getCurrentPL().getName());
+        }else{
+            if(!txtfld_changeName.getText().equals("")) {
+                try (PlaylistDAO pdao = new PlaylistDAO(AppData.getCurrentPL())) {
+                    AppData.getCurrentUser().getPlaylists().remove(pdao);
+                    pdao.setName(txtfld_changeName.getText());
+                    pdao.save();
+                    txtfld_changeName.setText("");
+                    txtfld_changeName.setVisible(false);
+                    AppData.setCurrentPL(pdao);
+                    AppData.getCurrentUser().getPlaylists().add(pdao);
+                    initialize();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }

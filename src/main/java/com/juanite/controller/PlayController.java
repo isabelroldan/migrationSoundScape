@@ -192,44 +192,18 @@ public class PlayController {
 
     @FXML
     public void goToProfile() throws IOException {
+        AppData.setCurrentSong(null);
+        AppData.setCurrentAlbum(null);
+        AppData.setCurrentArtist(null);
         App.setRoot("userProfile");
     }
 
     public void goToPlaylists() throws IOException {
+        AppData.setCurrentSong(null);
+        AppData.setCurrentAlbum(null);
+        AppData.setCurrentArtist(null);
         App.setRoot("playlists");
     }
-
-
-    /*public void setSongId(int songId) {
-        this.songId = songId;
-
-        SongDAO songDAO = new SongDAO();
-        Song song = songDAO.getByIdReturnSong(songId);
-
-        if (song != null) {
-            // Obtén la URL de la imagen y el nombre del álbum de la instancia de Song:
-            String imageUrl = song.getUrl();
-            String albumName = song.getAlbum().getName();
-
-            // Obtén el nombre del artista del álbum
-            String artistName = song.getAlbum().getArtists().toString();
-
-            // Actualiza el ImageView y el Text con los datos recuperados:
-            if (imageUrl != null) {
-                Image imageFromDatabase = new Image(imageUrl);
-                image.setImage(imageFromDatabase);
-            }
-
-            if (albumName != null) {
-                nameAlbum.setText(albumName);
-            }
-
-            // Actualiza el campo de texto para el artista del álbum
-            if (artistName != null) {
-                nameArtist.setText(artistName);
-            }
-        }
-    }*/
 
     /**
      * Handles a click on the album name text. Navigates to the "album" view and clears the current song data in AppData.
