@@ -1,48 +1,52 @@
 package com.juanite.controller;
 
 import com.juanite.App;
+import com.juanite.model.DAO.PlaylistDAO;
 import com.juanite.model.DAO.SongDAO;
+import com.juanite.model.domain.Playlist;
 import com.juanite.model.domain.Song;
 import com.juanite.util.AppData;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
-public class PlayController {
-
+public class PlaylistController {
     @FXML
-    private Button homeButton;
-
+    public ImageView img_avatar;
     @FXML
-    private Button exploreButton;
-
+    public Button homeButton;
     @FXML
-    private Button myListsButton;
-
+    public Button exploreButton;
     @FXML
-    private Button logOutButton;
-
+    public Button myListsButton;
     @FXML
-    private Button profileButton;
-
+    public Button logOutButton;
     @FXML
-    private ImageView image;
-
+    public Button profileButton;
     @FXML
-    private Text nameAlbum;
-
+    public TextField searchTextField;
     @FXML
-    private Text nameArtist;
-
+    public Button searchButton;
+    @FXML
+    public Label messageLabel;
+    @FXML
+    public ListView songListView;
+    @FXML
+    public Button btn_goSong;
+    @FXML
+    public Button btn_removeSong;
     private String botonEstiloOriginal;
-
-    private int songId;
+    private ObservableList<Song> plSongs;
 
     public void initialize() {
         botonEstiloOriginal = homeButton.getStyle();
@@ -62,36 +66,31 @@ public class PlayController {
         profileButton.setOnMouseEntered(event -> changeColorButtonprofile(true));
         profileButton.setOnMouseExited(event -> changeColorButtonprofile(false));
 
-        Song song = AppData.getCurrentSong();
+        plSongs = FXCollections.observableArrayList();
+        plSongs.addAll(AppData.getCurrentPL().getSongs());
+        songListView.setItems(plSongs);
+    }
 
-        if (song != null) {
-            // Obtén la URL de la imagen y el nombre del álbum de la instancia de Song:
-            String imageUrl = song.getAlbum().getPhoto();
-            String albumName = song.getAlbum().getName();
+    public void goToSong() throws IOException {
+        if(songListView.getSelectionModel().getSelectedItem() != null) {
+            AppData.setCurrentSong(((Song)songListView.getSelectionModel().getSelectedItem()));
+            App.setRoot("play");
+        }
+    }
 
-            AppData.setCurrentAlbum(song.getAlbum());
-
-            // Obtén el nombre del artista del álbum
-            String artistName = song.getAlbum().getArtists().toString();
-
-            AppData.setCurrentArtist(song.getAlbum().getArtists());
-
-            // Actualiza el ImageView y el Text con los datos recuperados:
-            if (imageUrl != null && !imageUrl.equals("")) {
-                image.setImage(new Image(getClass().getResourceAsStream(AppData.getCurrentAlbum().getPhoto())));
-            }
-
-            if (albumName != null) {
-                nameAlbum.setText(albumName);
-            }
-
-            // Actualiza el campo de texto para el artista del álbum
-            if (artistName != null) {
-                nameArtist.setText(artistName);
+    public void removeSong() {
+        if(songListView.getSelectionModel().getSelectedItem() != null) {
+            try(SongDAO sdao = new SongDAO(((Song)songListView.getSelectionModel().getSelectedItem()))) {
+                plSongs.remove(sdao);
+                try(PlaylistDAO pldao = new PlaylistDAO(AppData.getCurrentPL())) {
+                    pldao.removeSong(sdao);
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         }
-
     }
+
 
     /**
      * Change the color of the Home button based on mouse interaction.
@@ -164,9 +163,6 @@ public class PlayController {
      */
     @FXML
     private void handleHomeButton() {
-        AppData.setCurrentSong(null);
-        AppData.setCurrentAlbum(null);
-        AppData.setCurrentArtist(null);
         try {
             App.setRoot("home");
         } catch (IOException e) {
@@ -180,13 +176,35 @@ public class PlayController {
      */
     @FXML
     private void handleLogOutButton() {
-        AppData.setCurrentSong(null);
-        AppData.setCurrentAlbum(null);
-        AppData.setCurrentArtist(null);
         try {
-            App.setRoot("signup");
+            App.setRoot("login");
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Handles the search button event. Performs a search in the database and displays the results in the "play" view.
+     */
+    @FXML
+    private void handleSearchButton() {
+
+        String searchTerm = searchTextField.getText();
+        if (!searchTerm.isEmpty()) {
+            Set<Playlist> playlistSet = new PlaylistDAO(new Playlist()).getSearchResults(searchTerm);
+            List<Playlist> searchResults = new ArrayList<>();
+            searchResults.addAll(playlistSet);
+            if (!searchResults.isEmpty()) {
+                AppData.setSearchResults(null);
+                AppData.setSearchResultsPl(searchResults);
+                try {
+                    App.setRoot("searchResult");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                messageLabel.setText("Playlist no encontrada.");
+            }
         }
     }
 
@@ -198,66 +216,4 @@ public class PlayController {
     public void goToPlaylists() throws IOException {
         App.setRoot("playlists");
     }
-
-
-    /*public void setSongId(int songId) {
-        this.songId = songId;
-
-        SongDAO songDAO = new SongDAO();
-        Song song = songDAO.getByIdReturnSong(songId);
-
-        if (song != null) {
-            // Obtén la URL de la imagen y el nombre del álbum de la instancia de Song:
-            String imageUrl = song.getUrl();
-            String albumName = song.getAlbum().getName();
-
-            // Obtén el nombre del artista del álbum
-            String artistName = song.getAlbum().getArtists().toString();
-
-            // Actualiza el ImageView y el Text con los datos recuperados:
-            if (imageUrl != null) {
-                Image imageFromDatabase = new Image(imageUrl);
-                image.setImage(imageFromDatabase);
-            }
-
-            if (albumName != null) {
-                nameAlbum.setText(albumName);
-            }
-
-            // Actualiza el campo de texto para el artista del álbum
-            if (artistName != null) {
-                nameArtist.setText(artistName);
-            }
-        }
-    }*/
-
-    /**
-     * Handles a click on the album name text. Navigates to the "album" view and clears the current song data in AppData.
-     */
-    @FXML
-    private void handleNameAlbumTextClick() {
-
-        try {
-            App.setRoot("album");
-            AppData.setCurrentSong(null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Handles a click on the artist name text. Navigates to the "artist" view and clears the current song and album data in AppData.
-     */
-    @FXML
-    private void handleNameArtistTextClick() {
-
-        try {
-            App.setRoot("artist");
-            AppData.setCurrentSong(null);
-            AppData.setCurrentAlbum(null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
-
