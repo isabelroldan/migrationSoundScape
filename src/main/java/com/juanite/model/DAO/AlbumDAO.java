@@ -1,7 +1,6 @@
 package com.juanite.model.DAO;
 
 import com.juanite.connection.ConnectionMySQL;
-import com.juanite.model.Countries;
 import com.juanite.model.domain.Album;
 import com.juanite.model.domain.Artist;
 import com.juanite.model.domain.Song;
