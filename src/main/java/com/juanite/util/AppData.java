@@ -13,6 +13,7 @@ public class AppData {
     private static List<Artist> currentArtist;
     private static Album currentAlbum;
     private static List<Song> searchResults;
+    private static List<Playlist> searchResultsPl;
 
     public static PasswordAuthentication getPa() {
         return pa;
@@ -68,5 +69,13 @@ public class AppData {
 
     public static void setSearchResults(List<Song> searchResults) {
         AppData.searchResults = searchResults;
+    }
+
+    public static List<Playlist> getSearchResultsPl() {
+        return searchResultsPl;
+    }
+
+    public static void setSearchResultsPl(List<Playlist> searchResultsPl) {
+        AppData.searchResultsPl = searchResultsPl;
     }
 }

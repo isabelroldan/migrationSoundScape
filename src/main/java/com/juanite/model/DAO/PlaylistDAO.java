@@ -2,6 +2,7 @@ package com.juanite.model.DAO;
 
 import com.juanite.connection.ConnectionMySQL;
 import com.juanite.model.Countries;
+import com.juanite.model.Genres;
 import com.juanite.model.domain.*;
 import com.juanite.util.AppData;
 
@@ -30,6 +31,8 @@ public class PlaylistDAO extends Playlist implements iPlaylistDAO {
     private final static String SELECTBYSONG = "SELECT id_playlist FROM song_playlist WHERE id_song=?";
     private final static String SELECTBYSUBSCRIBER="SELECT id_playlist FROM user_playlist WHERE id_person=?";
     private final static String SELECTSUBSCRIBERS="SELECT id_person FROM user_playlist WHERE id_playlist=?";
+    private final static String SELECTCONTAININGPLAYLISTNAMES = "SELECT id, name, description, id_person FROM playlist WHERE name LIKE ?";
+
 
     public PlaylistDAO(int id, String name, String description, User owner, List<Song> songs, List<User> subscribers, List<Comment> comments){
         super(id, name, description, owner, songs, subscribers, comments);
@@ -543,6 +546,27 @@ public class PlaylistDAO extends Playlist implements iPlaylistDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+        return result;
+    }
+
+    public Set<Playlist> getSearchResults(String searchInput) {
+        Connection conn = ConnectionMySQL.getConnect();
+        Set<Playlist> result = new HashSet<>();
+        try (PreparedStatement ps = conn.prepareStatement(SELECTCONTAININGPLAYLISTNAMES)) {
+            ps.setString(1, "%" + searchInput + "%");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Playlist pl = new Playlist();
+                    pl.setId(rs.getInt("id"));
+                    pl.setName(rs.getString("name"));
+                    pl.setDescription(rs.getString("description"));
+                    pl.setOwner(AppData.getCurrentUser());
+                    result.add(pl);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return result;
     }
