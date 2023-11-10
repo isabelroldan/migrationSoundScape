@@ -34,7 +34,7 @@ public class Comment {
         return date_time;
     }
 
-    public Person getUser() {
+    public User getUser() {
         return user;
     }
 
