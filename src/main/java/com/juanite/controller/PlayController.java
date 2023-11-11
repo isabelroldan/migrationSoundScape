@@ -26,6 +26,10 @@ public class PlayController {
     @FXML
     public ChoiceBox<Playlist> selector_playlist;
     @FXML
+    public Button btn_next;
+    @FXML
+    public Button btn_previous;
+    @FXML
     private Button homeButton;
 
     @FXML
@@ -71,14 +75,16 @@ public class PlayController {
         profileButton.setOnMouseEntered(event -> changeColorButtonprofile(true));
         profileButton.setOnMouseExited(event -> changeColorButtonprofile(false));
 
-        if(AppData.getCurrentPL() != null) {
-            playlists = FXCollections.observableArrayList();
-            playlists.clear();
-            playlists.addAll(AppData.getCurrentUser().getPlaylists());
-            selector_playlist.setItems(playlists);
-            selector_playlist.setVisible(true);
+        playlists = FXCollections.observableArrayList();
+        playlists.clear();
+        playlists.addAll(AppData.getCurrentUser().getPlaylists());
+        selector_playlist.setItems(playlists);
+        if(AppData.getCurrentPL()!=null && !AppData.getCurrentPL().getSongs().isEmpty()) {
+            btn_next.setVisible(true);
+            btn_previous.setVisible(true);
         }else{
-            selector_playlist.setVisible(false);
+            btn_next.setVisible(false);
+            btn_previous.setVisible(false);
         }
 
         Song song = AppData.getCurrentSong();
@@ -123,6 +129,24 @@ public class PlayController {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public void nextSong() {
+        if(AppData.getCurrentPL().getSongs().indexOf(AppData.getCurrentSong()) != AppData.getCurrentPL().getSongs().size() - 1) {
+            AppData.setCurrentSong(AppData.getCurrentPL().getSongs().get(AppData.getCurrentPL().getSongs().indexOf(AppData.getCurrentSong()) + 1));
+        } else {
+            AppData.setCurrentSong(AppData.getCurrentPL().getSongs().get(0));
+        }
+        initialize();
+    }
+
+    public void previousSong() {
+        if(AppData.getCurrentPL().getSongs().indexOf(AppData.getCurrentSong()) != 0) {
+            AppData.setCurrentSong(AppData.getCurrentPL().getSongs().get(AppData.getCurrentPL().getSongs().indexOf(AppData.getCurrentSong()) - 1));
+        } else {
+            AppData.setCurrentSong(AppData.getCurrentPL().getSongs().get(AppData.getCurrentPL().getSongs().size() - 1));
+        }
+        initialize();
     }
 
     /**

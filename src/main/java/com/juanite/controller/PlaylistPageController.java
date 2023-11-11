@@ -3,6 +3,7 @@ package com.juanite.controller;
 import com.juanite.App;
 import com.juanite.model.DAO.PlaylistDAO;
 import com.juanite.model.DAO.SongDAO;
+import com.juanite.model.DAO.UserDAO;
 import com.juanite.model.domain.Playlist;
 import com.juanite.model.domain.Song;
 import com.juanite.util.AppData;
@@ -75,6 +76,8 @@ public class PlaylistPageController {
         profileButton.setOnMouseEntered(event -> changeColorButtonprofile(true));
         profileButton.setOnMouseExited(event -> changeColorButtonprofile(false));
 
+        ((UserDAO)AppData.getCurrentUser()).getById(AppData.getCurrentUser().getId());
+
         myPlaylists = FXCollections.observableArrayList();
         myFavoritePlaylists = FXCollections.observableArrayList();
         myPlaylists.removeAll();
@@ -83,6 +86,8 @@ public class PlaylistPageController {
         myFavoritePlaylists.addAll(AppData.getCurrentUser().getFavoritePlaylists());
         playlists.setItems(myPlaylists);
         favorite_playlist.setItems(myFavoritePlaylists);
+        playlists.refresh();
+        favorite_playlist.refresh();
     }
 
     public void createNewMyPlaylist() {
