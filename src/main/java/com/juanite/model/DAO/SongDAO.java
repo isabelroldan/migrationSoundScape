@@ -248,13 +248,7 @@ public class SongDAO extends Song implements iSongDAO {
             if (ps.execute()) {
                 try (ResultSet rs = ps.getResultSet()) {
                     while (rs.next()) {
-                        Song song = new Song();
-                        song.setId(rs.getInt("id"));
-                        song.setName(rs.getString("name"));
-                        song.setDuration(rs.getInt("duration"));
-                        song.setGenre(Genres.valueOf(rs.getString("genre")));
-                        song.setUrl(rs.getString("url"));
-                        song.setAlbum(new AlbumDAO(getId()));
+                        Song song = new SongDAO(rs.getInt("id_song"));
                         result.add(song);
                     }
                 }

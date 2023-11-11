@@ -66,12 +66,12 @@
             </font>
          </Button>
          <Slider layoutX="24.0" layoutY="22.0" prefHeight="14.0" prefWidth="562.0" />
-         <Button layoutX="372.0" layoutY="80.0" prefHeight="42.0" prefWidth="20.0" style="-fx-background-color: #ffffff; -fx-font-size: 25px; -fx-text-fill: black; -fx-background-radius: 10px;" text="⊵">
+         <Button fx:id="btn_next" layoutX="372.0" layoutY="80.0" onAction="#nextSong" prefHeight="42.0" prefWidth="20.0" style="-fx-background-color: #ffffff; -fx-font-size: 25px; -fx-text-fill: black; -fx-background-radius: 10px;" text="⊵">
             <font>
                <Font size="43.0" />
             </font>
          </Button>
-         <Button layoutX="193.0" layoutY="80.0" prefHeight="42.0" prefWidth="20.0" style="-fx-background-color: #ffffff; -fx-font-size: 25px; -fx-text-fill: black; -fx-background-radius: 10px;" text="⊴">
+         <Button fx:id="btn_previous" layoutX="193.0" layoutY="80.0" onAction="#previousSong" prefHeight="42.0" prefWidth="20.0" style="-fx-background-color: #ffffff; -fx-font-size: 25px; -fx-text-fill: black; -fx-background-radius: 10px;" text="⊴">
             <font>
                <Font size="43.0" />
             </font>

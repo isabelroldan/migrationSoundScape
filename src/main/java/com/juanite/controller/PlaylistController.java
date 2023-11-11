@@ -73,8 +73,12 @@ public class PlaylistController {
         profileButton.setOnMouseExited(event -> changeColorButtonprofile(false));
 
         plSongs = FXCollections.observableArrayList();
+        List<Song> songs = new ArrayList<>();
+        songs.addAll(new SongDAO(new Song()).getByPlaylist(AppData.getCurrentPL()));
+        AppData.getCurrentPL().setSongs(songs);
         plSongs.addAll(AppData.getCurrentPL().getSongs());
         songListView.setItems(plSongs);
+        songListView.refresh();
         lbl_plName.setText(AppData.getCurrentPL().getName());
         txtfld_changeName.setVisible(false);
         if(AppData.getCurrentPL().getOwner().getId() == AppData.getCurrentUser().getId()) {

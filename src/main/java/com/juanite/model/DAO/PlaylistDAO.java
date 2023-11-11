@@ -144,7 +144,7 @@ public class PlaylistDAO extends Playlist implements iPlaylistDAO {
             setId(-1);
             return false;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Song already in that playlist");
             return false;
         }
     }
