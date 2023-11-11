@@ -1,11 +1,16 @@
 package com.juanite.controller;
 
 import com.juanite.App;
+import com.juanite.model.DAO.PlaylistDAO;
 import com.juanite.model.DAO.SongDAO;
+import com.juanite.model.domain.Playlist;
 import com.juanite.model.domain.Song;
 import com.juanite.util.AppData;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -15,7 +20,11 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 
 public class PlayController {
+    @FXML
 
+    public Button btn_addToPlaylist;
+    @FXML
+    public ChoiceBox<Playlist> selector_playlist;
     @FXML
     private Button homeButton;
 
@@ -42,7 +51,7 @@ public class PlayController {
 
     private String botonEstiloOriginal;
 
-    private int songId;
+    private ObservableList<Playlist> playlists;
 
     public void initialize() {
         botonEstiloOriginal = homeButton.getStyle();
@@ -61,6 +70,16 @@ public class PlayController {
 
         profileButton.setOnMouseEntered(event -> changeColorButtonprofile(true));
         profileButton.setOnMouseExited(event -> changeColorButtonprofile(false));
+
+        if(AppData.getCurrentPL() != null) {
+            playlists = FXCollections.observableArrayList();
+            playlists.clear();
+            playlists.addAll(AppData.getCurrentUser().getPlaylists());
+            selector_playlist.setItems(playlists);
+            selector_playlist.setVisible(true);
+        }else{
+            selector_playlist.setVisible(false);
+        }
 
         Song song = AppData.getCurrentSong();
 
@@ -91,6 +110,19 @@ public class PlayController {
             }
         }
 
+    }
+
+    public void addToPlaylist() {
+        if(selector_playlist.getSelectionModel().getSelectedItem() != null) {
+            try(PlaylistDAO pdao = new PlaylistDAO(selector_playlist.getSelectionModel().getSelectedItem())) {
+                pdao.saveSong(AppData.getCurrentSong());
+                pdao.getById(pdao.getId());
+                AppData.getCurrentUser().getPlaylists().remove(pdao);
+                AppData.getCurrentUser().getPlaylists().add(pdao);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     /**
