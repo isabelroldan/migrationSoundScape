@@ -7,6 +7,7 @@ import com.juanite.model.domain.User;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -150,7 +151,8 @@ public class CommentDAO extends Comment implements iCommentDAO{
                         setId(rs.getInt("id"));
                         setComment(rs.getString("comment"));
                         String dateTimeString = rs.getString("date_time");
-                        LocalDateTime dateTime = LocalDateTime.parse(dateTimeString);
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                        LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, formatter);
                         setDate_time(dateTime);
                         setUser(new UserDAO(rs.getInt("id_person")));
                         setPlaylist(new PlaylistDAO(rs.getInt("id_playlist")));
@@ -185,7 +187,8 @@ public class CommentDAO extends Comment implements iCommentDAO{
                         c.setId(rs.getInt("id"));
                         c.setComment(rs.getString("comment"));
                         String dateTimeString = rs.getString("date_time");
-                        LocalDateTime dateTime = LocalDateTime.parse(dateTimeString);
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                        LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, formatter);
                         c.setDate_time(dateTime);
                         c.setUser(new UserDAO(rs.getInt("id_person")));
                         c.setPlaylist(new PlaylistDAO(rs.getInt("id_playlist")));
@@ -222,7 +225,8 @@ public class CommentDAO extends Comment implements iCommentDAO{
                         c.setId(rs.getInt("id"));
                         c.setComment(rs.getString("comment"));
                         String dateTimeString = rs.getString("date_time");
-                        LocalDateTime dateTime = LocalDateTime.parse(dateTimeString);
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                        LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, formatter);
                         c.setDate_time(dateTime);
                         c.setUser(new UserDAO(rs.getInt("id_person")));
                         c.setPlaylist(playlist);
@@ -259,7 +263,8 @@ public class CommentDAO extends Comment implements iCommentDAO{
                         c.setId(rs.getInt("id"));
                         c.setComment(rs.getString("comment"));
                         String dateTimeString = rs.getString("date_time");
-                        LocalDateTime dateTime = LocalDateTime.parse(dateTimeString);
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                        LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, formatter);
                         c.setDate_time(dateTime);
                         c.setUser(user);
                         c.setPlaylist(new PlaylistDAO(rs.getInt("id_playlist")));
