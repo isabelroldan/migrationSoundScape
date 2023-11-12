@@ -14,6 +14,7 @@ public class AppData {
     private static Album currentAlbum;
     private static List<Song> searchResults;
     private static List<Playlist> searchResultsPl;
+    private static Comment currentComment;
 
     public static PasswordAuthentication getPa() {
         return pa;
@@ -77,5 +78,13 @@ public class AppData {
 
     public static void setSearchResultsPl(List<Playlist> searchResultsPl) {
         AppData.searchResultsPl = searchResultsPl;
+    }
+
+    public static Comment getCurrentComment() {
+        return currentComment;
+    }
+
+    public static void setCurrentComment(Comment currentComment) {
+        AppData.currentComment = currentComment;
     }
 }
