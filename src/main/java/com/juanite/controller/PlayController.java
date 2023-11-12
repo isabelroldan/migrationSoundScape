@@ -16,8 +16,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.advanced.AdvancedPlayer;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class PlayController {
     @FXML
@@ -287,6 +292,28 @@ public class PlayController {
             AppData.setCurrentAlbum(null);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    /*AppData.getCurrentSong().getUrl();*/
+    @FXML
+    public void playSong() {
+        if (AppData.getCurrentSong() != null) {
+            /*String songPath = "/com/juanite/songs/badbunny_vete.mp3";*/ // Ruta relativa al classpath
+            String songPath = AppData.getCurrentSong().getUrl();;
+
+            try {
+                InputStream inputStream = getClass().getResourceAsStream(songPath);
+
+                if (inputStream != null) {
+                    AdvancedPlayer player = new AdvancedPlayer(inputStream);
+                    player.play();
+                } else {
+                    // El archivo no se pudo cargar
+                    System.err.println("No se pudo cargar el archivo de música.");
+                }
+            } catch (JavaLayerException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

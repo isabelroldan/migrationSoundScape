@@ -60,7 +60,7 @@
     <Pane layoutX="199.0" prefHeight="600.0" prefWidth="600.0" />
    <Pane layoutX="199.0" layoutY="426.0" prefHeight="184.0" prefWidth="610.0" style="-fx-background-color: #272727;">
       <children>
-         <Button layoutX="274.0" layoutY="73.0" prefHeight="66.0" prefWidth="63.0" style="-fx-background-color: #ffffff; -fx-font-size: 30px; -fx-text-fill: black; -fx-background-radius: 10px;" text="▶">
+         <Button onAction="#playSong" layoutX="274.0" layoutY="73.0" prefHeight="66.0" prefWidth="63.0" style="-fx-background-color: #ffffff; -fx-font-size: 30px; -fx-text-fill: black; -fx-background-radius: 10px;" text="▶">
             <font>
                <Font size="43.0" />
             </font>

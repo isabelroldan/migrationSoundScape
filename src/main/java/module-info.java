@@ -3,6 +3,7 @@ module com.juanite {
     requires javafx.fxml;
     requires java.sql;
     requires java.xml.bind;
+    requires jlayer;
 
     opens com.juanite to javafx.fxml;
     exports com.juanite;
