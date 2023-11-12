@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.juanite.controller.PlaylistController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.juanite.controller.CommentController">
 
     <Pane prefHeight="610.0" prefWidth="200.0" style="-fx-background-color: #8c8c8c;">
         <children>
@@ -27,18 +27,13 @@
     </Pane>
     <Pane layoutX="200.0" layoutY="5.0" prefHeight="600.0" prefWidth="600.0">
       <children>
-         <ListView fx:id="songListView" layoutX="36.0" layoutY="159.0" prefHeight="350.0" prefWidth="528.0" style="-fx-background-color: #909497; -fx-background-radius: 20px;" />
-          <Button fx:id="btn_goSong" layoutX="81.0" layoutY="522.0" onAction="#goToSong" prefHeight="31.0" prefWidth="133.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="GO TO SONG">
+         <ListView fx:id="commentListView" layoutX="36.0" layoutY="159.0" prefHeight="350.0" prefWidth="528.0" style="-fx-background-color: #909497; -fx-background-radius: 20px;" />
+          <Button fx:id="btn_showComment" layoutX="395.0" layoutY="524.0" onAction="#showComment" prefHeight="31.0" prefWidth="145.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="SHOW COMMENT">
               <font>
                   <Font size="15.0" />
               </font>
           </Button>
-         <Button fx:id="btn_removeSong" layoutX="234.0" layoutY="522.0" onAction="#removeSong" prefHeight="31.0" prefWidth="133.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="REMOVE SONG">
-            <font>
-               <Font size="15.0" />
-            </font>
-         </Button>
-         <Button fx:id="btn_changeName" layoutX="431.0" layoutY="117.0" onAction="#changePlaylistName" prefHeight="31.0" prefWidth="133.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="RENAME">
+         <Button fx:id="btn_addComment" layoutX="58.0" layoutY="524.0" onAction="#addComment" prefHeight="31.0" prefWidth="133.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="ADD COMMENT">
             <font>
                <Font size="15.0" />
             </font>
@@ -48,12 +43,42 @@
                <Font name="System Bold" size="18.0" />
             </font>
          </Label>
-         <TextField fx:id="txtfld_changeName" layoutX="36.0" layoutY="118.0" prefHeight="30.0" prefWidth="380.0" style="-fx-background-color: #8c8c8c;-fx-text-fill: black;" />
-         <Button fx:id="btn_comments" layoutX="387.0" layoutY="522.0" onAction="#goToComments" prefHeight="31.0" prefWidth="133.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="COMMENTS">
+         <Label fx:id="lbl_userTitle" layoutX="128.0" layoutY="180.0" text="User:">
+            <font>
+               <Font name="System Bold" size="18.0" />
+            </font>
+         </Label>
+         <Label fx:id="lbl_timestampTitle" layoutX="71.0" layoutY="207.0" text="Timestamp:">
+            <font>
+               <Font name="System Bold" size="18.0" />
+            </font>
+         </Label>
+         <Label fx:id="lbl_commentTitle" layoutX="82.0" layoutY="234.0" text="Comment: ">
+            <font>
+               <Font name="System Bold" size="18.0" />
+            </font>
+         </Label>
+         <Label fx:id="lbl_user" layoutX="191.0" layoutY="180.0" prefHeight="27.0" prefWidth="360.0" text="Placeholder">
+            <font>
+               <Font name="System Bold" size="18.0" />
+            </font>
+         </Label>
+         <Label fx:id="lbl_timestamp" layoutX="191.0" layoutY="207.0" prefHeight="27.0" prefWidth="360.0" text="Placeholder">
+            <font>
+               <Font name="System Bold" size="18.0" />
+            </font>
+         </Label>
+         <Label fx:id="lbl_comment" alignment="TOP_LEFT" layoutX="191.0" layoutY="234.0" prefHeight="260.0" prefWidth="360.0" text="Placeholder">
+            <font>
+               <Font name="System Bold" size="18.0" />
+            </font>
+         </Label>
+         <Button fx:id="btn_back" layoutX="234.0" layoutY="524.0" onAction="#back" prefHeight="31.0" prefWidth="133.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="BACK">
             <font>
                <Font size="15.0" />
             </font>
          </Button>
+         <TextArea fx:id="txt_newComment" layoutX="191.0" layoutY="234.0" prefHeight="275.0" prefWidth="360.0" />
       </children></Pane>
     <ImageView fx:id="img_avatar" fitHeight="18.0" fitWidth="19.0" layoutX="567.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="42.0" />
     <TextField fx:id="searchTextField" layoutX="224.0" layoutY="37.0" prefHeight="30.0" prefWidth="478.0" promptText="Buscar una canción" style="-fx-background-color: #8c8c8c;-fx-text-fill: black;" AnchorPane.leftAnchor="224.0" AnchorPane.rightAnchor="96.60000000000002" AnchorPane.topAnchor="37.0" />
