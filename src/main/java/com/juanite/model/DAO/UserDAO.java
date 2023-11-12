@@ -302,7 +302,7 @@ public class UserDAO extends User implements iUserDAO {
                 pst.setString(1, username);
                 try (ResultSet res = pst.executeQuery()) {
                     if(res.next()) {
-                        return username.equals(res.getString("username"));
+                        return username.equals(res.getString("name"));
                     }
                 }
             }
