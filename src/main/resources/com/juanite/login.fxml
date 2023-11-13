@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #424949;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.juanite.controller.LoginController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #424949;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.juanite.controller.LoginController">
    <children>
-      <Pane layoutX="181.0" layoutY="56.0" prefHeight="288.0" prefWidth="238.0" style="-fx-background-color: #CACFD2; -fx-background-radius: 5px;">
+      <Pane layoutX="281.0" layoutY="156.0" prefHeight="288.0" prefWidth="238.0" style="-fx-background-color: #CACFD2; -fx-background-radius: 5px;">
          <children>
             <Label layoutX="85.0" layoutY="22.0" style="-fx-font-size: 20; -fx-font-weight: bold;" text="LOG IN" textFill="WHITE" />
             <TextField fx:id="usernameField" alignment="CENTER" layoutX="112.0" layoutY="82.0" prefHeight="26.0" prefWidth="96.0" promptText="UserName" />
@@ -17,13 +17,13 @@
             <Label layoutX="29.0" layoutY="149.0" text="Password" />
          </children>
       </Pane>
-      <Button layoutX="444.0" layoutY="357.0" onAction="#signUpView" style="-fx-text-fill: black; -fx-background-color: white; -fx-background-radius: 25px;" text="I don´t have an account" />
-      <ImageView fitHeight="90.0" fitWidth="102.0" layoutX="47.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+      <Button layoutX="634.0" layoutY="548.0" onAction="#signUpView" style="-fx-text-fill: black; -fx-background-color: white; -fx-background-radius: 25px;" text="I don´t have an account" />
+      <ImageView fitHeight="110.0" fitWidth="123.0" layoutX="43.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/Logo.png" />
          </image>
       </ImageView>
-      <Label layoutX="40.0" layoutY="134.0" text="SoundScape" textFill="WHITE">
+      <Label layoutX="46.0" layoutY="156.0" text="SoundScape" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

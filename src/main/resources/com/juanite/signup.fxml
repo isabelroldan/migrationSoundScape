@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #424949;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.juanite.controller.SignUpController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #424949;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.juanite.controller.SignUpController">
     <children>
-        <Pane layoutX="181.0" layoutY="17.0" prefHeight="366.0" prefWidth="237.0" style="-fx-background-color: #CACFD2; -fx-background-radius: 5px;">
+        <Pane layoutX="281.0" layoutY="125.0" prefHeight="366.0" prefWidth="237.0" style="-fx-background-color: #CACFD2; -fx-background-radius: 5px;">
             <children>
                 <Label layoutX="75.0" layoutY="43.0" style="-fx-font-size: 20; -fx-font-weight: bold;" text="Sign Up" textFill="WHITE" />
                 <TextField fx:id="emailField" alignment="CENTER" layoutX="112.0" layoutY="103.0" prefHeight="26.0" prefWidth="96.0" promptText="Email" />
@@ -19,12 +19,13 @@
                 <Label layoutX="31.0" layoutY="215.0" text="Password" />
             </children>
         </Pane>
-        <ImageView fitHeight="90.0" fitWidth="102.0" layoutX="47.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+        <Button layoutX="695.0" layoutY="547.0" onAction="#LogIn" prefHeight="26.0" prefWidth="63.0" style="-fx-text-fill: black; -fx-background-color: white; -fx-background-radius: 25px;" text="LogIn" />
+        <ImageView fitHeight="111.0" fitWidth="119.0" layoutX="37.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@images/Logo.png" />
             </image>
         </ImageView>
-        <Label layoutX="40.0" layoutY="134.0" text="SoundScape" textFill="WHITE">
+        <Label layoutX="41.0" layoutY="155.0" text="SoundScape" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>

@@ -46,5 +46,11 @@ public class SignUpController {
         App.setRoot("home");
     }
 
+    @FXML
+    public void LogIn() throws IOException {
+        App.setRoot("login");
+    }
+
+
 
 }
