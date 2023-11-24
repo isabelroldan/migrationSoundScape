@@ -87,9 +87,10 @@ public class AlbumController {
     }
 
     private void handleSongClick(MouseEvent event) {
-        if (event.getClickCount() == 1) {
+        if (event.getClickCount() == 2) {  // Cambiado a doble clic
             Song selectedSong = songListView.getSelectionModel().getSelectedItem();
             if (selectedSong != null) {
+                AppData.setCurrentSong(selectedSong);  // Establecer la canción seleccionada en AppData
                 loadPlayView(selectedSong);
             }
         }
