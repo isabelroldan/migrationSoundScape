@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -9,8 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.control.ListView?>
-<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.juanite.controller.HomeController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.juanite.controller.HomeController">
 
     <Pane prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: #8c8c8c;">
         <children>
@@ -21,27 +21,27 @@
             </Text>
 
 
-            <Button fx:id="homeButton" layoutX="7.0" layoutY="84.0" onAction="#handleHomeButton" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="🏠   Inicio">
+            <Button id="inicio" fx:id="homeButton" layoutX="7.0" layoutY="84.0" onAction="#handleHomeButton" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="🏠   Inicio">
                 <font>
                     <Font size="15.0" /> <!-- Aquí establece el tamaño deseado -->
                 </font>
             </Button>
-            <Button fx:id="exploreButton" layoutX="8.0" layoutY="147.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="🎓  Explorar">
+            <Button id="explorar" fx:id="exploreButton" layoutX="8.0" layoutY="147.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="🎓  Explorar">
                 <font>
                     <Font size="15.0" /> <!-- Configura el tamaño deseado -->
                 </font>
             </Button>
-            <Button fx:id="myListsButton" layoutX="8.0" layoutY="217.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="🖤   Mis Listas">
+            <Button id="misListas" fx:id="myListsButton" layoutX="8.0" layoutY="217.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="🖤   Mis Listas">
                 <font>
                     <Font size="15.0" /> <!-- Configura el tamaño deseado -->
                 </font>
             </Button>
-            <Button fx:id="logOutButton" layoutX="6.0" layoutY="530.0" onAction="#handleLogOutButton" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="🌑  Cerrar Sesión">
+            <Button id="cerrarSesion" fx:id="logOutButton" layoutX="6.0" layoutY="530.0" onAction="#handleLogOutButton" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="🌑  Cerrar Sesión">
                 <font>
                     <Font size="15.0" /> <!-- Configura el tamaño deseado -->
                 </font>
             </Button>
-            <Button fx:id="profileButton" layoutX="6.0" layoutY="483.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="🙍‍♀️ Mi perfil">
+            <Button id="miPerfil" fx:id="profileButton" layoutX="6.0" layoutY="483.0" prefHeight="30.0" prefWidth="185.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="🙍‍♀️ Mi perfil">
                 <font>
                     <Font size="15.0" /> <!-- Configura el tamaño deseado -->
                 </font>
@@ -57,21 +57,19 @@
     </VBox>
    <Pane layoutX="199.0" prefHeight="600.0" prefWidth="600.0">
       <children>
-         <Text id="nombreArtista" fill="WHITE" layoutX="26.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="N. ARTISTA" wrappingWidth="103.95832824707043">
+         <Text id="nombreArtista" fill="WHITE" layoutX="27.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="N. ARTISTA" wrappingWidth="103.95832824707043">
             <font>
                <Font name="Tw Cen MT" size="20.0" />
             </font>
          </Text>
-          <Pane layoutX="200.0" layoutY="5.0" prefHeight="600.0" prefWidth="600.0">
-              <children>
-                  <ListView fx:id="songListView" layoutX="36.0" layoutY="225.0" prefHeight="350.0" prefWidth="528.0" style="-fx-background-color: #909497; -fx-background-radius: 20px;"/>
-              </children></Pane>
-         <Text id="textoPopulares" fill="WHITE" layoutX="26.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POPULARES" wrappingWidth="103.95832824707043">
+          <Pane layoutX="150.0" layoutY="174.0" prefHeight="195.0" prefWidth="222.0" />
+         <Text id="textoPopulares" fill="WHITE" layoutX="27.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POPULARES" wrappingWidth="103.95832824707043">
             <font>
                <Font name="Tw Cen MT" size="19.0" />
             </font>
          </Text>
-         <ImageView id="imagenArtista" fitHeight="187.0" fitWidth="609.0" layoutX="-3.0" pickOnBounds="true" preserveRatio="true" />
+         <ImageView id="imagenArtista" fitHeight="174.0" fitWidth="609.0" pickOnBounds="true" preserveRatio="true" />
+         <ListView layoutX="31.0" layoutY="243.0" prefHeight="324.0" prefWidth="540.0" />
       </children>
    </Pane>
 
