@@ -1,12 +1,21 @@
 package com.juanite.model.domain;
 
+import com.juanite.util.AppData;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "USER")
 public class User extends Person {
+    @Column(name = "PHOTO")
     private String photo;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Playlist> playlists;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Playlist> favoritePlaylists;
 
     public User() {
@@ -76,5 +85,40 @@ public class User extends Person {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public static List<User> selectAllUsers() {
+        EntityManager em = AppData.getManager();
+        Query query = em.createQuery("FROM User", User.class);
+        List<User> users = query.getResultList();
+        return users;
+    }
+
+    public static User selectUserById(int id) {
+        EntityManager em = AppData.getManager();
+        User user = em.find(User.class, id);
+        return user;
+    }
+
+    public static void saveUser(User user) {
+        EntityManager em = AppData.getManager();
+        em.getTransaction().begin();
+        em.persist(user);
+        em.getTransaction().commit();
+    }
+
+    public static void updateUser(User user) {
+        EntityManager em = AppData.getManager();
+        em.getTransaction().begin();
+        em.merge(user);
+        em.getTransaction().commit();
+    }
+
+    public static void deleteUser(User user) {
+        EntityManager em = AppData.getManager();
+        em.getTransaction().begin();
+        user = em.merge(user);
+        em.remove(user);
+        em.getTransaction().commit();
     }
 }
