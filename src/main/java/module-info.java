@@ -4,6 +4,7 @@ module com.juanite {
     requires java.sql;
     requires java.xml.bind;
     requires jlayer;
+    requires java.persistence;
 
     opens com.juanite to javafx.fxml;
     exports com.juanite;

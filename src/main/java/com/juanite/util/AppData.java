@@ -2,6 +2,8 @@ package com.juanite.util;
 
 import com.juanite.model.domain.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 public class AppData {
@@ -15,6 +17,8 @@ public class AppData {
     private static List<Song> searchResults;
     private static List<Playlist> searchResultsPl;
     private static Comment currentComment;
+    private static EntityManager manager;
+    private static EntityManagerFactory emf;
 
     public static PasswordAuthentication getPa() {
         return pa;
@@ -86,5 +90,21 @@ public class AppData {
 
     public static void setCurrentComment(Comment currentComment) {
         AppData.currentComment = currentComment;
+    }
+
+    public static EntityManager getManager() {
+        return manager;
+    }
+
+    public static void setManager(EntityManager manager) {
+        AppData.manager = manager;
+    }
+
+    public static EntityManagerFactory getEmf() {
+        return emf;
+    }
+
+    public static void setEmf(EntityManagerFactory emf) {
+        AppData.emf = emf;
     }
 }

@@ -2,15 +2,25 @@ package com.juanite.model.domain;
 
 import com.juanite.model.Countries;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Artist {
+@Entity
+@Table(name="artist")
+public class Artist implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Column(name="id")
     private int id;
+    @Column(name="name")
     private String name;
+    @Column(name="nationality")
     private Countries nationality;
+    @Column(name="photo")
     private String photo;
     private List<Album> albumList;
 
