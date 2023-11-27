@@ -1,13 +1,32 @@
 package com.juanite.model.domain;
 
+import com.juanite.util.AppData;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "COMMENT")
 public class Comment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private int id;
+
+    @Column(name = "COMMENT_TEXT")
     private String comment;
+
+    @Column(name = "DATE_TIME")
     private LocalDateTime date_time;
+
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "PLAYLIST_ID")
     private Playlist playlist;
 
     public Comment(int id, String comment, LocalDateTime date_time, User user, Playlist playlist) {
@@ -82,5 +101,40 @@ public class Comment {
     @Override
     public String toString() {
         return comment;
+    }
+
+    public static List<Comment> selectAllComments() {
+        EntityManager em = AppData.getManager();
+        Query query = em.createQuery("FROM Comment", Comment.class);
+        List<Comment> comments = query.getResultList();
+        return comments;
+    }
+
+    public static Comment selectCommentById(int id) {
+        EntityManager em = AppData.getManager();
+        Comment comment = em.find(Comment.class, id);
+        return comment;
+    }
+
+    public static void saveComment(Comment comment) {
+        EntityManager em = AppData.getManager();
+        em.getTransaction().begin();
+        em.persist(comment);
+        em.getTransaction().commit();
+    }
+
+    public static void updateComment(Comment comment) {
+        EntityManager em = AppData.getManager();
+        em.getTransaction().begin();
+        em.merge(comment);
+        em.getTransaction().commit();
+    }
+
+    public static void deleteComment(Comment comment) {
+        EntityManager em = AppData.getManager();
+        em.getTransaction().begin();
+        comment = em.merge(comment);
+        em.remove(comment);
+        em.getTransaction().commit();
     }
 }
