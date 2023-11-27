@@ -1,12 +1,26 @@
 package com.juanite.model.domain;
 
+import com.juanite.util.AppData;
+
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "PERSON")
 public class Person {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     protected int id;
 
+    @Column(name = "NAME")
     protected String name;
+
+    @Column(name = "EMAIL")
     protected String email;
+
+    @Column(name = "PASSWORD")
     protected String password;
 
     public Person() {
@@ -73,5 +87,40 @@ public class Person {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, email, password);
+    }
+
+    public static List<Person> selectAllPersons() {
+        EntityManager em = AppData.getManager();
+        Query query = em.createQuery("FROM Person", Person.class);
+        List<Person> persons = query.getResultList();
+        return persons;
+    }
+
+    public static Person selectPersonById(int id) {
+        EntityManager em = AppData.getManager();
+        Person person = em.find(Person.class, id);
+        return person;
+    }
+
+    public static void savePerson(Person person) {
+        EntityManager em = AppData.getManager();
+        em.getTransaction().begin();
+        em.persist(person);
+        em.getTransaction().commit();
+    }
+
+    public static void updatePerson(Person person) {
+        EntityManager em = AppData.getManager();
+        em.getTransaction().begin();
+        em.merge(person);
+        em.getTransaction().commit();
+    }
+
+    public static void deletePerson(Person person) {
+        EntityManager em = AppData.getManager();
+        em.getTransaction().begin();
+        person = em.merge(person);
+        em.remove(person);
+        em.getTransaction().commit();
     }
 }
