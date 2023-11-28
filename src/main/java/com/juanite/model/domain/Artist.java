@@ -22,6 +22,7 @@ public class Artist implements Serializable {
     private Countries nationality;
     @Column(name="photo")
     private String photo;
+    @ManyToMany(mappedBy = "artists")
     private List<Album> albumList;
 
     public Artist() {
