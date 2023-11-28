@@ -89,6 +89,11 @@ public class Person {
         return Objects.hash(id, name, email, password);
     }
 
+    /**
+     * Retrieves all persons from the database.
+     *
+     * @return A List of Person objects representing all persons in the database.
+     */
     public static List<Person> selectAllPersons() {
         EntityManager em = AppData.getManager();
         Query query = em.createQuery("FROM Person", Person.class);
@@ -96,12 +101,23 @@ public class Person {
         return persons;
     }
 
+    /**
+     * Retrieves a person from the database based on their ID.
+     *
+     * @param id The ID of the person to retrieve.
+     * @return The Person object with the specified ID, or null if not found.
+     */
     public static Person selectPersonById(int id) {
         EntityManager em = AppData.getManager();
         Person person = em.find(Person.class, id);
         return person;
     }
 
+    /**
+     * Saves a new person to the database.
+     *
+     * @param person The Person object to be saved.
+     */
     public static void savePerson(Person person) {
         EntityManager em = AppData.getManager();
         em.getTransaction().begin();
@@ -109,6 +125,11 @@ public class Person {
         em.getTransaction().commit();
     }
 
+    /**
+     * Updates an existing person in the database.
+     *
+     * @param person The Person object to be updated.
+     */
     public static void updatePerson(Person person) {
         EntityManager em = AppData.getManager();
         em.getTransaction().begin();
@@ -116,6 +137,11 @@ public class Person {
         em.getTransaction().commit();
     }
 
+    /**
+     * Deletes a person from the database.
+     *
+     * @param person The Person object to be deleted.
+     */
     public static void deletePerson(Person person) {
         EntityManager em = AppData.getManager();
         em.getTransaction().begin();

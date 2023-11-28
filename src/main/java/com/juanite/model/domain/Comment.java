@@ -103,6 +103,11 @@ public class Comment {
         return comment;
     }
 
+    /**
+     * Retrieves all comments from the database.
+     *
+     * @return A List of Comment objects representing all comments in the database.
+     */
     public static List<Comment> selectAllComments() {
         EntityManager em = AppData.getManager();
         Query query = em.createQuery("FROM Comment", Comment.class);
@@ -110,12 +115,24 @@ public class Comment {
         return comments;
     }
 
+
+    /**
+     * Retrieves a comment from the database based on its ID.
+     *
+     * @param id The ID of the comment to retrieve.
+     * @return The Comment object with the specified ID, or null if not found.
+     */
     public static Comment selectCommentById(int id) {
         EntityManager em = AppData.getManager();
         Comment comment = em.find(Comment.class, id);
         return comment;
     }
 
+    /**
+     * Saves a new comment to the database.
+     *
+     * @param comment The Comment object to be saved.
+     */
     public static void saveComment(Comment comment) {
         EntityManager em = AppData.getManager();
         em.getTransaction().begin();
@@ -123,6 +140,11 @@ public class Comment {
         em.getTransaction().commit();
     }
 
+    /**
+     * Updates an existing comment in the database.
+     *
+     * @param comment The Comment object to be updated.
+     */
     public static void updateComment(Comment comment) {
         EntityManager em = AppData.getManager();
         em.getTransaction().begin();
@@ -130,6 +152,11 @@ public class Comment {
         em.getTransaction().commit();
     }
 
+    /**
+     * Deletes a comment from the database.
+     *
+     * @param comment The Comment object to be deleted.
+     */
     public static void deleteComment(Comment comment) {
         EntityManager em = AppData.getManager();
         em.getTransaction().begin();

@@ -87,6 +87,11 @@ public class User extends Person {
         return Objects.hash(id);
     }
 
+    /**
+     * Retrieves all users from the database.
+     *
+     * @return A List of User objects representing all users in the database.
+     */
     public static List<User> selectAllUsers() {
         EntityManager em = AppData.getManager();
         Query query = em.createQuery("FROM User", User.class);
@@ -94,12 +99,23 @@ public class User extends Person {
         return users;
     }
 
+    /**
+     * Retrieves a user from the database based on their ID.
+     *
+     * @param id The ID of the user to retrieve.
+     * @return The User object with the specified ID, or null if not found.
+     */
     public static User selectUserById(int id) {
         EntityManager em = AppData.getManager();
         User user = em.find(User.class, id);
         return user;
     }
 
+    /**
+     * Saves a new user to the database.
+     *
+     * @param user The User object to be saved.
+     */
     public static void saveUser(User user) {
         EntityManager em = AppData.getManager();
         em.getTransaction().begin();
@@ -107,6 +123,11 @@ public class User extends Person {
         em.getTransaction().commit();
     }
 
+    /**
+     * Updates an existing user in the database.
+     *
+     * @param user The User object to be updated.
+     */
     public static void updateUser(User user) {
         EntityManager em = AppData.getManager();
         em.getTransaction().begin();
@@ -114,6 +135,11 @@ public class User extends Person {
         em.getTransaction().commit();
     }
 
+    /**
+     * Deletes a user from the database.
+     *
+     * @param user The User object to be deleted.
+     */
     public static void deleteUser(User user) {
         EntityManager em = AppData.getManager();
         em.getTransaction().begin();
