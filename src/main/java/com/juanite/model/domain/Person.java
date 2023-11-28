@@ -1,12 +1,26 @@
 package com.juanite.model.domain;
 
+import com.juanite.util.AppData;
+
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "PERSON")
 public class Person {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     protected int id;
 
+    @Column(name = "NAME")
     protected String name;
+
+    @Column(name = "EMAIL")
     protected String email;
+
+    @Column(name = "PASSWORD")
     protected String password;
 
     public Person() {
@@ -73,5 +87,66 @@ public class Person {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, email, password);
+    }
+
+    /**
+     * Retrieves all persons from the database.
+     *
+     * @return A List of Person objects representing all persons in the database.
+     */
+    public static List<Person> selectAllPersons() {
+        EntityManager em = AppData.getManager();
+        Query query = em.createQuery("FROM Person", Person.class);
+        List<Person> persons = query.getResultList();
+        return persons;
+    }
+
+    /**
+     * Retrieves a person from the database based on their ID.
+     *
+     * @param id The ID of the person to retrieve.
+     * @return The Person object with the specified ID, or null if not found.
+     */
+    public static Person selectPersonById(int id) {
+        EntityManager em = AppData.getManager();
+        Person person = em.find(Person.class, id);
+        return person;
+    }
+
+    /**
+     * Saves a new person to the database.
+     *
+     * @param person The Person object to be saved.
+     */
+    public static void savePerson(Person person) {
+        EntityManager em = AppData.getManager();
+        em.getTransaction().begin();
+        em.persist(person);
+        em.getTransaction().commit();
+    }
+
+    /**
+     * Updates an existing person in the database.
+     *
+     * @param person The Person object to be updated.
+     */
+    public static void updatePerson(Person person) {
+        EntityManager em = AppData.getManager();
+        em.getTransaction().begin();
+        em.merge(person);
+        em.getTransaction().commit();
+    }
+
+    /**
+     * Deletes a person from the database.
+     *
+     * @param person The Person object to be deleted.
+     */
+    public static void deletePerson(Person person) {
+        EntityManager em = AppData.getManager();
+        em.getTransaction().begin();
+        person = em.merge(person);
+        em.remove(person);
+        em.getTransaction().commit();
     }
 }
