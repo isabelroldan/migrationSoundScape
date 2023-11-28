@@ -106,4 +106,6 @@ public class Artist implements Serializable {
     public String toString() {
         return name;
     }
+
+
 }
