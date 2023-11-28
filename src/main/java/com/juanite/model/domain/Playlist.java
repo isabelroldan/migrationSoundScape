@@ -1,17 +1,41 @@
 package com.juanite.model.domain;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Playlist {
+@Entity
+@Table(name="playlist")
+public class Playlist implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Column(name="id")
     private int id;
+    @Column(name="name")
     private String name;
+    @Column(name="description")
     private String description;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="id_user")
     private User owner;
+    @ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+    @JoinTable(
+            name = "song_playlist",
+            joinColumns = { @JoinColumn(name = "id_song") },
+            inverseJoinColumns = { @JoinColumn(name = "id_playlist") }
+    )
     private List<Song> songs;
+    @ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+    @JoinTable(
+            name = "user_playlist",
+            joinColumns = { @JoinColumn(name = "id_person") },
+            inverseJoinColumns = { @JoinColumn(name = "id_playlist") }
+    )
     private List<User> subscribers;
+    @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
     public Playlist() {
