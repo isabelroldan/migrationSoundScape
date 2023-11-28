@@ -12,7 +12,7 @@ import java.util.Objects;
 public class User extends Person {
     @Column(name = "PHOTO")
     private String photo;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Playlist> playlists;
 
     @ManyToMany(mappedBy = "subscribers")
