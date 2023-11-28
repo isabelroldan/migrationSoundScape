@@ -15,7 +15,7 @@ public class User extends Person {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Playlist> playlists;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "subscribers")
     private List<Playlist> favoritePlaylists;
 
     public User() {
