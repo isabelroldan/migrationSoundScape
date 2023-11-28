@@ -4,6 +4,7 @@ import com.juanite.model.domain.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.List;
 
 public class AppData {
@@ -17,8 +18,8 @@ public class AppData {
     private static List<Song> searchResults;
     private static List<Playlist> searchResultsPl;
     private static Comment currentComment;
-    private static EntityManager manager;
-    private static EntityManagerFactory emf;
+    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("soundscape");
+    private static EntityManager manager = emf.createEntityManager();
 
     public static PasswordAuthentication getPa() {
         return pa;
