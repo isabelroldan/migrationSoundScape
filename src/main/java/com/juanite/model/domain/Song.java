@@ -2,15 +2,39 @@ package com.juanite.model.domain;
 
 import com.juanite.model.Genres;
 
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "song")
 public class Song {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private int id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "duration")
     private int duration;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "genre")
     private Genres genre;
+
+    @Column(name = "url")
     private String url;
+
+    @ManyToOne
+    @JoinColumn(name = "id_album")
     private Album album;
+
+
+    @ManyToMany(mappedBy = "songs")
+    private List<Playlist> playlists;
 
     public Song() {
         this.id = -1;
