@@ -1,25 +1,20 @@
 package com.juanite.model.DAO;
 
 import com.juanite.connection.ConnectionMySQL;
-import com.juanite.model.domain.Comment;
-import com.juanite.model.domain.Playlist;
-import com.juanite.model.domain.User;
+import com.juanite.model.domain.*;
+import com.juanite.util.AppData;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-public class CommentDAO extends Comment implements iCommentDAO{
-
-    private final static String INSERT = "INSERT INTO Comment (comment,date_time, id_person, id_playlist) VALUES (?,?,?,?)";
-    private final static String UPDATE ="UPDATE Comment SET comment=?,date_time=?,id_person=?,id_playlist=? WHERE id=?";
-    private final static String DELETE="DELETE FROM Comment WHERE id=?";
-    private final static String SELECTBYID="SELECT id,comment,date_time,id_person,id_playlist FROM Comment WHERE id=?";
-    private final static String SELECTALL="SELECT id,comment,date_time,id_person,id_playlist FROM Comment";
-    private final static String SELECTBYPERSON="SELECT id,comment,date_time,id_person,id_playlist FROM Comment WHERE id_person=?";
-    private final static String SELECTBYPLAYLIST="SELECT id,comment,date_time,id_person,id_playlist FROM Comment WHERE id_playlist=?";
+public class CommentDAO extends Comment implements AutoCloseable {
 
     public CommentDAO(int id,String comment, LocalDateTime date_time, User user, Playlist playlist){
         super(id,comment, date_time, user, playlist);
@@ -32,259 +27,90 @@ public class CommentDAO extends Comment implements iCommentDAO{
     }
 
     /**
-     * Saves the current object to the database.
-     * If the object already has an ID, it updates the existing record; otherwise, it inserts a new record.
+     * Saves a new comment to the database.
      *
-     * @return true if the save operation is successful, false otherwise.
      */
-    public boolean save(){
-        if(getId()!=-1){
-            return update();
-        }else{
-            if(getUser()==null ) return false;
-            if( getPlaylist()==null ) return false;
-            Connection conn = ConnectionMySQL.getConnect();
-            if(conn==null) return false;
-
-            try(PreparedStatement ps = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)){
-                LocalDateTime dateTime = getDate_time();
-                String formattedDateTime = dateTime.toString();
-
-                ps.setString(1, getComment());
-                ps.setString(2, formattedDateTime);
-                ps.setInt(3,getUser().getId());
-                ps.setInt(4,getPlaylist().getId());
-
-                if(ps.executeUpdate()==1) {
-                    try (ResultSet rs = ps.getGeneratedKeys()) {
-                        if (rs.next()) {
-                            setId(rs.getInt(1));
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                }
-                setId(-1);
-                return false;
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
-            }
-        }
+    public void save() {
+        EntityManager em = AppData.getManager();
+        em.getTransaction().begin();
+        em.persist(this);
+        em.getTransaction().commit();
     }
 
     /**
-     * Updates the current object's data in the database.
-     * This method is used to modify the existing record in the database with the current object's data.
+     * Updates an existing comment in the database.
      *
-     * @return true if the update operation is successful, false otherwise.
      */
-    public boolean update(){
-        if(getId()==-1) return false;
-        if(getUser()==null ) return false;
-        if( getPlaylist()==null ) return false;
-
-        Connection conn = ConnectionMySQL.getConnect();
-        if(conn==null) return false;
-
-        try(PreparedStatement ps = conn.prepareStatement(UPDATE)){
-            LocalDateTime dateTime = getDate_time();
-            String formattedDateTime = dateTime.toString();
-
-            ps.setString(1, getComment());
-            ps.setString(2, formattedDateTime);
-            ps.setInt(3,getUser().getId());
-            ps.setInt(4,getPlaylist().getId());
-            ps.setInt(5, getId());
-            if(ps.executeUpdate()==1)
-                return true;
-            setId(-1);
-            return false;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+    public void update() {
+        EntityManager em = AppData.getManager();
+        em.getTransaction().begin();
+        em.merge(this);
+        em.getTransaction().commit();
     }
 
     /**
-     * Removes the current object's data from the database.
-     * This method is used to delete the database record associated with the current object.
+     * Deletes a comment from the database.
      *
-     * @return true if the removal operation is successful, false otherwise.
      */
-    public boolean remove(){
-
-        if(getId()==-1) return false;
-
-        Connection conn = ConnectionMySQL.getConnect();
-        if(conn==null) return false;
-
-        try(PreparedStatement ps = conn.prepareStatement(DELETE)){
-            ps.setInt(1,getId());
-            if(ps.executeUpdate()==1)
-                return true;
-
-            return false;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+    public void remove() {
+        EntityManager em = AppData.getManager();
+        em.getTransaction().begin();
+        em.remove(em.contains(this) ? this : em.merge(this));
+        em.getTransaction().commit();
     }
 
     /**
-     * Retrieves an object's data from the database using the specified ID.
-     * This method fetches the data of the current object from the database based on the provided ID.
+     * Retrieves a comment from the database based on its ID.
      *
-     * @param id The unique identifier of the object to retrieve.
-     * @return true if the data retrieval is successful, false otherwise.
+     * @param id The ID of the comment to retrieve.
+     * @return The Comment object with the specified ID, or null if not found.
      */
-    @Override
-    public boolean getById(int id){
-        Connection conn = ConnectionMySQL.getConnect();
-        if(conn==null) return false;
-        try(PreparedStatement ps = conn.prepareStatement(SELECTBYID)){
-            ps.setInt(1,id);
-            if(ps.execute()){
-                try(ResultSet rs = ps.getResultSet()){
-                    if(rs.next()){
-                        setId(rs.getInt("id"));
-                        setComment(rs.getString("comment"));
-                        String dateTimeString = rs.getString("date_time");
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                        LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, formatter);
-                        setDate_time(dateTime);
-                        setUser(new UserDAO(rs.getInt("id_person")));
-                        setPlaylist(new PlaylistDAO(rs.getInt("id_playlist")));
-                    }
-                }
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
+    public Comment getById(int id) {
+        EntityManager em = AppData.getManager();
+        Comment comment = em.find(Comment.class, id);
+        return comment;
     }
 
     /**
      * Retrieves all comments from the database.
      *
-     * This method fetches all comments from the database and returns them as a set of Comment objects.
-     *
-     * @return A set of Comment objects if the retrieval is successful, or null if there was an error.
+     * @return A List of Comment objects representing all comments in the database.
      */
-    @Override
-    public Set<Comment> getAll() {
-        Connection conn = ConnectionMySQL.getConnect();
-        if(conn==null) return null;
-        Set<Comment> result=new HashSet<>();
-        try(PreparedStatement ps = conn.prepareStatement(SELECTALL)){
-            if(ps.execute()){
-                try(ResultSet rs = ps.getResultSet()){
-                    while(rs.next()){
-                        Comment c = new Comment();
-                        c.setId(rs.getInt("id"));
-                        c.setComment(rs.getString("comment"));
-                        String dateTimeString = rs.getString("date_time");
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                        LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, formatter);
-                        c.setDate_time(dateTime);
-                        c.setUser(new UserDAO(rs.getInt("id_person")));
-                        c.setPlaylist(new PlaylistDAO(rs.getInt("id_playlist")));
-
-                        result.add(c);
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return result;
+    public List<Comment> getAll() {
+        EntityManager em = AppData.getManager();
+        Query query = em.createQuery("FROM Comment", Comment.class);
+        List<Comment> comments = query.getResultList();
+        return comments;
     }
 
-    /**
-     * Retrieves all comments associated with a specific playlist from the database.
-     * This method fetches all comments that are related to the provided playlist and returns them as a set of Comment objects.
-     *
-     * @param playlist The playlist for which comments should be retrieved.
-     * @return A set of Comment objects if the retrieval is successful, or null if there was an error.
-     */
-    @Override
-    public Set<Comment> getByPlaylist(Playlist playlist) {
-        Connection conn = ConnectionMySQL.getConnect();
-        if (conn == null) return null;
-        Set<Comment> result = new HashSet<>();
-        try (PreparedStatement ps = conn.prepareStatement(SELECTBYPLAYLIST)) {
-            ps.setInt(1, playlist.getId());
-            if (ps.execute()) {
-                try (ResultSet rs = ps.getResultSet()) {
-                    while (rs.next()) {
-                        Comment c = new Comment();
-                        c.setId(rs.getInt("id"));
-                        c.setComment(rs.getString("comment"));
-                        String dateTimeString = rs.getString("date_time");
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                        LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, formatter);
-                        c.setDate_time(dateTime);
-                        c.setUser(new UserDAO(rs.getInt("id_person")));
-                        c.setPlaylist(playlist);
-
-                        result.add(c);
-                    }
-                }
-            }
-        } catch (SQLException e) {
+    public List<Comment> getByPlaylist(Playlist playlist) {
+        EntityManager entityManager = AppData.getManager();
+        List<Comment> comments = null;
+        try {
+            TypedQuery<Comment> query = entityManager.createQuery("SELECT c FROM Comment c JOIN c.playlist p WHERE p = :playlist", Comment.class);
+            query.setParameter("playlist", playlist);
+            comments = query.getResultList(); // Obtener comentarios asociados a una playlist específica
+        } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
-        return result;
+        return comments;
     }
 
-    /**
-     * Retrieves all comments created by a specific user from the database.
-     * This method fetches all comments that have been created by the provided user and returns them as a set of Comment objects.
-     *
-     * @param user The user for whom comments should be retrieved.
-     * @return A set of Comment objects if the retrieval is successful, or null if there was an error.
-     */
-    @Override
-    public Set<Comment> getByUser(User user) {
-        Connection conn = ConnectionMySQL.getConnect();
-        if (conn == null) return null;
-        Set<Comment> result = new HashSet<>();
-        try (PreparedStatement ps = conn.prepareStatement(SELECTBYPERSON)) {
-            ps.setInt(1, user.getId()); // Accede al ID del usuario a través del objeto User
-            if (ps.execute()) {
-                try (ResultSet rs = ps.getResultSet()) {
-                    while (rs.next()) {
-                        Comment c = new Comment();
-                        c.setId(rs.getInt("id"));
-                        c.setComment(rs.getString("comment"));
-                        String dateTimeString = rs.getString("date_time");
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                        LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, formatter);
-                        c.setDate_time(dateTime);
-                        c.setUser(user);
-                        c.setPlaylist(new PlaylistDAO(rs.getInt("id_playlist")));
-
-                        result.add(c);
-                    }
-                }
-            }
-        } catch (SQLException e) {
+    public List<Comment> getByUser(User user) {
+        EntityManager entityManager = AppData.getManager();
+        List<Comment> comments = null;
+        try {
+            TypedQuery<Comment> query = entityManager.createQuery("SELECT c FROM Comment c JOIN c.user u WHERE u = :user", Comment.class);
+            query.setParameter("user", user);
+            comments = query.getResultList(); // Obtener comentarios asociados a un user específico
+        } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
-        return result;
+        return comments;
     }
 
-
-    /**
-     * Closes any associated resources.
-     */
     @Override
     public void close() throws Exception {
+
     }
 }

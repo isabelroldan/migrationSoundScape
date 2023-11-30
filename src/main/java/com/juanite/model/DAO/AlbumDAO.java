@@ -4,20 +4,18 @@ import com.juanite.connection.ConnectionMySQL;
 import com.juanite.model.domain.Album;
 import com.juanite.model.domain.Artist;
 import com.juanite.model.domain.Song;
+import com.juanite.util.AppData;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class AlbumDAO extends Album implements iAlbumDAO {
-    private final static String INSERT = "INSERT INTO album (name, publication, photo) VALUES (?,?,?)";
-    private final static String UPDATE ="UPDATE album SET name=?, publication=?, photo=? WHERE id=?";
-    private final static String DELETE="DELETE FROM album WHERE id=?";
-    private final static String SELECTBYID="SELECT id, name, publication, photo FROM album WHERE id=?";
-    private final static String SELECTALL="SELECT id, name, publication, photo FROM album";
-    private final static String SELECTBYARTIST="SELECT id_album FROM artist_album WHERE id_artist=?";
+public class AlbumDAO extends Album implements AutoCloseable{
 
     public AlbumDAO(int id, String name, Date publication, String photo){
         super(id, name, publication, photo);
@@ -35,36 +33,18 @@ public class AlbumDAO extends Album implements iAlbumDAO {
      *
      * @return true if the save operation is successful, false otherwise.
      */
-    public boolean save(){
-        if(getId()!=-1){
-            return update();
-        }else{
-            if(getArtists()==null ) return false;
-            if(getSongs()==null ) return false;
-            Connection conn = ConnectionMySQL.getConnect();
-            if(conn==null) return false;
-
-            try(PreparedStatement ps = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)){
-                ps.setString(1, getName());
-                ps.setDate(2, getPublication());
-                ps.setString(3, getPhoto());
-
-                if(ps.executeUpdate()==1) {
-                    try (ResultSet rs = ps.getGeneratedKeys()) {
-                        if (rs.next()) {
-                            setId(rs.getInt(1));
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                }
-                setId(-1);
-                return false;
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
+    public void save() {
+        EntityManager entityManager = AppData.getManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(this); // Guardar el álbum actual en la base de datos
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
             }
+            e.printStackTrace();
         }
     }
 
@@ -74,28 +54,18 @@ public class AlbumDAO extends Album implements iAlbumDAO {
      *
      * @return true if the update operation is successful, false otherwise.
      */
-    public boolean update(){
-        if(getId()==-1) return false;
-        if(getArtists()==null ) return false;
-        if(getSongs()==null ) return false;
-
-        Connection conn = ConnectionMySQL.getConnect();
-        if(conn==null) return false;
-
-        try(PreparedStatement ps = conn.prepareStatement(UPDATE)){
-
-            ps.setString(1, getName());
-            ps.setDate(2, getPublication());
-            ps.setString(3, getPhoto());
-            ps.setInt(4, getId());
-            if(ps.executeUpdate()==1) {
-                return true;
+    public void update() {
+        EntityManager entityManager = AppData.getManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(this); // Actualizar el álbum actual en la base de datos
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
             }
-            setId(-1);
-            return false;
-        } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
     }
 
@@ -105,22 +75,18 @@ public class AlbumDAO extends Album implements iAlbumDAO {
      *
      * @return true if the removal operation is successful, false otherwise.
      */
-    public boolean remove(){
-
-        if(getId()==-1) return false;
-
-        Connection conn = ConnectionMySQL.getConnect();
-        if(conn==null) return false;
-
-        try(PreparedStatement ps = conn.prepareStatement(DELETE)){
-            ps.setInt(1,getId());
-            if(ps.executeUpdate()==1)
-                return true;
-
-            return false;
-        } catch (SQLException e) {
+    public void remove() {
+        EntityManager entityManager = AppData.getManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.remove(entityManager.contains(this) ? this : entityManager.merge(this)); // Borrar el álbum actual de la base de datos
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             e.printStackTrace();
-            return false;
         }
     }
     /**
@@ -130,37 +96,16 @@ public class AlbumDAO extends Album implements iAlbumDAO {
      *
      * @return A set of Album objects if the retrieval is successful, or null if there was an error.
      */
-    @Override
-    public Set<Album> getAll() {
-        Connection conn = ConnectionMySQL.getConnect();
-        if(conn==null) return null;
-        Set<Album> result=new HashSet<>();
-        try(PreparedStatement ps = conn.prepareStatement(SELECTALL)){
-            if(ps.execute()){
-                try(ResultSet rs = ps.getResultSet()){
-                    while(rs.next()){
-                        Album a = new Album();
-                        a.setId(rs.getInt("id"));
-                        a.setName(rs.getString("name"));
-                        a.setPublication(rs.getDate("publication"));
-                        a.setPhoto(rs.getString("photo"));
-                        List<Artist> artists = new ArrayList<>();
-                        try(ArtistDAO adao = new ArtistDAO(new Artist())) {
-                            Set<Artist>artistSet = adao.getByAlbum(this);
-                            artists.addAll(artistSet);
-                        } catch (Exception e) {
-                            return null;
-                        }
-                        a.setArtists(artists);
-                        result.add(a);
-                    }
-                }
-            }
-        } catch (SQLException e) {
+    public List<Album> getAll() {
+        EntityManager entityManager = AppData.getManager();
+        List<Album> albums = null;
+        try {
+            TypedQuery<Album> query = entityManager.createQuery("SELECT a FROM Album a", Album.class);
+            albums = query.getResultList(); // Obtener todos los álbumes de la base de datos
+        } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
-        return result;
+        return albums;
     }
 
     /**
@@ -170,84 +115,41 @@ public class AlbumDAO extends Album implements iAlbumDAO {
      * @param id The unique identifier of the object to retrieve.
      * @return true if the data retrieval is successful, false otherwise.
      */
-    @Override
-    public boolean getById(int id){
-        Connection conn = ConnectionMySQL.getConnect();
-        if(conn==null) return false;
-        try(PreparedStatement ps = conn.prepareStatement(SELECTBYID)){
-            ps.setInt(1,id);
-            if(ps.execute()){
-                try(ResultSet rs = ps.getResultSet()){
-                    if(rs.next()){
-                        setId(rs.getInt("id"));
-                        setName(rs.getString("name"));
-                        setPublication(rs.getDate("publication"));
-                        setPhoto(rs.getString("photo"));
-                        List<Artist> artists = new ArrayList<>();
-                        try(ArtistDAO adao = new ArtistDAO(new Artist())) {
-                            Set<Artist>artistSet = adao.getByAlbum(this);
-                            artists.addAll(artistSet);
-                        } catch (Exception e) {
-                            return false;
-                        }
-                        setArtists(artists);
-                    }
-                }
-            }
-
-        } catch (SQLException e) {
+    public Album getById(int id) {
+        EntityManager entityManager = AppData.getManager();
+        Album album = null;
+        try {
+            album = entityManager.find(Album.class, id); // Obtener el álbum por su ID
+        } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
+        return album;
     }
 
-    @Override
-    public boolean getBySong(Song song) {
-        Connection conn = ConnectionMySQL.getConnect();
-        if(conn==null) return false;
-        try(PreparedStatement ps = conn.prepareStatement(SELECTBYID)){
-            ps.setInt(1, song.getAlbum().getId());
-            if(ps.execute()){
-                try(ResultSet rs = ps.getResultSet()){
-                    if(rs.next()){
-                        setId(rs.getInt("id"));
-                        setName(rs.getString("name"));
-                        setPublication(rs.getDate("publication"));
-                        setPhoto(rs.getString("photo"));
-                        List<Artist> artists = new ArrayList<>();
-                        artists.addAll((new ArtistDAO(new Artist()).getByAlbum(this)));
-                        setArtists(artists);
-                        setSongs(new ArrayList<>());
-                    }
-                }
-            }
-        } catch (SQLException e) {
+    public List<Album> getBySong(Song song) {
+        EntityManager entityManager = AppData.getManager();
+        List<Album> albums = null;
+        try {
+            TypedQuery<Album> query = entityManager.createQuery("SELECT a FROM Album a JOIN a.songs s WHERE s = :song", Album.class);
+            query.setParameter("song", song);
+            albums = query.getResultList(); // Obtener álbumes asociados a una canción específica
+        } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
+        return albums;
     }
 
-    @Override
-    public Set<Album> getByArtist(Artist artist) {
-        Connection conn = ConnectionMySQL.getConnect();
-        if(conn==null) return null;
-        Set<Album> result=new HashSet<>();
-        try(PreparedStatement ps = conn.prepareStatement(SELECTBYARTIST)){
-            ps.setInt(1, artist.getId());
-            if(ps.execute()){
-                try(ResultSet rs = ps.getResultSet()){
-                    while(rs.next()){
-                        getById(rs.getInt("id_album"));
-                    }
-                }
-            }
-        } catch (SQLException e) {
+    public List<Album> getByArtist(Artist artist) {
+        EntityManager entityManager = AppData.getManager();
+        List<Album> albums = null;
+        try {
+            TypedQuery<Album> query = entityManager.createQuery("SELECT a FROM Album a JOIN a.artists ar WHERE ar = :artist", Album.class);
+            query.setParameter("artist", artist);
+            albums = query.getResultList(); // Obtener álbumes asociados a un artista específico
+        } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
-        return result;
+        return albums;
     }
 
     @Override
