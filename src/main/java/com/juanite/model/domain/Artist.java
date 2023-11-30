@@ -1,6 +1,7 @@
 package com.juanite.model.domain;
 
 import com.juanite.model.Countries;
+import com.juanite.util.AppData;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -106,6 +107,5 @@ public class Artist implements Serializable {
     public String toString() {
         return name;
     }
-
 
 }
