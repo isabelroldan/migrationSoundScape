@@ -24,15 +24,15 @@ public class SignUpController {
     @FXML
     public void signUp() throws Exception {
         if(!usernameField.getText().equals("") && !passwordField.getText().equals("") && !emailField.getText().equals("")) {
-                if(Validator.validatePassword(passwordField.getText())) {
-                    if(Validator.validateEmail(emailField.getText())) {
-                        if(Validator.validateUsername(usernameField.getText())) {
-                            try (UserDAO udao = new UserDAO(new User())) {
-                                if(!udao.emailExists(emailField.getText())) {
-                                    if(!udao.userExists(usernameField.getText())) {
-                                        AppData.setCurrentUser(new UserDAO(new User(-1,usernameField.getText(), emailField.getText(), AppData.getPa().hash(passwordField.getText()),"")));
-                                        ((UserDAO) AppData.getCurrentUser()).save();
-                                        home();
+            if(Validator.validatePassword(passwordField.getText())) {
+                if(Validator.validateEmail(emailField.getText())) {
+                    if(Validator.validateUsername(usernameField.getText())) {
+                        try (UserDAO udao = new UserDAO(new User())) {
+                            if(!udao.emailExists(emailField.getText())) {
+                                if(!udao.userExists(usernameField.getText())) {
+                                    AppData.setCurrentUser(new UserDAO(new User(-1,usernameField.getText(), emailField.getText(), AppData.getPa().hash(passwordField.getText()),"")));
+                                    ((UserDAO) AppData.getCurrentUser()).save();
+                                    home();
                                 }
                             }
                         }

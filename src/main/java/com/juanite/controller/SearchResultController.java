@@ -230,7 +230,7 @@ public class SearchResultController {
                     messageLabel.setText("Playlist no encontrada.");
                 }
             }else{
-                Set<Song> songsSet = new SongDAO(new Song()).getSearchResults(searchTerm);
+                List<Song> songsSet = new SongDAO(new Song()).getSearchResults(searchTerm);
                 List<Song> searchResults = new ArrayList<>();
                 searchResults.addAll(songsSet);
                 if (!searchResults.isEmpty()) {
