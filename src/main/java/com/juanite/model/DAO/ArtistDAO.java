@@ -26,7 +26,6 @@ public class ArtistDAO extends Artist implements AutoCloseable {
      * Saves the current object to the database.
      * If the object already has an ID, it updates the existing record; otherwise, it inserts a new record.
      *
-     * @return true if the save operation is successful, false otherwise.
      */
     public void save() {
         EntityManager entityManager = AppData.getManager();
