@@ -216,7 +216,7 @@ public class SearchResultController {
         String searchTerm = searchTextField.getText();
         if (!searchTerm.isEmpty()) {
             if(isPlaylist) {
-                Set<Playlist> playlistSet = new PlaylistDAO(new Playlist()).getSearchResults(searchTerm);
+                List<Playlist> playlistSet = new PlaylistDAO(new Playlist()).getSearchResults(searchTerm);
                 List<Playlist> searchResults = new ArrayList<>();
                 searchResults.addAll(playlistSet);
                 if (!searchResults.isEmpty()) {
