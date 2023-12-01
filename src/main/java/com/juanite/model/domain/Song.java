@@ -35,7 +35,7 @@ public class Song {
     private Album album;
 
 
-    @ManyToMany(mappedBy = "songs")
+    @ManyToMany(mappedBy = "songs", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
     private List<Playlist> playlists;
 
     public Song() {

@@ -3,6 +3,7 @@ package com.juanite.controller;
 import com.juanite.App;
 import com.juanite.model.DAO.PlaylistDAO;
 import com.juanite.model.DAO.SongDAO;
+import com.juanite.model.DAO.UserDAO;
 import com.juanite.model.domain.Playlist;
 import com.juanite.model.domain.Song;
 import com.juanite.util.AppData;
@@ -126,10 +127,12 @@ public class PlayController {
     public void addToPlaylist() {
         if(selector_playlist.getSelectionModel().getSelectedItem() != null) {
             try(PlaylistDAO pdao = new PlaylistDAO(selector_playlist.getSelectionModel().getSelectedItem())) {
-                pdao.saveSong(AppData.getCurrentSong());
+                pdao.getSongs().add(AppData.getCurrentSong());
+                pdao.update();
                 pdao.getById(pdao.getId());
                 AppData.getCurrentUser().getPlaylists().remove(pdao);
                 AppData.getCurrentUser().getPlaylists().add(pdao);
+                ((UserDAO) AppData.getCurrentUser()).update();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
