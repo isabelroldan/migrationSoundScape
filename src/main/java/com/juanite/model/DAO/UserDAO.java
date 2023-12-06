@@ -1,8 +1,6 @@
 package com.juanite.model.DAO;
 
-import com.juanite.connection.ConnectionMySQL;
 import com.juanite.model.domain.Playlist;
-import com.juanite.model.domain.Song;
 import com.juanite.model.domain.User;
 import com.juanite.util.AppData;
 
@@ -10,11 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 public class UserDAO extends User implements AutoCloseable{
@@ -31,16 +25,20 @@ public class UserDAO extends User implements AutoCloseable{
         super(user.getId(), user.getName(), user.getEmail(), user.getPassword(),user.getPhoto(), user.getPlaylists(), user.getFavoritePlaylists());
     }
 
+    public UserDAO() {
+    }
+
     /**
      * Saves a new user to the database.
      *
      */
-    public void save() {
+    public void save(User user) {
         EntityManager em = AppData.getManager();
         em.getTransaction().begin();
-        em.persist(this);
+        em.persist(user);
         em.getTransaction().commit();
     }
+
     /**
      * Updates an existing user in the database.
      *
@@ -117,18 +115,23 @@ public class UserDAO extends User implements AutoCloseable{
     }
 
     // Método para obtener un usuario por su nombre desde la base de datos.
-    public static List<User> getByName(String name) {
+    public static List<User> getByNameAndPassword(String name, String password) {
         EntityManager entityManager = AppData.getManager();
         List<User> users = null;
         try {
-            TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.name = :name", User.class);
+            TypedQuery<User> query = entityManager.createQuery(
+                    "SELECT u FROM User u WHERE u.name = :name AND u.password = :password",
+                    User.class
+            );
             query.setParameter("name", name);
-            users = query.getResultList(); // Obtener canciones por nombre
+            query.setParameter("password", password);
+            users = query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return users;
     }
+
 
     public boolean userExists(String username) {
         EntityManager entityManager = AppData.getManager();
@@ -151,10 +154,10 @@ public class UserDAO extends User implements AutoCloseable{
                     "SELECT COUNT(u) FROM User u WHERE u.email = :email", Long.class);
             query.setParameter("email", email);
             Long count = query.getSingleResult();
-            return count > 0;
+            return count <= 0;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return true;
         }
     }
 

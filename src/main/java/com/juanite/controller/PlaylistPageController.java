@@ -6,6 +6,7 @@ import com.juanite.model.DAO.SongDAO;
 import com.juanite.model.DAO.UserDAO;
 import com.juanite.model.domain.Playlist;
 import com.juanite.model.domain.Song;
+import com.juanite.model.domain.User;
 import com.juanite.util.AppData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -76,7 +77,13 @@ public class PlaylistPageController {
         profileButton.setOnMouseEntered(event -> changeColorButtonprofile(true));
         profileButton.setOnMouseExited(event -> changeColorButtonprofile(false));
 
-        ((UserDAO)AppData.getCurrentUser()).getById(AppData.getCurrentUser().getId());
+        User currentUser = AppData.getCurrentUser();
+        int userId = currentUser.getId();
+
+// Aquí puedes hacer lo que necesites con el userId, ya sea usando un UserDAO o cualquier otra lógica.
+        UserDAO userDAO = new UserDAO(new User());
+        userDAO.getById(userId);  // O cualquier otra operación que necesites hacer con UserDAO
+
 
         myPlaylists = FXCollections.observableArrayList();
         myFavoritePlaylists = FXCollections.observableArrayList();
@@ -91,11 +98,16 @@ public class PlaylistPageController {
     }
 
     public void createNewMyPlaylist() {
-        try(PlaylistDAO pdao = new PlaylistDAO(new Playlist("New Playlist", "", AppData.getCurrentUser()))) {
-            pdao.save();
-            AppData.getCurrentUser().getPlaylists().add(pdao);
-            myPlaylists.add(pdao);
-        }catch (Exception e) {
+        try {
+            System.out.println(AppData.getCurrentUser());
+            Playlist newPlaylist = new Playlist("New Playlist", "", AppData.getCurrentUser());
+
+            try (PlaylistDAO pdao = new PlaylistDAO(newPlaylist)) {
+                pdao.save(newPlaylist);  // Guarda la nueva Playlist en la base de datos
+                AppData.getCurrentUser().getPlaylists().add(newPlaylist);
+                myPlaylists.add(newPlaylist);
+            }
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -108,10 +120,14 @@ public class PlaylistPageController {
     }
 
     public void removeFocusedMyPlaylist() {
-        if(playlists.getSelectionModel().getSelectedItem() != null) {
-            try(PlaylistDAO pdao = new PlaylistDAO(((Playlist)playlists.getSelectionModel().getSelectedItem()))) {
-                myPlaylists.remove(pdao);
-                pdao.remove();
+        if (playlists.getSelectionModel().getSelectedItem() != null) {
+            try {
+                Playlist selectedPlaylist = playlists.getSelectionModel().getSelectedItem();
+                try (PlaylistDAO pdao = new PlaylistDAO()) {
+                    pdao.remove(selectedPlaylist);
+                } catch (NullPointerException pe){
+                    pe.printStackTrace();
+                }
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -126,9 +142,12 @@ public class PlaylistPageController {
     }
 
     public void removeFocusedFavPlaylist() {
-        if(favorite_playlist.getSelectionModel().getSelectedItem() != null) {
-            try(PlaylistDAO pdao = new PlaylistDAO(((Playlist)favorite_playlist.getSelectionModel().getSelectedItem()))) {
-                pdao.removeUserPlaylist();
+        if (favorite_playlist.getSelectionModel().getSelectedItem() != null) {
+            try {
+                Playlist selectedPlaylist = (Playlist) favorite_playlist.getSelectionModel().getSelectedItem();
+                try (PlaylistDAO pdao = new PlaylistDAO()) {
+                    pdao.remove(selectedPlaylist);
+                }
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -235,7 +254,7 @@ public class PlaylistPageController {
 
         String searchTerm = searchTextField.getText();
         if (!searchTerm.isEmpty()) {
-            Set<Playlist> playlistSet = new PlaylistDAO(new Playlist()).getSearchResults(searchTerm);
+            List<Playlist> playlistSet = new PlaylistDAO(new Playlist()).getSearchResults(searchTerm);
             List<Playlist> searchResults = new ArrayList<>();
             searchResults.addAll(playlistSet);
             if (!searchResults.isEmpty()) {

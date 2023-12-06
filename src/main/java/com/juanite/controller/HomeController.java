@@ -146,6 +146,8 @@ public class HomeController {
     @FXML
     private void handleLogOutButton() {
         try {
+            System.out.println();
+            AppData.setCurrentUser(null);
             App.setRoot("login");
         } catch (IOException e) {
             e.printStackTrace();

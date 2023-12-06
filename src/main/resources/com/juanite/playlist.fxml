@@ -33,7 +33,7 @@
                   <Font size="15.0" />
               </font>
           </Button>
-         <Button fx:id="btn_removeSong" layoutX="234.0" layoutY="522.0" onAction="#removeSong" prefHeight="31.0" prefWidth="133.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="REMOVE SONG">
+         <Button fx:id="btn_removeSong" layoutX="234.0" layoutY="522.0" onAction="#remove" prefHeight="31.0" prefWidth="133.0" style="-fx-background-color: #8c8c8c; -fx-text-fill: black; -fx-background-radius: 10px;" text="REMOVE SONG">
             <font>
                <Font size="15.0" />
             </font>

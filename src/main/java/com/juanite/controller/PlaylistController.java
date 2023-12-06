@@ -105,12 +105,13 @@ public class PlaylistController {
         }
     }
 
-    public void removeSong() {
+    public void remove() {
         if(songListView.getSelectionModel().getSelectedItem() != null) {
             try(SongDAO sdao = new SongDAO(((Song)songListView.getSelectionModel().getSelectedItem()))) {
                 plSongs.remove(sdao);
+                Playlist currentPlaylist = AppData.getCurrentPL();
                 try(PlaylistDAO pldao = new PlaylistDAO(AppData.getCurrentPL())) {
-                    pldao.removeSong(sdao);
+                    pldao.remove(currentPlaylist);
                 }
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -119,26 +120,26 @@ public class PlaylistController {
     }
 
     public void changePlaylistName() {
-        if(!txtfld_changeName.isVisible()) {
+        if (!txtfld_changeName.isVisible()) {
             txtfld_changeName.setVisible(true);
             txtfld_changeName.setText(AppData.getCurrentPL().getName());
-        }else{
-            if(!txtfld_changeName.getText().equals("")) {
-                try (PlaylistDAO pdao = new PlaylistDAO(AppData.getCurrentPL())) {
-                    AppData.getCurrentUser().getPlaylists().remove(pdao);
-                    pdao.setName(txtfld_changeName.getText());
-                    pdao.save();
+        } else {
+            if (!txtfld_changeName.getText().isEmpty()) {
+                try (PlaylistDAO pdao = new PlaylistDAO()) {
+                    AppData.getCurrentPL().setName(txtfld_changeName.getText());
+                    pdao.update(AppData.getCurrentPL()); // Actualiza el nombre de la playlist en la base de datos
+
+                    // Restablece la interfaz y la visibilidad del campo de texto
                     txtfld_changeName.setText("");
                     txtfld_changeName.setVisible(false);
-                    AppData.setCurrentPL(pdao);
-                    AppData.getCurrentUser().getPlaylists().add(pdao);
-                    initialize();
+                    initialize(); // Refresca la interfaz si es necesario
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             }
         }
     }
+
 
 
     /**
@@ -240,7 +241,7 @@ public class PlaylistController {
 
         String searchTerm = searchTextField.getText();
         if (!searchTerm.isEmpty()) {
-            Set<Playlist> playlistSet = new PlaylistDAO(new Playlist()).getSearchResults(searchTerm);
+            List<Playlist> playlistSet = new PlaylistDAO(new Playlist()).getSearchResults(searchTerm);
             List<Playlist> searchResults = new ArrayList<>();
             searchResults.addAll(playlistSet);
             if (!searchResults.isEmpty()) {

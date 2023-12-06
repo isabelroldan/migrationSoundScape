@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Album")
+@Table(name = "ALBUM")
 public class Album {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue
     @Column(name = "id")
     private int id;
 

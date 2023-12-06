@@ -11,22 +11,22 @@ import java.util.Objects;
 @Table(name = "COMMENT")
 public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(name = "ID")
     private int id;
 
-    @Column(name = "COMMENT_TEXT")
+    @Column(name = "COMMENT")
     private String comment;
 
     @Column(name = "DATE_TIME")
     private LocalDateTime date_time;
 
     @ManyToOne
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "ID_PERSON")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "PLAYLIST_ID")
+    @JoinColumn(name = "ID_PLAYLIST")
     private Playlist playlist;
 
     public Comment(int id, String comment, LocalDateTime date_time, User user, Playlist playlist) {

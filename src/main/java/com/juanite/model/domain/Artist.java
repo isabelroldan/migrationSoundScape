@@ -10,16 +10,17 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name="artist")
+@Table(name="ARTIST")
 public class Artist implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue
     @Column(name="id")
     private int id;
     @Column(name="name")
     private String name;
-    @Column(name="nationality")
+    @Enumerated(EnumType.STRING) // Esto indica que el enum se almacenará como una cadena en la base de datos
     private Countries nationality;
     @Column(name="photo")
     private String photo;

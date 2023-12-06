@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "USER")
+@Table(name="USER")
 public class User extends Person {
     @Column(name = "PHOTO")
     private String photo;
@@ -44,6 +44,7 @@ public class User extends Person {
         this.playlists = playlists;
         this.favoritePlaylists = favoritePlaylists;
     }
+
 
     public String getPhoto() {
         return photo;

@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class UserProfileController {
     @FXML
@@ -114,7 +113,7 @@ public class UserProfileController {
             if(Validator.validateUsername(txtfld_username.getText())) {
                 if(!((UserDAO)AppData.getCurrentUser()).userExists(txtfld_username.getText())) {
                     AppData.getCurrentUser().setName(txtfld_username.getText());
-                    ((UserDAO) AppData.getCurrentUser()).save();
+                    ((UserDAO) AppData.getCurrentUser()).save(AppData.getCurrentUser());
                 }
             }
         }
@@ -136,9 +135,9 @@ public class UserProfileController {
     public void editEmail() throws SQLException {
         if(!txtfld_email.getText().equals("")) {
             if(Validator.validateEmail(txtfld_email.getText())) {
-                if(!((UserDAO)AppData.getCurrentUser()).emailExists(txtfld_email.getText())) {
+                if(((UserDAO) AppData.getCurrentUser()).emailExists(txtfld_email.getText())) {
                     AppData.getCurrentUser().setEmail(txtfld_email.getText());
-                    ((UserDAO) AppData.getCurrentUser()).save();
+                    ((UserDAO) AppData.getCurrentUser()).save(AppData.getCurrentUser());
                 }
             }
         }

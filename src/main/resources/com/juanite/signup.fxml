@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #424949;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.juanite.controller.SignUpController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #424949;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.juanite.controller.SignUpController">
     <children>
         <Pane layoutX="281.0" layoutY="125.0" prefHeight="366.0" prefWidth="237.0" style="-fx-background-color: #CACFD2; -fx-background-radius: 5px;">
             <children>
                 <Label layoutX="75.0" layoutY="43.0" style="-fx-font-size: 20; -fx-font-weight: bold;" text="Sign Up" textFill="WHITE" />
-                <TextField fx:id="emailField" alignment="CENTER" layoutX="112.0" layoutY="103.0" prefHeight="26.0" prefWidth="96.0" promptText="Email" />
-                <TextField fx:id="usernameField" alignment="CENTER" layoutX="112.0" layoutY="157.0" prefHeight="26.0" prefWidth="96.0" promptText="UserName" />
-                <PasswordField fx:id="passwordField" alignment="CENTER" layoutX="112.0" layoutY="210.0" prefHeight="26.0" prefWidth="96.0" promptText="Password" />
+                <TextField fx:id="emailField" alignment="CENTER" layoutX="112.0" layoutY="103.0" prefHeight="26.0" prefWidth="96.0" promptText="Email" text="usuario_ejemplo@gmail.com" />
+                <TextField fx:id="usernameField" alignment="CENTER" layoutX="112.0" layoutY="157.0" prefHeight="26.0" prefWidth="96.0" promptText="UserName" text="user123" />
+                <PasswordField fx:id="passwordField" alignment="CENTER" layoutX="112.0" layoutY="210.0" prefHeight="26.0" prefWidth="96.0" promptText="Password" text="Passw0rd" />
                 <Button layoutX="63.0" layoutY="284.0" onAction="#signUp" style="-fx-background-color: #000000; -fx-text-fill: white; -fx-background-radius: 25px;" text="Create Account" />
                 <Label layoutX="41.0" layoutY="108.0" text="Email" />
                 <Label layoutX="28.0" layoutY="162.0" text="UserName" />

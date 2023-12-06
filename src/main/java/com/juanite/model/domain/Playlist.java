@@ -7,11 +7,12 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name="playlist")
+@Table(name="PLAYLIST")
 public class Playlist implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue
     @Column(name="id")
     private int id;
     @Column(name="name")
@@ -31,7 +32,7 @@ public class Playlist implements Serializable {
     @ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
     @JoinTable(
             name = "user_playlist",
-            joinColumns = { @JoinColumn(name = "id_person") },
+            joinColumns = { @JoinColumn(name = "id_user") },
             inverseJoinColumns = { @JoinColumn(name = "id_playlist") }
     )
     private List<User> subscribers;
@@ -137,9 +138,21 @@ public class Playlist implements Serializable {
         return Objects.hash(id, name, owner);
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return name;
-    }
+    }*/
 
+    @Override
+    public String toString() {
+        return "Playlist{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", owner=" + owner.getId() +
+                ", songs=" + songs +
+                ", subscribers=" + subscribers +
+                ", comments=" + comments +
+                '}';
+    }
 }

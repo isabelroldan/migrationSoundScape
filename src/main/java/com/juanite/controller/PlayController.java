@@ -128,7 +128,7 @@ public class PlayController {
         if(selector_playlist.getSelectionModel().getSelectedItem() != null) {
             try(PlaylistDAO pdao = new PlaylistDAO(selector_playlist.getSelectionModel().getSelectedItem())) {
                 pdao.getSongs().add(AppData.getCurrentSong());
-                pdao.update();
+                pdao.update(AppData.getCurrentPL());
                 pdao.getById(pdao.getId());
                 AppData.getCurrentUser().getPlaylists().remove(pdao);
                 AppData.getCurrentUser().getPlaylists().add(pdao);

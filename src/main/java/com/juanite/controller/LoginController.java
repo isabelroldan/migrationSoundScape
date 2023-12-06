@@ -1,11 +1,13 @@
 package com.juanite.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.juanite.App;
 import com.juanite.model.DAO.UserDAO;
 import com.juanite.model.domain.User;
 import com.juanite.util.AppData;
+import com.juanite.util.PasswordAuthentication;
 import com.juanite.util.Validator;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -21,18 +23,30 @@ public class LoginController {
 
     @FXML
     public void Login() throws Exception {
+        String username = usernameField.getText();
+        String passwordText = passwordField.getText();
+        PasswordAuthentication passwordAuthentication = new PasswordAuthentication();
+
         try (UserDAO udao = new UserDAO(new User())) {
-            if(Validator.validateUsername(usernameField.getText()) || Validator.validateUsername(usernameField.getText())) {
-                if(Validator.validatePassword(passwordField.getText())) {
-                    udao.getByName(usernameField.getText());
-                    if(udao != null) {
-                        if (AppData.getPa().authenticate(passwordField.getText(), udao.getPassword())) {
-                            AppData.setCurrentUser(udao);
-                            App.setRoot("home");
-                        }
+            if (Validator.validateUsername(username) && Validator.validatePassword(passwordText)) {
+                List<User> users = udao.getByNameAndPassword(username, passwordAuthentication.hash(passwordText));
+
+                if (!users.isEmpty()) {
+                    User user = users.get(0);
+                    if (AppData.getPa().authenticate(passwordText, user.getPassword())) {
+                        System.out.println("Contraseña correcta");
+                        AppData.setCurrentUser(user);
+                        App.setRoot("home");
+                        return;
+                    } else {
+                        System.out.println("Contraseña incorrecta");
                     }
+                } else {
+                    System.out.println("Usuario no encontrado");
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     @FXML

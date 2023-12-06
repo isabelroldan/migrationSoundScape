@@ -7,10 +7,11 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)  //cada atributo en su tabla,  SINGLE todas en una tabla , TABLE_PER_CLASS tantas tablas como clases con TODOS los atributos
 @Table(name = "PERSON")
 public class Person {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(name = "ID")
     protected int id;
 

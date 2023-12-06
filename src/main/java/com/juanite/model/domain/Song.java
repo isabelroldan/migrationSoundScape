@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "song")
+@Table(name = "SONG")
 public class Song {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @Column(name = "id")
     private int id;
 

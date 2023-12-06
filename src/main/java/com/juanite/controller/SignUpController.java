@@ -23,15 +23,16 @@ public class SignUpController {
 
     @FXML
     public void signUp() throws Exception {
-        if(!usernameField.getText().equals("") && !passwordField.getText().equals("") && !emailField.getText().equals("")) {
-            if(Validator.validatePassword(passwordField.getText())) {
-                if(Validator.validateEmail(emailField.getText())) {
-                    if(Validator.validateUsername(usernameField.getText())) {
-                        try (UserDAO udao = new UserDAO(new User())) {
-                            if(!udao.emailExists(emailField.getText())) {
-                                if(!udao.userExists(usernameField.getText())) {
-                                    AppData.setCurrentUser(new UserDAO(new User(-1,usernameField.getText(), emailField.getText(), AppData.getPa().hash(passwordField.getText()),"")));
-                                    ((UserDAO) AppData.getCurrentUser()).save();
+        if (!usernameField.getText().equals("") && !passwordField.getText().equals("") && !emailField.getText().equals("")) {
+            if (Validator.validatePassword(passwordField.getText())) {
+                if (Validator.validateEmail(emailField.getText())) {
+                    if (Validator.validateUsername(usernameField.getText())) {
+                        try (UserDAO udao = new UserDAO()) {
+                            if (udao.emailExists(emailField.getText())) {
+                                if (!udao.userExists(usernameField.getText())) {
+                                    User newUser = new User(-1, usernameField.getText(), emailField.getText(), AppData.getPa().hash(passwordField.getText()), "");
+                                    udao.save(newUser);
+                                    AppData.setCurrentUser(newUser);
                                     home();
                                 }
                             }
@@ -41,6 +42,7 @@ public class SignUpController {
             }
         }
     }
+
     @FXML
     public void home() throws IOException {
         App.setRoot("home");

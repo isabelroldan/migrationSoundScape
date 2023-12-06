@@ -30,10 +30,10 @@ public class CommentDAO extends Comment implements AutoCloseable {
      * Saves a new comment to the database.
      *
      */
-    public void save() {
+    public void save(Comment comment) {
         EntityManager em = AppData.getManager();
         em.getTransaction().begin();
-        em.persist(this);
+        em.persist(comment);
         em.getTransaction().commit();
     }
 

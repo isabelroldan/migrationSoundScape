@@ -127,6 +127,7 @@ public class CommentController {
     }
 
     public void addComment() {
+
         if(!txt_newComment.isVisible()) {
             commentListView.setVisible(false);
             btn_showComment.setVisible(false);
@@ -137,7 +138,8 @@ public class CommentController {
         }else{
             if(txt_newComment.getText() != null && !txt_newComment.getText().equals("")) {
                 try(CommentDAO cdao = new CommentDAO(new Comment(-1, txt_newComment.getText(), LocalDateTime.now() , AppData.getCurrentUser(), AppData.getCurrentPL()))) {
-                    cdao.save();
+                    Comment comment = new Comment(-1, txt_newComment.getText(), LocalDateTime.now(), AppData.getCurrentUser(), AppData.getCurrentPL());
+                    cdao.save(comment);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

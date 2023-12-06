@@ -19,8 +19,16 @@ public class PlaylistDAO extends Playlist implements AutoCloseable {
 
     public PlaylistDAO(int id){ getById(id);}
 
-    public PlaylistDAO(Playlist p){
-        super(p.getId(), p.getName(), p.getDescription(), p.getOwner(), p.getSongs(), p.getSubscribers(), p.getComments());
+    public PlaylistDAO(Playlist playlist){
+        super(playlist.getId(), playlist.getName(), playlist.getDescription(), playlist.getOwner(), playlist.getSongs(), playlist.getSubscribers(), playlist.getComments());
+    }
+
+    public PlaylistDAO() {
+
+    }
+
+    public PlaylistDAO(String name, String description, User owner) {
+        super(name, description, owner);
     }
 
     /**
@@ -28,32 +36,24 @@ public class PlaylistDAO extends Playlist implements AutoCloseable {
      * If the object already has an ID, it updates the existing record; otherwise, it inserts a new record.
      *
      */
-    public void save(){
-        EntityManager entityManager = AppData.getManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        try {
-            entityManager.getTransaction().begin();
-            entityManager.persist(this);
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }else {
-            }
-            e.printStackTrace();
-        }
+    public void save(Playlist playlist) {
+        EntityManager em = AppData.getManager();
+        em.getTransaction().begin();
+
+        em.persist(playlist);
+        em.getTransaction().commit();
     }
     /**
      * Updates the current object's data in the database.
      * This method is used to modify the existing record in the database with the current object's data.
      *
      */
-    public void update(){
+    public void update(Playlist playlist){
         EntityManager entityManager = AppData.getManager();
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             entityManager.getTransaction().begin();
-            entityManager.merge(this);
+            entityManager.merge(playlist);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -68,13 +68,12 @@ public class PlaylistDAO extends Playlist implements AutoCloseable {
      * This method is used to delete the database record associated with the current object.
      *
      */
-    public void remove(){
-
+    public void remove(Playlist playlist) {
         EntityManager entityManager = AppData.getManager();
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             entityManager.getTransaction().begin();
-            entityManager.remove(entityManager.contains(this) ? this : entityManager.merge(this));
+            entityManager.remove(entityManager.contains(playlist) ? playlist : entityManager.merge(playlist)); // Borrar el álbum actual de la base de datos
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -95,7 +94,7 @@ public class PlaylistDAO extends Playlist implements AutoCloseable {
         EntityManager entityManager = AppData.getManager();
         List<Playlist> p = null;
         try {
-            TypedQuery<Playlist> query = entityManager.createQuery("SELECT s FROM Playlist s", Playlist.class);
+            TypedQuery<Playlist> query = entityManager.createQuery("SELECT p FROM Playlist p", Playlist.class);
             p = query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,7 +117,7 @@ public class PlaylistDAO extends Playlist implements AutoCloseable {
         EntityManager entityManager = AppData.getManager();
         List<Playlist> p = null;
         try {
-            TypedQuery<Playlist> query = entityManager.createQuery("SELECT s FROM Playlist s WHERE name = :name", Playlist.class);
+            TypedQuery<Playlist> query = entityManager.createQuery("SELECT p FROM Playlist p WHERE name = :name", Playlist.class);
             query.setParameter("name", name);
             p = query.getResultList();
         } catch (Exception e) {
