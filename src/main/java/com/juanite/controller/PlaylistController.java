@@ -15,6 +15,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -119,7 +121,7 @@ public class PlaylistController {
         }
     }
 
-    public void changePlaylistName() {
+    /*public void changePlaylistName() {
         if (!txtfld_changeName.isVisible()) {
             txtfld_changeName.setVisible(true);
             txtfld_changeName.setText(AppData.getCurrentPL().getName());
@@ -135,6 +137,32 @@ public class PlaylistController {
                     initialize(); // Refresca la interfaz si es necesario
                 } catch (Exception e) {
                     throw new RuntimeException(e);
+                }
+            }
+        }
+    }*/
+    public void changePlaylistName() {
+        if (!txtfld_changeName.isVisible()) {
+            txtfld_changeName.setVisible(true);
+            txtfld_changeName.setText(AppData.getCurrentPL().getName());
+        } else {
+            String newName = txtfld_changeName.getText();
+            if (!newName.equals("")) {
+                EntityManager entityManager = AppData.getManager();
+                EntityTransaction transaction = entityManager.getTransaction();
+                try {
+                    transaction.begin();
+                    Playlist playlist = entityManager.find(Playlist.class, AppData.getCurrentPL().getId());
+                    playlist.setName(newName);
+                    entityManager.merge(playlist);
+                    transaction.commit();
+                    txtfld_changeName.setText("");
+                    txtfld_changeName.setVisible(false);
+                } catch (Exception e) {
+                    if (transaction != null) {
+                        transaction.rollback();
+                    }
+                    e.printStackTrace();
                 }
             }
         }
