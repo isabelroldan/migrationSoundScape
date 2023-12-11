@@ -4,8 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Objects;
 
-@Entity
-@Table(name="ADMIN")
+
 public class Admin extends Person {
 
     public Admin() {

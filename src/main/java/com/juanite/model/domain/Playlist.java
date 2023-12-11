@@ -138,21 +138,10 @@ public class Playlist implements Serializable {
         return Objects.hash(id, name, owner);
     }
 
-    /*@Override
-    public String toString() {
-        return name;
-    }*/
-
     @Override
     public String toString() {
-        return "Playlist{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", owner=" + owner.getId() +
-                ", songs=" + songs +
-                ", subscribers=" + subscribers +
-                ", comments=" + comments +
-                '}';
+        return name;
     }
+
+
 }

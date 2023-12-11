@@ -29,21 +29,17 @@ public class LoginController {
 
         try (UserDAO udao = new UserDAO(new User())) {
             if (Validator.validateUsername(username) && Validator.validatePassword(passwordText)) {
-                List<User> users = udao.getByNameAndPassword(username, passwordAuthentication.hash(passwordText));
+                List<User> users = UserDAO.getByNameAndPassword(username, passwordAuthentication.hash(passwordText));
 
-                if (!users.isEmpty()) {
-                    User user = users.get(0);
+                for (User user : users) {
                     if (AppData.getPa().authenticate(passwordText, user.getPassword())) {
                         System.out.println("Contraseña correcta");
                         AppData.setCurrentUser(user);
                         App.setRoot("home");
                         return;
-                    } else {
-                        System.out.println("Contraseña incorrecta");
                     }
-                } else {
-                    System.out.println("Usuario no encontrado");
                 }
+                System.out.println("Usuario no encontrado");
             }
         } catch (Exception e) {
             e.printStackTrace();

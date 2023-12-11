@@ -23,12 +23,12 @@ public class PlaylistDAO extends Playlist implements AutoCloseable {
         super(playlist.getId(), playlist.getName(), playlist.getDescription(), playlist.getOwner(), playlist.getSongs(), playlist.getSubscribers(), playlist.getComments());
     }
 
-    public PlaylistDAO() {
-
-    }
 
     public PlaylistDAO(String name, String description, User owner) {
         super(name, description, owner);
+    }
+
+    public PlaylistDAO() {
     }
 
     /**
@@ -39,6 +39,8 @@ public class PlaylistDAO extends Playlist implements AutoCloseable {
     public void save(Playlist playlist) {
         EntityManager em = AppData.getManager();
         em.getTransaction().begin();
+
+        System.out.println("Nombre antes de persistir: " + playlist.getName());
 
         em.persist(playlist);
         em.getTransaction().commit();
@@ -69,16 +71,16 @@ public class PlaylistDAO extends Playlist implements AutoCloseable {
      *
      */
     public void remove(Playlist playlist) {
-        EntityManager entityManager = AppData.getManager();
-        EntityTransaction transaction = entityManager.getTransaction();
+        EntityManager em = AppData.getManager();
+        EntityTransaction transaction = em.getTransaction();
         try {
-            entityManager.getTransaction().begin();
-            entityManager.remove(entityManager.contains(playlist) ? playlist : entityManager.merge(playlist)); // Borrar el álbum actual de la base de datos
-            entityManager.getTransaction().commit();
+            em.getTransaction().begin();
+            System.out.println("begin correct");
+            em.remove(playlist); // Borrar la canción actual de la base de datos
+            System.out.println("remove correct");
+            em.getTransaction().commit();
+            System.out.println("commit correct");
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
             e.printStackTrace();
         }
     }

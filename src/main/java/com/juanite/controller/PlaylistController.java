@@ -20,7 +20,6 @@ import javax.persistence.EntityTransaction;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class PlaylistController {
     @FXML
@@ -108,18 +107,22 @@ public class PlaylistController {
     }
 
     public void remove() {
-        if(songListView.getSelectionModel().getSelectedItem() != null) {
-            try(SongDAO sdao = new SongDAO(((Song)songListView.getSelectionModel().getSelectedItem()))) {
-                plSongs.remove(sdao);
+        if (songListView.getSelectionModel().getSelectedItem() != null) {
+            try {
+                Song selectedSong = (Song) songListView.getSelectionModel().getSelectedItem();
+
                 Playlist currentPlaylist = AppData.getCurrentPL();
-                try(PlaylistDAO pldao = new PlaylistDAO(AppData.getCurrentPL())) {
-                    pldao.remove(currentPlaylist);
+                try (PlaylistDAO pldao = new PlaylistDAO(currentPlaylist)) {
+                    // Eliminar la canción de la playlist, sin eliminar la canción en sí
+                    currentPlaylist.getSongs().remove(selectedSong);
+                    pldao.update(currentPlaylist); // Actualizar la playlist en la base de datos
                 }
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
     }
+
 
     /*public void changePlaylistName() {
         if (!txtfld_changeName.isVisible()) {

@@ -6,6 +6,7 @@ import com.juanite.model.DAO.SongDAO;
 import com.juanite.model.DAO.UserDAO;
 import com.juanite.model.domain.Playlist;
 import com.juanite.model.domain.Song;
+import com.juanite.model.domain.User;
 import com.juanite.util.AppData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -130,9 +131,9 @@ public class PlayController {
                 pdao.getSongs().add(AppData.getCurrentSong());
                 pdao.update(AppData.getCurrentPL());
                 pdao.getById(pdao.getId());
-                AppData.getCurrentUser().getPlaylists().remove(pdao);
-                AppData.getCurrentUser().getPlaylists().add(pdao);
-                ((UserDAO) AppData.getCurrentUser()).update();
+                UserDAO userDAO = new UserDAO(); // Asegúrate de tener un método apropiado para instanciar UserDAO
+                User currentUser = AppData.getCurrentUser();
+                userDAO.update(currentUser);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

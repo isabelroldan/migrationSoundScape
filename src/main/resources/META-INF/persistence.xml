@@ -22,7 +22,6 @@
         <class>com.juanite.model.domain.Song</class>
         <class>com.juanite.model.domain.Album</class>
         <class>com.juanite.model.domain.Artist</class>
-        <class>com.juanite.model.domain.Admin</class>
         <class>com.juanite.model.domain.Comment</class>
         <class>com.juanite.model.domain.Person</class>
         <class>com.juanite.model.domain.User</class>
@@ -36,7 +35,7 @@
 
             <!-- Configuración específica de Hibernate -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MariaDBDialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="create-drop" />
+            <property name="hibernate.hbm2ddl.auto" value="validate" />
             <property name="hibernate.show_sql" value="true"/>
         </properties>
     </persistence-unit>

@@ -2,10 +2,8 @@ package com.juanite.controller;
 
 import com.juanite.App;
 import com.juanite.model.DAO.PlaylistDAO;
-import com.juanite.model.DAO.SongDAO;
 import com.juanite.model.DAO.UserDAO;
 import com.juanite.model.domain.Playlist;
-import com.juanite.model.domain.Song;
 import com.juanite.model.domain.User;
 import com.juanite.util.AppData;
 import javafx.collections.FXCollections;
@@ -20,7 +18,6 @@ import javafx.scene.image.ImageView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class PlaylistPageController {
     @FXML
@@ -84,23 +81,27 @@ public class PlaylistPageController {
         UserDAO userDAO = new UserDAO(new User());
         userDAO.getById(userId);  // O cualquier otra operación que necesites hacer con UserDAO
 
+        loadPlaylists();
 
-        myPlaylists = FXCollections.observableArrayList();
-        myFavoritePlaylists = FXCollections.observableArrayList();
-        myPlaylists.removeAll();
-        myFavoritePlaylists.removeAll();
-        myPlaylists.addAll(AppData.getCurrentUser().getPlaylists());
-        myFavoritePlaylists.addAll(AppData.getCurrentUser().getFavoritePlaylists());
-        playlists.setItems(myPlaylists);
-        favorite_playlist.setItems(myFavoritePlaylists);
-        playlists.refresh();
-        favorite_playlist.refresh();
     }
 
+    private void loadPlaylists() {
+        User currentUser = AppData.getCurrentUser();
+        myPlaylists = FXCollections.observableArrayList();
+        myFavoritePlaylists = FXCollections.observableArrayList();
+
+        myPlaylists.addAll(currentUser.getPlaylists());
+        myFavoritePlaylists.addAll(currentUser.getFavoritePlaylists());
+
+        playlists.setItems(myPlaylists);
+        favorite_playlist.setItems(myFavoritePlaylists);
+    }
     public void createNewMyPlaylist() {
         try {
             System.out.println(AppData.getCurrentUser());
             Playlist newPlaylist = new Playlist("New Playlist", "", AppData.getCurrentUser());
+
+            System.out.println("Nombre antes de guardar: " + newPlaylist.getName());
 
             try (PlaylistDAO pdao = new PlaylistDAO(newPlaylist)) {
                 pdao.save(newPlaylist);  // Guarda la nueva Playlist en la base de datos
@@ -125,14 +126,17 @@ public class PlaylistPageController {
                 Playlist selectedPlaylist = playlists.getSelectionModel().getSelectedItem();
                 try (PlaylistDAO pdao = new PlaylistDAO()) {
                     pdao.remove(selectedPlaylist);
-                } catch (NullPointerException pe){
-                    pe.printStackTrace();
+                    AppData.getCurrentUser().getPlaylists().remove(selectedPlaylist);
+                    playlists.refresh();
+                } catch (Exception e) {
+                    throw new RuntimeException("Error al eliminar la playlist", e);
                 }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            } catch (RuntimeException e) {
+                throw new RuntimeException("Error al obtener la playlist seleccionada", e);
             }
         }
     }
+
 
     public void showFocusedFavPlaylist() throws IOException {
         if(favorite_playlist.getSelectionModel().getSelectedItem() != null) {
@@ -147,6 +151,7 @@ public class PlaylistPageController {
                 Playlist selectedPlaylist = (Playlist) favorite_playlist.getSelectionModel().getSelectedItem();
                 try (PlaylistDAO pdao = new PlaylistDAO()) {
                     pdao.remove(selectedPlaylist);
+                    AppData.getCurrentUser().getPlaylists().remove(selectedPlaylist);
                 }
             } catch (Exception e) {
                 throw new RuntimeException(e);

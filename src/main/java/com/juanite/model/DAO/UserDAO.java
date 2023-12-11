@@ -43,10 +43,10 @@ public class UserDAO extends User implements AutoCloseable{
      * Updates an existing user in the database.
      *
      */
-    public void update() {
+    public void update(User user) {
         EntityManager em = AppData.getManager();
         em.getTransaction().begin();
-        em.merge(this);
+        em.merge(user);
         em.getTransaction().commit();
     }
 
